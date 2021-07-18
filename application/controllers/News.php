@@ -13,22 +13,22 @@
 
 	        public function index()
 	        {
-	                $data['news'] = $this->news_model->get_news();
+	                $data['oglas'] = $this->news_model->get_news();
 
 	                $data["title"] = "News";
 	                $this->load->view('templates/header', $data);
-	                //var_dump($data["news"]);
+	                /*var_dump($data["news"]);*/
 	                $this->load->view('news/index', $data);
 	                $this->load->view('templates/footer');
 
 	                
 	        }
 
-	        public function view($slug = NULL)
+	        public function view($num = NULL)
 	        {
-	                $data['news_item'] = $this->news_model->get_news($slug);
+	                $data['news_item'] = $this->news_model->get_news($num);
 
-	                $data["title"] = "News";
+	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
 	                $this->load->view('templates/header', $data);
 	                /*var_dump($data["news"]);*/
@@ -51,8 +51,15 @@
 
 			    $data['title'] = 'Create a news item';
 
-			    $this->form_validation->set_rules('title', 'Title', 'required');
+			    /*$this->form_validation->set_rules('title', 'Title', 'required');
+			    $this->form_validation->set_rules('text', 'Text', 'required');*/
 			    $this->form_validation->set_rules('text', 'Text', 'required');
+			    $this->form_validation->set_rules('price', 'Price', 'required');
+			    $this->form_validation->set_rules('type', 'Type', 'required');
+			    $this->form_validation->set_rules('country', 'Country', 'required');
+			    $this->form_validation->set_rules('city', 'City', 'required');
+			    $this->form_validation->set_rules('paddress', 'Paddress', 'required');
+			    $this->form_validation->set_rules('address', 'Address', 'required');
 
 			    if ($this->form_validation->run() === FALSE)
 			    {
@@ -64,8 +71,12 @@
 			    else
 			    {
 				    	//var_dump($GLOBALS);
-			        $this->news_model->set_news();
+			        $lastAdded = $this->news_model->set_news();
+			        echo $lastAdded;
+
 			        $this->load->view('news/success');
+			        echo "Exit";
+			        echo $lastAdded;
 			    }
 			}
 
@@ -88,7 +99,7 @@
 	                $this->load->view('templates/footer');
 	        }
 
-	        public function edit($slug = NULL)
+	        public function edit($opis = NULL)
 			{
 
 				if(!isset($this->session->userdata['logged_in'])){
@@ -102,9 +113,9 @@
 			    $this->load->helper('form');
 			    $this->load->library('form_validation');
 
-			    $data['news_item'] = $this->news_model->get_news($slug);
+			    $data['news_item'] = $this->news_model->get_news($opis);
 
-			    $data['title'] = 'Update a news item';
+			    $data['opis'] = 'Update a news item';
 
 			    $this->form_validation->set_rules('title', 'Title', 'required');
 			    $this->form_validation->set_rules('text', 'Text', 'required');
@@ -119,9 +130,9 @@
 			    else
 			    {
 				    //var_dump($GLOBALS);
-				    $d["title"] = $this->input->post('title');
-				    $d["text"] = $this->input->post('text');
-			        $this->news_model->update_news($d, $slug);
+				    $d["tip"] = $this->input->post('tip');
+				    $d["opis"] = $this->input->post('opis');
+			        $this->news_model->update_news($d, $opis);
 			        $this->load->view('news/success');
 			    }
 			}

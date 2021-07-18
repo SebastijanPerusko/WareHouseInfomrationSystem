@@ -38,19 +38,33 @@ public function show() {
 public function signup() {
 
     // Check validation for user input in SignUp form
+    $this->form_validation->set_rules('name', 'Name', 'trim|required');
+    $this->form_validation->set_rules('secondname', 'SecondName', 'trim|required');
+    $this->form_validation->set_rules('email', 'Email', 'trim|required');
+    $this->form_validation->set_rules('tel', 'Tel', 'trim|required');
     $this->form_validation->set_rules('username', 'Username', 'trim|required');
-    $this->form_validation->set_rules('email_value', 'Email', 'trim|required');
     $this->form_validation->set_rules('password', 'Password', 'trim|required');
+
+
+
+    /*$this->form_validation->set_rules('username', 'Username', 'trim|required');
+    $this->form_validation->set_rules('email_value', 'Email', 'trim|required');
+    $this->form_validation->set_rules('password', 'Password', 'trim|required');*/
 
     if ($this->form_validation->run() == FALSE) {
         $this->load->view('templates/header');
         $this->load->view('user_authentication/registration_form');
         $this->load->view('templates/footer');
     } else {
+        $hash = $this->input->post('password');
+        $password_hash = password_hash($hash, PASSWORD_DEFAULT);
         $data = array(
-            'user_name' => $this->input->post('username'),
-            'user_email' => $this->input->post('email_value'),
-            'user_password' => $this->input->post('password')
+            'ime' => $this->input->post('name'),
+            'priimek' => $this->input->post('secondname'),
+            'email' => $this->input->post('email'),
+            'tel' => $this->input->post('tel'),
+            'username' => $this->input->post('username'),
+            'geslo' => $password_hash
         );
         $result = $this->login_database->registration_insert($data);
         if ($result == TRUE) {
@@ -91,7 +105,7 @@ public function signin() {
 
     $data = array(
         'username' => $this->input->post('username'),
-        'password' => $this->input->post('password')
+        'geslo' => $this->input->post('password')
     );
     $result = $this->login_database->login($data);
     if ($result == TRUE) {
@@ -100,8 +114,9 @@ public function signin() {
         $result = $this->login_database->read_user_information($username);
         if ($result != false) {
             $session_data = array(
-                'username' => $result[0]->user_name,
-                'email' => $result[0]->user_email,
+                'username' => $result[0]->username,
+                'email' => $result[0]->email,
+                'id_u' => $result[0]->id,
             );
             // Add user data in session
             $data = array('error_message' => 'Signin OK');
