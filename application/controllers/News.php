@@ -1,6 +1,7 @@
 	<?php
 	class News extends CI_Controller {
 
+
 	        public function __construct()
 	        {
 	                parent::__construct();
@@ -8,6 +9,7 @@
 	                $this->load->helper('url_helper');
 	                $this->load->helper('form');
                 	$this->load->library('session');
+                	$this->load->helper('url');
 
 	        }
 
@@ -53,14 +55,15 @@
 
 			    /*$this->form_validation->set_rules('title', 'Title', 'required');
 			    $this->form_validation->set_rules('text', 'Text', 'required');*/
+
 			    $this->form_validation->set_rules('text', 'Text', 'required');
 			    $this->form_validation->set_rules('price', 'Price', 'required');
-			    $this->form_validation->set_rules('type', 'Type', 'required');
 			    $this->form_validation->set_rules('country', 'Country', 'required');
 			    $this->form_validation->set_rules('city', 'City', 'required');
 			    $this->form_validation->set_rules('paddress', 'Paddress', 'required');
 			    $this->form_validation->set_rules('address', 'Address', 'required');
 
+				echo "step - pre";
 			    if ($this->form_validation->run() === FALSE)
 			    {
 			        $this->load->view('templates/header', $data);
@@ -70,6 +73,7 @@
 			    }
 			    else
 			    {
+			    	echo "step - pree";
 				    	//var_dump($GLOBALS);
 			        $lastAdded = $this->news_model->set_news();
 			        echo $lastAdded;
