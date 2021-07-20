@@ -6,6 +6,45 @@ class News_model extends CI_Model {
             $this->load->database();
         }
 
+
+        public function set_comment($slug = FALSE)
+		{
+			$this->load->helper('url');
+			$my_date_time = date('Y-m-d H:i:s');
+			$arr = $_SESSION['logged_in'];
+			$data = array(
+		    	'vsebina' => $this->input->post('comment'),
+		    	'datumura' => $my_date_time,
+		        'id_u' => $arr['id_u'],
+		        'id_o' => $this->input->post('id_space')
+		    );
+
+		    $this->db->insert('komentar', $data);
+        }
+
+        public function set_vote($slug = FALSE)
+		{
+			$this->load->helper('url');
+			$my_date_time = date('Y-m-d H:i:s');
+			$arr = $_SESSION['logged_in'];
+			$data = array(
+		    	'vrednost' => intval($this->input->post('vote_space')),
+		    	'datumura' => $my_date_time,
+		        'id_u' => $arr['id_u'],
+		        'id_o' => $this->input->post('id_space')
+		    );
+
+		    $this->db->insert('ocena', $data);
+        }
+
+        public function control_comment(){
+
+        }
+
+        public function control_user($user, $space){
+
+        }
+
         public function get_news($slug = FALSE)
 		{
 	        if ($slug === FALSE)
@@ -14,8 +53,23 @@ class News_model extends CI_Model {
 	                return $query->result_array();
 	        }
 
-	        $query = $this->db->get_where('news', array('slug' => $slug));
+	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
+	        $query = $this->db->select('*')
+	        				->from('oglas')
+	        				->join('lastnost', 'oglas.id = lastnost.id_o')
+	        				->where('oglas.id', $slug)
+	        				->get();
 	        return $query->row_array();
+        }
+
+        public function get_comment()
+		{
+			$query = $this->db->select('*')
+	        				->from('komentar')
+	        				->join('uporabnik', 'komentar.id_u = uporabnik.id')
+	        				->get();
+	        /*$query = $this->db->get('komentar');*/
+	        return $query->result_array();
         }
 
 
@@ -199,6 +253,32 @@ class News_model extends CI_Model {
 			$this->db->set($data);
 			$this->db->where("slug", $slug);
 			$this->db->update("news");
+		}
+
+
+		public function set_reservation()
+		{
+		    $this->load->helper('url');
+
+		    $arr = $_SESSION['logged_in'];
+
+
+
+			//$_POST["title"] = $this->input->post('title')
+		    $data = array(
+		    	'datum_od' => $this->input->post('reserve_date'),
+		    	'cas_rezervacije' => $this->input->post('how_long'),
+		    	'stvari' => $this->input->post('description_reservation'),
+		    	'opis' => $this->input->post('description_need'),
+		        'status' => "pending",
+		        'id_u' => $arr['id_u'],
+		        'id_o' => $this->input->post('id_space')
+		    );
+
+
+
+		    $this->db->insert('rezervacija', $data);
+
 		}
 
 }
