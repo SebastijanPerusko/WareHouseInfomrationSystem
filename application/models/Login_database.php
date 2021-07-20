@@ -61,4 +61,39 @@ class Login_database extends CI_model {
 	    }
 	}
 
+	public function get_user_reservation($num)
+		{
+
+	        $query = $this->db->select('*')
+	        				->from('rezervacija')
+	        				->join('oglas', 'oglas.id = rezervacija.id_o')
+	        				->where('rezervacija.id_u', $num)
+	        				->get();
+	        return $query->result_array();
+        }
+
+        public function get_other_reservation($num)
+		{
+
+	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
+	        $query = $this->db->select('*')
+	        				->from('oglas')
+	        				->join('rezervacija', 'oglas.id = rezervacija.id_o')
+	        				->join('uporabnik', 'uporabnik.id = oglas.id_u')
+	        				->where('oglas.id_u', $num)
+	        				->get();
+	        return $query->result_array();
+        }
+
+        public function get_user_space($num)
+		{
+
+	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
+	        $query = $this->db->select('*')
+	        				->from('oglas')
+	        				->where('oglas.id_u', $num)
+	        				->get();
+	        return $query->result_array();
+        }
+
 }

@@ -15,7 +15,7 @@
 <a href="<?php echo site_url('pages/view/about'); ?>">About</a>
 <a href="<?php echo site_url('news/index'); ?>">News</a>
 <a href="<?php echo site_url('news/create'); ?>">Create News</a>
-<a href="<?php echo site_url('user_authentication/admin'); ?>">Admin</a>
+<a href="<?php echo site_url('user_authentication/profile'); ?>">Admin</a>
 <a href="<?php echo site_url('user_authentication/signin'); ?>">Signin</a>
 <a style = "float:right;" href="<?php echo site_url('user_authentication/logout'); ?>">Logout</a>
 <h1><?php if(isset($title))echo $title; ?></h1>
