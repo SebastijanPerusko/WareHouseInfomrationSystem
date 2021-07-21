@@ -15,13 +15,32 @@
 
 	        public function index()
 	        {
-	                $data['space'] = $this->news_model->get_news();
+	                 $this->load->helper('form');
+			    	$this->load->library('form_validation');
+			    	
+			    	$this->form_validation->set_rules('type_storage', 'type_storage', 'required');
 
-	                /*$data["title"] = "News";*/
-	                $this->load->view('templates/header', $data);
-	                /*var_dump($data["news"]);*/
-	                $this->load->view('news/index', $data);
-	                $this->load->view('templates/footer');
+	                if ($this->form_validation->run() === FALSE)
+				    {
+				        $data['space'] = $this->news_model->get_news();
+
+		                /*$data["title"] = "News";*/
+		                $this->load->view('templates/header', $data);
+		                /*var_dump($data["news"]);*/
+		                $this->load->view('news/index', $data);
+		                $this->load->view('templates/footer');
+
+				    }
+				    else
+				    {
+				        $data['space'] = $this->news_model->find_group_news();
+
+		                /*var_dump($data["news_item"]);*/
+		                $this->load->view('templates/header', $data);
+		                /*var_dump($data["news"]);*/
+		                $this->load->view('news/index', $data);
+		                $this->load->view('templates/footer');
+				    }
 
 	                
 	        }

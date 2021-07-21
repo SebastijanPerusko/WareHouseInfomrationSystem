@@ -37,6 +37,19 @@
 
         <?php endforeach; ?>
 
+
+        <h2>Your lised spaces</h2>
+        <?php foreach ($user_space as $user_space): ?>
+
+        <h3><?php echo $user_space['opis_k']; ?></h3>
+        <div class="main">
+                <?php echo "Status: ".$user_space['opis_k']; ?>
+        </div>
+        <p><a href="<?php echo site_url('news/view/'.$user_space['id']); ?>">Modify</a></p>
+        <p><a href="<?php echo site_url('news/view/'.$user_space['id']); ?>">Delete</a></p>
+
+        <?php endforeach; ?>
+
     
 </div>
 <br/>

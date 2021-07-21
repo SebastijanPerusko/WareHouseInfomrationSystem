@@ -49,7 +49,10 @@ class News_model extends CI_Model {
 		{
 	        if ($slug === FALSE)
 	        {
-	                $query = $this->db->get('oglas');
+	                $query = $this->db->select('*')
+	        				->from('oglas')
+	        				->join('lastnost', 'oglas.id = lastnost.id_o')
+	        				->get();
 	                return $query->result_array();
 	        }
 
@@ -72,6 +75,34 @@ class News_model extends CI_Model {
 	        				->join('uporabnik', 'komentar.id_u = uporabnik.id')
 	        				->get();
 	        /*$query = $this->db->get('komentar');*/
+	        return $query->result_array();
+        }
+
+
+        public function find_group_news()
+		{
+			if(isset($_POST['city_name'])){
+				echo "osajdnaosdnaso";
+			}
+
+			echo "osajdnaosdnaso";
+
+
+			if(isset($_POST['city_name']) && isset($_POST['type_storage']) && isset($_POST['start_price']) && isset($_POST['end_price'])) 
+			{
+				$query = $this->db->select('*')
+	        				->from('oglas')
+	        				->join('lastnost', 'oglas.id = lastnost.id_o')
+	        				->where('oglas.mesto', $_POST['city_name'])
+	        				->where('oglas.cena >=', $_POST['start_price'])
+							->where('oglas.cena <=', $_POST['end_price'])
+	        				->get();
+			} else {
+
+			}
+
+
+			
 	        return $query->result_array();
         }
 
