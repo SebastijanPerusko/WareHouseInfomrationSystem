@@ -11,30 +11,32 @@
         <?php echo form_open('news/index'); ?>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <input class="form-control col-lg-5" name = "city_name" type="text" placeholder="Find City" aria-label="Search">
+              <input class="form-control col-lg-5" name = "city_name" type="text" 
+              value="<?php if(isset($city_post)){ echo $city_post; } else { echo "";} ?>" 
+              aria-label="Search">
             </li>
             <li class="nav-item text-center">
                 <label class="btn btn-default">
-                  <input checked type="radio" name="type_storage" value="all"/> All storage
+                  <input <?php if(isset($point_value) && $point_value == "all"){ echo "checked"; } else if(!isset($point_value)) { echo "checked";} ?> checked type="radio" name="type_storage" value="all"/> All storage
                   </label>
                   <label class="btn btn-default">
-                  <input type="radio"  name="type_storage" value="veichle"/> Veichle storage
+                  <input <?php if(isset($point_value) && $point_value == "veichle"){ echo "checked"; } ?> type="radio"  name="type_storage" value="veichle"/> Veichle storage
                   </label>
                   <label class="btn btn-default">
-                  <input type="radio"  name="type_storage" value="object"/> Object storage
+                  <input <?php if(isset($point_value) && $point_value == "object"){ echo "checked"; } ?> type="radio"  name="type_storage" value="object"/> Object storage
                 </label>
             </li>
             <li class="nav-item">
               <p>Price</p>
             </li>
             <li class="nav-item">
-              <input class="form-control col-lg-5" name = "start_price" type="text" placeholder="Search" aria-label="Search">
+              <input class="form-control col-lg-5" name = "start_price" type="text" value="<?php if(isset($price_from)){ echo $price_from; } else { echo "";} ?>" aria-label="Search">
             </li>
             <li class="nav-item align-middle">
               <p> to </p>
             </li>
             <li class="nav-item">
-              <input class="form-control col-lg-5" name = "end_price" type="text" placeholder="Search" aria-label="Search">
+              <input class="form-control col-lg-5" name = "end_price" type="text" value="<?php if(isset($price_end)){ echo $price_end; } else { echo "";} ?>" aria-label="Search">
             </li>
             <li class="nav-item">
               <input type="submit" class="w-100 btn btn-primary btn-lg" name="submit" value="Find" />
@@ -59,7 +61,7 @@
 <?php foreach ($space as $space_item): ?>
 
         <div class="col-4 text-decoration-none">
-        <a class = "space_ad" href="<?php echo site_url('news/view/'.$space_item['id']); ?>">
+        <a class = "space_ad" href="<?php echo site_url('news/view/'.$space_item['id_o']); ?>">
         <div class="border-primary card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3 text-white bg-primary border-primary">
             <h5 class="my-0 fw-normal"> <?php echo $space_item['dolzina']."x"; echo $space_item['sirina']." "; echo ucfirst(str_replace("_", " ", $space_item['opis_k']))." in ".$space_item['mesto'].", ".$space_item['drzava']; ?></h5>
@@ -83,6 +85,7 @@
         </div>
         </a>
       </div>
+      <hr class="featurette-divider">
 
 
 <?php endforeach; ?>

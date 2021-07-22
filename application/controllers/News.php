@@ -34,6 +34,10 @@
 				    else
 				    {
 				        $data['space'] = $this->news_model->find_group_news();
+				        $data['city_post'] = $this->input->post('city_name');
+				        $data['point_value'] = $this->input->post('type_storage');
+				        $data['price_from'] = $this->input->post('start_price');
+				        $data['price_end'] = $this->input->post('end_price');
 
 		                /*var_dump($data["news_item"]);*/
 		                $this->load->view('templates/header', $data);
@@ -183,8 +187,22 @@
 			    {
 				    	//var_dump($GLOBALS);
 			        $lastAdded = $this->news_model->set_news();
-			        $this->load->view('news/success');
+			        $find = 'news/create/'.strval($lastAdded);
+			        $this->load->view('templates/header', $data);
+			        $this->load->view('news/create');
+			        $this->load->view('templates/footer');
 			    }
+			}
+
+			public function set_reservation($num){
+	                $data['comment'] = $this->news_model->get_comment($num);
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/reserve_space', $data);
+	                $this->load->view('templates/footer');
 			}
 
 

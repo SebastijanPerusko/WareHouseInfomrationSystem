@@ -1,3 +1,5 @@
+
+<div class="container py-3">
 <div id="profile">
     <?php
     echo "Hello <b id='welcome'><i>" .$username. "</i> !</b>";
@@ -52,4 +54,4 @@
 
     
 </div>
-<br/>
+</div>

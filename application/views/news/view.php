@@ -1,5 +1,8 @@
 <!--<h2><?php /*echo $title;*/ ?></h2>-->
 
+<div class="container py-3">
+
+
         <h3><?php echo $space_item['opis_k']." in ".$space_item['mesto']; ?></h3>
         <div class="main">
                 <?php echo "Size: ".$space_item['dolzina']." x ".$space_item['sirina']."<br>"; ?>
@@ -9,6 +12,8 @@
                 <?php echo "Description: ".$space_item['opis']."<br>"; ?>
                 <?php echo "Description: ".$space_item['climate_controlled']."<br>"; ?>
         </div>
+
+        
 
 
 
@@ -22,13 +27,7 @@
 
 
         <?php echo validation_errors(); ?>
-        <?php echo form_open('news/comment'); ?>
-
-        <label for="comment">Post a comment</label>
-            <input type="textarea" name="comment" /><br />
-            <input type="hidden" name="id_space" value=<?php echo $space_item['id_o']; ?>>
-            <input type="submit" name="submit" value="Create news item" />
-        </form>
+        
 
         <?php echo form_open('news/vote'); ?>
         <input type="hidden" name="id_space" value=<?php echo $space_item['id_o']; ?>>
@@ -59,6 +58,18 @@
         </form>
 
 
+        <?php echo form_open('news/comment'); ?>
+
+        <label for="comment">Post a comment</label>
+            <input type="textarea" name="comment" /><br />
+            <input type="hidden" name="id_space" value=<?php echo $space_item['id_o']; ?>>
+            <input type="submit" name="submit" value="Create news item" />
+        </form>
+
+
+
+        $comment_id = 0;
+
         <?php foreach ($comment as $comment_item): ?>
 
         <h3><?php echo $comment_item['vsebina']; ?></h3>
@@ -67,12 +78,17 @@
         </div>
 
         <?php 
-                $arr = $_SESSION['logged_in']; 
-                if($comment_item['id_u'] == $arr['id_u']){
-                        echo "<p><a href=".site_url('news/edit_comment/'.$comment_item['id']).">Edit comment</a></p>";
-                        echo "<p><a onclick=".'"return confirm(&quot Are you sure you want to delete?&quot);"'." href=".site_url('news/delete_comment/'.$comment_item['id']).">Delete comment</a></p>";
+                if(isset($_SESSION['logged_in'])){
+                       $arr = $_SESSION['logged_in']; 
+                        if($comment_item['id_u'] == $arr['id_u']){
+                                echo "<p><a href=".site_url('news/edit_comment/'.$comment_item['id']).">Edit comment</a></p>";
+                                echo "<p><a onclick=".'"return confirm(&quot Are you sure you want to delete?&quot);"'." href=".site_url('news/delete_comment/'.$comment_item['id_ads']).">Delete comment</a></p>";
+                        } 
                 }
+                
         ?>
 
         <?php endforeach; ?>
+
+</div>
 

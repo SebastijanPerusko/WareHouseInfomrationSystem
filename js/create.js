@@ -46,3 +46,7 @@ function handleLocation() {
       document.getElementById("div_uncover_select").style.display = "block";
     }
 }
+
+function comment_transformation(){
+  
+}

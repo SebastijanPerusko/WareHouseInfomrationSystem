@@ -1,5 +1,7 @@
 <!--<h2><?php echo $title; ?></h2>-->
 
+
+<div class="container py-3">
 <?php echo validation_errors(); ?>
 
 <?php echo form_open('news/create_reservation'); ?>
@@ -41,3 +43,4 @@
     <input type="submit" name="submit" value="Confirm reservation" />
 
 </form>
+</div>

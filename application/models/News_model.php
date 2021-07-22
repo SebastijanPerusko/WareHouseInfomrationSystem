@@ -68,11 +68,13 @@ class News_model extends CI_Model {
         
 
 
-        public function get_comment()
+        public function get_comment($num)
 		{
 			$query = $this->db->select('*')
+							->select('komentar.id AS "id_ads"')
 	        				->from('komentar')
 	        				->join('uporabnik', 'komentar.id_u = uporabnik.id')
+	        				->where('komentar.id_o', $num)
 	        				->get();
 	        /*$query = $this->db->get('komentar');*/
 	        return $query->result_array();
@@ -81,28 +83,33 @@ class News_model extends CI_Model {
 
         public function find_group_news()
 		{
-			if(isset($_POST['city_name'])){
-				echo "osajdnaosdnaso";
-			}
-
-			echo "osajdnaosdnaso";
 
 
-			if(isset($_POST['city_name']) && isset($_POST['type_storage']) && isset($_POST['start_price']) && isset($_POST['end_price'])) 
-			{
-				$query = $this->db->select('*')
+			echo $_POST['start_price'];
+			$query = $this->db->select('*')
 	        				->from('oglas')
-	        				->join('lastnost', 'oglas.id = lastnost.id_o')
-	        				->where('oglas.mesto', $_POST['city_name'])
-	        				->where('oglas.cena >=', $_POST['start_price'])
-							->where('oglas.cena <=', $_POST['end_price'])
-	        				->get();
-			} else {
+	        				->join('lastnost', 'oglas.id = lastnost.id_o');
 
+	        if($_POST['type_storage'] == "veichle"){
+				$query = $this->db->where('oglas.lokacija', "cover")
+	        				->where('oglas.lokacija', "uncover");
+			} else if($_POST['type_storage'] == "object") {
+				$query = $this->db->where('oglas.lokacija', "indoor")
+									->where('oglas.lokacija', "none");
 			}
 
+			if(!empty($_POST['city_name'])){
+				$query = $this->db->where('oglas.mesto', $_POST['city_name']);
+			}
+			if(!empty($_POST['start_price'])){
+				$query = $this->db->where('oglas.cena >=', intval($_POST['start_price']));
+			}
+			if(!empty($_POST['end_price'])){
+				$query = $this->db->where('oglas.cena <=', intval($_POST['end_price']));
+			}
 
-			
+	        $query = $this->db->get();
+
 	        return $query->result_array();
         }
 
@@ -273,6 +280,9 @@ class News_model extends CI_Model {
 		    );
 
 		    $this->db->insert('lastnost', $data2);
+
+
+		    return $last_id;
 
 		}
 
