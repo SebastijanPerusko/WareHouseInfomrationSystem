@@ -65,6 +65,7 @@ class Login_database extends CI_model {
 		{
 
 	        $query = $this->db->select('*')
+	        				->select('rezervacija.id AS "id_res"')
 	        				->from('rezervacija')
 	        				->join('oglas', 'oglas.id = rezervacija.id_o')
 	        				->where('rezervacija.id_u', $num)
@@ -77,6 +78,7 @@ class Login_database extends CI_model {
 
 	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
 	        $query = $this->db->select('*')
+	        				->select('rezervacija.id AS "id_res"')
 	        				->from('oglas')
 	        				->join('rezervacija', 'oglas.id = rezervacija.id_o')
 	        				->join('uporabnik', 'uporabnik.id = oglas.id_u')

@@ -13,7 +13,7 @@
 
 	        }
 
-	        public function index()
+	        public function index($num_page = NULL)
 	        {
 	                 $this->load->helper('form');
 			    	$this->load->library('form_validation');
@@ -22,7 +22,14 @@
 
 	                if ($this->form_validation->run() === FALSE)
 				    {
-				        $data['space'] = $this->news_model->get_news();
+				    	if($num_page == NULL){
+				    		$data['space'] = $this->news_model->get_news(FALSE, 1);
+				    	} else {
+				    		$data['space'] = $this->news_model->get_news(FALSE, $num_page);
+				    	}
+				        $data['num_space'] = $this->news_model->get_num_space();
+
+				        echo count($data['space'])."num_space";
 
 		                /*$data["title"] = "News";*/
 		                $this->load->view('templates/header', $data);
@@ -33,11 +40,17 @@
 				    }
 				    else
 				    {
-				        $data['space'] = $this->news_model->find_group_news();
+				    	if($num_page == NULL){
+				    		$data['space'] = $this->news_model->find_group_news(1);
+				    	} else {
+				    		$data['space'] = $this->news_model->find_group_news($num_page);
+				    	}
+				        /*$data['space'] = $this->news_model->find_group_news();*/
 				        $data['city_post'] = $this->input->post('city_name');
 				        $data['point_value'] = $this->input->post('type_storage');
 				        $data['price_from'] = $this->input->post('start_price');
 				        $data['price_end'] = $this->input->post('end_price');
+				        $data['num_space'] = $this->news_model->get_num_space_form();
 
 		                /*var_dump($data["news_item"]);*/
 		                $this->load->view('templates/header', $data);
@@ -139,8 +152,8 @@
 
 	        public function view($num = NULL)
 	        {
-	                $data['space_item'] = $this->news_model->get_news($num);
-	                $data['comment'] = $this->news_model->get_comment($num);
+	                $data['space_item'] = $this->news_model->get_news($num, NULL);
+	                $data['comment'] = $this->news_model->get_comment($num, NULL);
 
 	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
@@ -194,16 +207,14 @@
 			    }
 			}
 
-			public function set_reservation($num){
-	                $data['comment'] = $this->news_model->get_comment($num);
+			/*public function set_reservation($num){
+	                $data['comment'] = $this->news_model->get_reservation($num);
 
 	                $data["opis"] = "News";
-	                /*var_dump($data["news_item"]);*/
 	                $this->load->view('templates/header', $data);
-	                /*var_dump($data["news"]);*/
-	                $this->load->view('news/reserve_space', $data);
+	                $this->load->view('news/reserve_space_modify', $data);
 	                $this->load->view('templates/footer');
-			}
+			}*/
 
 
 			public function create_reservation()
@@ -263,6 +274,26 @@
 	                $this->load->view('templates/footer');
 	        }
 
+
+	        public function delete_reservation($slug = NULL)
+	        {
+		        	if(!isset($this->session->userdata['logged_in'])){
+						$data['message_display'] = 'Signin to view this page!';
+					    $this->load->view('templates/header');
+					    $this->load->view('user_authentication/login_form', $data);
+					    $this->load->view('templates/footer');
+						return;
+					}
+
+	                $data["title"] = "News";
+	                $this->news_model->delete_reservation($slug);
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/success');
+	                $this->load->view('templates/footer');
+	        }
+
 	        public function edit($opis = NULL)
 			{
 
@@ -300,6 +331,129 @@
 			        $this->load->view('news/success');
 			    }
 			}
+
+
+			public function edit_reservation($num = NULL)
+			{
+
+				if(!isset($this->session->userdata['logged_in'])){
+					$data['message_display'] = 'Signin to view this page!';
+				    $this->load->view('templates/header');
+				    $this->load->view('user_authentication/login_form', $data);
+				    $this->load->view('templates/footer');
+				    return;
+				}
+
+				$this->load->helper('form');
+			    $this->load->library('form_validation');
+
+				if($num == NULL && ($this->form_validation->run() == FALSE)){
+					$this->form_validation->set_rules('reserve_date', 'reserve_date', 'required');
+				    $this->form_validation->set_rules('how_long', 'how_long', 'required');
+				    $this->form_validation->set_rules('description_reservation', 'description_reservation', 'required');
+				    $this->form_validation->set_rules('description_need', 'description_need', 'required');
+					$this->news_model->update_reservation();
+			        $this->load->view('news/success');
+				} else if($num == NULL){
+					echo $this->form_validation->run() == TRUE;
+					echo "ushaud";
+					$this->load->view('news/success');
+				} else {
+					$data['comment'] = $this->news_model->get_reservation($num);
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/reserve_space_modify', $data);
+	                $this->load->view('templates/footer');
+				}
+
+			}
+
+
+
+			public function accept_reservation($num = NULL)
+			{
+
+				if(!isset($this->session->userdata['logged_in'])){
+					$data['message_display'] = 'Signin to view this page!';
+				    $this->load->view('templates/header');
+				    $this->load->view('user_authentication/login_form', $data);
+				    $this->load->view('templates/footer');
+				    return;
+				}
+
+				$this->load->helper('form');
+			    $this->load->library('form_validation');
+
+			    $this->news_model->accept_reservation_model($num);
+
+			}
+
+			public function decline_reservation($num = NULL)
+			{
+
+				if(!isset($this->session->userdata['logged_in'])){
+					$data['message_display'] = 'Signin to view this page!';
+				    $this->load->view('templates/header');
+				    $this->load->view('user_authentication/login_form', $data);
+				    $this->load->view('templates/footer');
+				    return;
+				}
+
+				$this->load->helper('form');
+			    $this->load->library('form_validation');
+
+			    $this->news_model->decline_reservation_model($num);
+
+			}
+
+
+
+			public function edit_space($num = NULL)
+			{
+
+				if(!isset($this->session->userdata['logged_in'])){
+					$data['message_display'] = 'Signin to view this page!';
+				    $this->load->view('templates/header');
+				    $this->load->view('user_authentication/login_form', $data);
+				    $this->load->view('templates/footer');
+				    return;
+				}
+
+				$this->load->helper('form');
+			    $this->load->library('form_validation');
+
+				if($num == NULL && ($this->form_validation->run() == FALSE)){
+					$this->form_validation->set_rules('text', 'Text', 'required');
+				    $this->form_validation->set_rules('price', 'Price', 'required');
+				    $this->form_validation->set_rules('country', 'Country', 'required');
+				    $this->form_validation->set_rules('city', 'City', 'required');
+				    $this->form_validation->set_rules('paddress', 'Paddress', 'required');
+				    $this->form_validation->set_rules('address', 'Address', 'required');
+
+				    $lastAdded = $this->news_model->update_news();
+
+			        $find = 'news/create/'.strval($lastAdded);
+			        $this->load->view('templates/header');
+			        $this->load->view('news/create');
+			        $this->load->view('templates/footer');
+				} else if($num == NULL){
+					echo $this->form_validation->run() == TRUE;
+					echo "ushaud";
+					$this->load->view('news/success');
+				} else {
+					$data['space'] = $this->news_model->get_news($num);
+
+		            $this->load->view('templates/header', $data);
+		            $this->load->view('news/modify_space', $data);
+		            $this->load->view('templates/footer');
+				}
+
+			}
+
+
 
 
 			public function edit_comment($num = NULL)

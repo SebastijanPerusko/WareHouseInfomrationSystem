@@ -1,6 +1,6 @@
 <!--<h2><?php /*echo $title;*/ ?></h2>-->
 
-
+<?php echo $num_space; ?>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light rounded" aria-label="Eleventh navbar example">
       <div class="container-fluid">
@@ -88,7 +88,24 @@
       <hr class="featurette-divider">
 
 
+
 <?php endforeach; ?>
+
+  <div class="col-12 text-decoration-none">
+      <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <?php $times = intval($num_space / 9);
+        if($num_space % 9 >= 1) {$times++;} echo $times; $i; ?>
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <?php for($i = 0; $i < $times; $i++){ ?>
+        <li class="page-item"><a class="page-link" href="<?php echo site_url('news/index/'.($i+1)); ?>"><?php echo ($i+1); ?></a></li>
+        <?php } ?>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
+  </div>
+
+
 </div>
 
 </div>

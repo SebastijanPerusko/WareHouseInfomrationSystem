@@ -45,19 +45,67 @@ class News_model extends CI_Model {
 
         }
 
-        public function get_news($slug = FALSE)
+        public function get_num_space(){
+        	$query = $this->db->select('*')
+	        				->from('oglas')
+	        				->get();
+	        return $query->num_rows();
+        }
+
+        public function get_num_space_form(){
+        	$query = $this->db->select('*')
+	        				->from('oglas')
+	        				->join('lastnost', 'oglas.id = lastnost.id_o');
+
+	        if($_POST['type_storage'] == "veichle"){
+				$query = $this->db->where('oglas.lokacija', "cover")
+	        				->where('oglas.lokacija', "uncover");
+			} else if($_POST['type_storage'] == "object") {
+				$query = $this->db->where('oglas.lokacija', "indoor")
+									->where('oglas.lokacija', "none");
+			}
+
+			if(!empty($_POST['city_name'])){
+				$query = $this->db->where('UPPER(oglas.mesto)', strtoupper($_POST['city_name']));
+			}
+			if(!empty($_POST['start_price'])){
+				$query = $this->db->where('oglas.cena >=', intval($_POST['start_price']));
+			}
+			if(!empty($_POST['end_price'])){
+				$query = $this->db->where('oglas.cena <=', intval($_POST['end_price']));
+			}
+
+	        $query = $this->db->get();
+
+	        return $query->num_rows();
+        }
+
+        public function get_news($slug = FALSE, $num = NULL)
 		{
 	        if ($slug === FALSE)
 	        {
+	        	if($num == NULL){
 	                $query = $this->db->select('*')
 	        				->from('oglas')
 	        				->join('lastnost', 'oglas.id = lastnost.id_o')
 	        				->get();
 	                return $query->result_array();
+	            } else {
+	            	$query = $this->db->select('*')
+	        				->from('oglas')
+	        				->join('lastnost', 'oglas.id = lastnost.id_o');
+
+	        		$query = $this->db->limit(12*($num),12*($num-1));
+	        		$query = $this->db->get();
+	        		$que = $this->db->last_query();
+	                return $query->result_array();
+	            }
 	        }
 
 	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
 	        $query = $this->db->select('*')
+	        				->select('oglas.id AS "id_space"')
+	        				->select('lastnost.id AS "id_pro"')
 	        				->from('oglas')
 	        				->join('lastnost', 'oglas.id = lastnost.id_o')
 	        				->where('oglas.id', $slug)
@@ -81,11 +129,10 @@ class News_model extends CI_Model {
         }
 
 
-        public function find_group_news()
+        public function find_group_news($num = NULL)
 		{
 
 
-			echo $_POST['start_price'];
 			$query = $this->db->select('*')
 	        				->from('oglas')
 	        				->join('lastnost', 'oglas.id = lastnost.id_o');
@@ -99,7 +146,7 @@ class News_model extends CI_Model {
 			}
 
 			if(!empty($_POST['city_name'])){
-				$query = $this->db->where('oglas.mesto', $_POST['city_name']);
+				$query = $this->db->where('UPPER(oglas.mesto)', strtoupper($_POST['city_name']));
 			}
 			if(!empty($_POST['start_price'])){
 				$query = $this->db->where('oglas.cena >=', intval($_POST['start_price']));
@@ -107,6 +154,8 @@ class News_model extends CI_Model {
 			if(!empty($_POST['end_price'])){
 				$query = $this->db->where('oglas.cena <=', intval($_POST['end_price']));
 			}
+
+			$query = $this->db->limit(12*($num),12*($num-1));
 
 	        $query = $this->db->get();
 
@@ -291,12 +340,211 @@ class News_model extends CI_Model {
 			$this->db->delete("news");
 		}
 
-		public function update_news($data, $slug){
-			echo($data["title"].'\n');
-			echo($data["text"]);
-			$this->db->set($data);
-			$this->db->where("slug", $slug);
-			$this->db->update("news");
+		public function update_news(){
+
+
+			$this->load->helper('url');
+
+		    $slug = url_title($this->input->post('title'), 'dash', TRUE);
+		    $arr = $_SESSION['logged_in'];
+		    $location;
+		    $description_s;
+		    $owner_need_v;
+		    $c_c;
+		    $s_f;
+		    $s_d;
+		    $p_e;
+		    $p_s;
+		    $l_a;
+		    $p_f;
+		    $s_c;
+		    $n_s;
+
+
+
+
+		    if(isset($_POST['type_select_radio']) && $_POST['type_select_radio'] == 'yes') {
+		    	if(isset($_POST['type_select_yes'])) {
+		    		$location = $_POST['type_select_yes'];
+		    	}
+		    	if(isset($_POST['indoor_select'])) {
+		    		$description_s = $_POST['indoor_select'];
+		    	}
+		    	if(isset($_POST['cover_select'])) {
+		    		$description_s = $_POST['cover_select'];
+		    	}
+		    	if(isset($_POST['uncover_select'])) {
+		    		$description_s = $_POST['uncover_select'];
+		    	}
+			} else {
+				$location = "none";
+				if(isset($_POST['type_select_no'])) {
+		    		$description_s = $_POST['type_select_no'];
+		    	}
+			}
+
+
+			if(isset($_POST['need_owner']) && 
+   				$_POST['need_owner'] == 'yes') 
+			{
+				$owner_need_v = "yes";
+			} else {
+				$owner_need_v = "no";
+			}
+
+
+
+			//$_POST["title"] = $this->input->post('title')
+		    $data = array(
+		    	'vozilo' => $this->input->post('type_select_radio'),
+		    	'lokacija' => $location,
+		    	'opis_k' => $description_s,
+		    	'opis' => $this->input->post('text'),
+		        'cena' => $this->input->post('price'),
+		        'drzava' => $this->input->post('country'),
+		        'mesto' => $this->input->post('city'),
+		        'p_stevilka' => $this->input->post('paddress'),
+		        'naslov' => $this->input->post('address'),
+		        'dolzina' => $this->input->post('length'),
+		        'sirina' => $this->input->post('width'),
+		        'visina' => $this->input->post('height'),
+		        'lastnik_ogled' => $owner_need_v,
+		        'gostota' => $this->input->post('often_visit'),
+		        'cas' => $this->input->post('day_visit'),
+		        'id_u' => $arr['id_u']
+		    );
+
+
+
+		    $this->db->set($data);
+			$this->db->where('id', $this->input->post('id_space'));
+			$this->db->update("oglas");
+
+
+		    $last_id = $this->input->post('id_space');
+
+		    if(isset($_POST['climate_controlled']) && 
+   				$_POST['climate_controlled'] == 'yes') 
+			{
+				$c_c = 1;
+			} else {
+				$c_c = 0;
+			}
+
+			if(isset($_POST['private_space']) && 
+   				$_POST['private_space'] == 'yes') 
+			{
+				$s_f = 1;
+			} else {
+				$s_f = 0;
+			}
+
+			if(isset($_POST['smoke_free']) && 
+   				$_POST['smoke_free'] == 'yes') 
+			{
+				$s_d = 1;
+			} else {
+				$s_d = 0;
+			}
+
+			if(isset($_POST['smoke_detectors']) && 
+   				$_POST['smoke_detectors'] == 'yes') 
+			{
+				$p_e = 1;
+			} else {
+				$p_e = 0;
+			}
+
+			if(isset($_POST['private_entrance']) && 
+   				$_POST['private_entrance'] == 'yes') 
+			{
+				$p_s = 1;
+			} else {
+				$p_s = 0;
+			}
+
+			if(isset($_POST['locked_area']) && 
+   				$_POST['locked_area'] == 'yes') 
+			{
+				$l_a = 1;
+			} else {
+				$l_a = 0;
+			}
+
+			if(isset($_POST['pet_free']) && 
+   				$_POST['pet_free'] == 'yes') 
+			{
+				$p_f = 1;
+			} else {
+				$p_f = 0;
+			}
+
+			if(isset($_POST['security_camera']) && 
+   				$_POST['security_camera'] == 'yes') 
+			{
+				$s_c = 1;
+			} else {
+				$s_c = 0;
+			}
+
+			if(isset($_POST['no_stairs']) && 
+   				$_POST['no_stairs'] == 'yes') 
+			{
+				$n_s = 1;
+			} else {
+				$n_s = 0;
+			}
+
+			$data2 = array(
+		    	'climate_controlled' => $c_c,
+		    	'smoke_free' => $s_f,
+		    	'smoke_detectors' => $s_d,
+		    	'private_entrance' => $p_e,
+		        'private_space' => $p_s,
+		        'locked_area' => $l_a,
+		        'pet_free' => $p_f,
+		        'security_camera' => $s_c,
+		        'no_stairs' => $n_s,
+		        'id_o' => $last_id
+		    );
+
+		    $this->db->set($data2);
+			$this->db->where('id', $this->input->post('id_pro'));
+			$this->db->update("lastnost");
+
+
+
+
+		}
+
+		public function get_reservation($num)
+		{
+			$query = $this->db->select('*')
+	        				->from('rezervacija')
+	        				->where('rezervacija.id', $num)
+	        				->get();
+	        /*$query = $this->db->get('komentar');*/
+	        return $query->row_array();
+		}
+
+		public function update_reservation()
+		{
+			$data = array(
+		    	'datum_od' => $this->input->post('reserve_date'),
+		    	'cas_rezervacije' => $this->input->post('how_long'),
+		    	'stvari' => $this->input->post('description_reservation'),
+		    	'opis' => $this->input->post('description_need'),
+		    );
+		    $this->db->set($data);
+			$this->db->where('id', $this->input->post('id_space'));
+			$this->db->update("rezervacija");
+	        /*$query = $this->db->get('komentar');*/
+		}
+
+		public function delete_reservation($slug)
+		{
+			$this->db->where("id", $slug);
+			$this->db->delete("rezervacija");
 		}
 
 
@@ -324,5 +572,52 @@ class News_model extends CI_Model {
 		    $this->db->insert('rezervacija', $data);
 
 		}
+
+
+		public function accept_reservation_model($num)
+		{
+		    $this->load->helper('url');
+
+		    $arr = $_SESSION['logged_in'];
+
+
+
+			//$_POST["title"] = $this->input->post('title')
+		    $data = array(
+		    	'status' => "accepted"
+		    );
+
+
+
+		   	$this->db->set($data);
+			$this->db->where('id', $num);
+			$this->db->update("rezervacija");
+
+		}
+
+		public function decline_reservation_model($num)
+		{
+		    $this->load->helper('url');
+
+		    $arr = $_SESSION['logged_in'];
+
+
+
+			//$_POST["title"] = $this->input->post('title')
+		    $data = array(
+		    	'status' => "rejected"
+		    );
+
+
+
+		   	$this->db->set($data);
+			$this->db->where('id', $num);
+			$this->db->update("rezervacija");
+
+		}
+
+
+
+
 
 }
