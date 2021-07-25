@@ -5,11 +5,13 @@
 	        public function __construct()
 	        {
 	                parent::__construct();
+	                $this->load->helper(array('form', 'url'));
 	                $this->load->model('news_model');
 	                $this->load->helper('url_helper');
 	                $this->load->helper('form');
                 	$this->load->library('session');
                 	$this->load->helper('url');
+                	
 
 	        }
 
@@ -198,8 +200,34 @@
 			    }
 			    else
 			    {
-				    	//var_dump($GLOBALS);
-			        $lastAdded = $this->news_model->set_news();
+				    $config['upload_path']          = './uploads/';
+	                $config['allowed_types']        = 'gif|jpg|png';
+	                $config['max_size']             = 2000;
+	                $config['max_width']            = 4096;
+	                $config['max_height']           = 2160;
+
+	                $this->load->library('upload', $config);
+
+	                $path_img = '';
+	                if ( ! $this->upload->do_upload('userfile'))
+	                {
+	                        $error = array('error' => $this->upload->display_errors());
+
+                        	$this->load->view('upload_form', $error);
+	                }
+	                else
+	                {
+	                        $data = array('upload_data' => $this->upload->data());
+
+                        	/*$this->load->view('upload_success', $data);*/
+                        	$path_img = $data['upload_data']['full_path'];
+                        	$path_img = substr($path_img, 50);
+	                }
+
+
+
+			        $lastAdded = $this->news_model->set_news($path_img);
+
 			        $find = 'news/create/'.strval($lastAdded);
 			        $this->load->view('templates/header', $data);
 			        $this->load->view('news/create');
@@ -433,7 +461,35 @@
 				    $this->form_validation->set_rules('paddress', 'Paddress', 'required');
 				    $this->form_validation->set_rules('address', 'Address', 'required');
 
-				    $lastAdded = $this->news_model->update_news();
+
+				    $path_img = '';
+				    if(isset($_FILES['userfile'])){
+				    	echo "Enter";
+				    	$config['upload_path']          = './uploads/';
+		                $config['allowed_types']        = 'gif|jpg|png';
+		                $config['max_size']             = 2000;
+		                $config['max_width']            = 4096;
+		                $config['max_height']           = 2160;
+
+		                $this->load->library('upload', $config);
+
+		                if ( ! $this->upload->do_upload('userfile'))
+		                {
+		                        $error = array('error' => $this->upload->display_errors());
+
+	                        	$this->load->view('upload_form', $error);
+		                }
+		                else
+		                {
+		                        $data = array('upload_data' => $this->upload->data());
+
+	                        	/*$this->load->view('upload_success', $data);*/
+	                        	$path_img = $data['upload_data']['full_path'];
+	                        	$path_img = substr($path_img, 50);
+		                }
+				    }
+
+				    $lastAdded = $this->news_model->update_news($path_img);
 
 			        $find = 'news/create/'.strval($lastAdded);
 			        $this->load->view('templates/header');

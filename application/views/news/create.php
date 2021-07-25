@@ -2,7 +2,7 @@
    <main>
 
       <?php echo validation_errors(); ?>
-      <?php echo form_open('news/create'); ?>
+      <?php echo form_open_multipart('news/create'); ?>
 
       <div class="py-5 text-center">
          <h2>Checkout form</h2>
@@ -118,7 +118,7 @@
                   <input type="radio"  name="uncover_select" value="unpawed_lot"/> Unpawed lot
                   </label>
                   <label class="btn btn-default">
-                  <input type="radio"  name="uncover_select" value="street_parking"/> Parking lot
+                  <input type="radio"  name="uncover_select" value="street_parking"/> Street parking
                   </label>
                </div>
             </div>
@@ -252,6 +252,13 @@
             <input type="checkbox" name="security_camera" value="yes"/><br />
             <label for="no_stairs">No stairs</label>
             <input type="checkbox" name="no_stairs" value="yes"/><br />
+         </div>
+
+         <div id = "" class = "col-12 text-center">
+            <h4 class="mb-3">Features</h4><br>
+         </div>
+         <div id = "" class = "col-12 text-center">
+            <input type="file" name="userfile" size="2000" />
          </div>
          <input type="submit" class="w-100 btn btn-primary btn-lg" name="submit" value="List your space" />
    </div>

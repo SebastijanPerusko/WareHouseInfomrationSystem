@@ -4,7 +4,18 @@
 }
 
 .container {
-  max-width: 960px;
+  max-width: 1250px;
+  padding-right: var(--bs-gutter-x,.75rem);
+  padding-left: var(--bs-gutter-x,.75rem);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.col-4 {
+    max-width: 100%;
+padding-right: calc(var(--bs-gutter-x) * .5);
+padding-left: calc(var(--bs-gutter-x) * .5);
+margin-top: var(--bs-gutter-y);
 }
 
 #div_type_no_select, 

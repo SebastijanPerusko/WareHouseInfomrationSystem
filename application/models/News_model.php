@@ -138,11 +138,9 @@ class News_model extends CI_Model {
 	        				->join('lastnost', 'oglas.id = lastnost.id_o');
 
 	        if($_POST['type_storage'] == "veichle"){
-				$query = $this->db->where('oglas.lokacija', "cover")
-	        				->where('oglas.lokacija', "uncover");
+				$query = $this->db->where("oglas.lokacija = 'cover' OR oglas.lokacija = 'uncover'");
 			} else if($_POST['type_storage'] == "object") {
-				$query = $this->db->where('oglas.lokacija', "indoor")
-									->where('oglas.lokacija', "none");
+				$query = $this->db->where("oglas.lokacija = 'indoor' OR oglas.lokacija = 'cover'");
 			}
 
 			if(!empty($_POST['city_name'])){
@@ -163,7 +161,7 @@ class News_model extends CI_Model {
         }
 
 
-        public function set_news()
+        public function set_news($path_img)
 		{
 		    $this->load->helper('url');
 
@@ -217,7 +215,8 @@ class News_model extends CI_Model {
 
 
 			//$_POST["title"] = $this->input->post('title')
-		    $data = array(
+			if($path_img == ''){
+				$data = array(
 		    	'vozilo' => $this->input->post('type_select_radio'),
 		    	'lokacija' => $location,
 		    	'opis_k' => $description_s,
@@ -233,8 +232,31 @@ class News_model extends CI_Model {
 		        'lastnik_ogled' => $owner_need_v,
 		        'gostota' => $this->input->post('often_visit'),
 		        'cas' => $this->input->post('day_visit'),
+		        'pot_slika' => '/uploads/no_img.png',
 		        'id_u' => $arr['id_u']
 		    );
+			} else {
+				$data = array(
+		    	'vozilo' => $this->input->post('type_select_radio'),
+		    	'lokacija' => $location,
+		    	'opis_k' => $description_s,
+		    	'opis' => $this->input->post('text'),
+		        'cena' => $this->input->post('price'),
+		        'drzava' => $this->input->post('country'),
+		        'mesto' => $this->input->post('city'),
+		        'p_stevilka' => $this->input->post('paddress'),
+		        'naslov' => $this->input->post('address'),
+		        'dolzina' => $this->input->post('length'),
+		        'sirina' => $this->input->post('width'),
+		        'visina' => $this->input->post('height'),
+		        'lastnik_ogled' => $owner_need_v,
+		        'gostota' => $this->input->post('often_visit'),
+		        'cas' => $this->input->post('day_visit'),
+		        'pot_slika' => $path_img,
+		        'id_u' => $arr['id_u']
+		    );
+			}
+		    
 
 
 
@@ -340,10 +362,11 @@ class News_model extends CI_Model {
 			$this->db->delete("news");
 		}
 
-		public function update_news(){
+		public function update_news($path_img){
 
 
 			$this->load->helper('url');
+			echo $path_img."ashdoashodh";
 
 		    $slug = url_title($this->input->post('title'), 'dash', TRUE);
 		    $arr = $_SESSION['logged_in'];
@@ -395,7 +418,9 @@ class News_model extends CI_Model {
 
 
 			//$_POST["title"] = $this->input->post('title')
-		    $data = array(
+
+			if($path_img == ''){
+				$data = array(
 		    	'vozilo' => $this->input->post('type_select_radio'),
 		    	'lokacija' => $location,
 		    	'opis_k' => $description_s,
@@ -413,6 +438,28 @@ class News_model extends CI_Model {
 		        'cas' => $this->input->post('day_visit'),
 		        'id_u' => $arr['id_u']
 		    );
+			} else {
+				$data = array(
+		    	'vozilo' => $this->input->post('type_select_radio'),
+		    	'lokacija' => $location,
+		    	'opis_k' => $description_s,
+		    	'opis' => $this->input->post('text'),
+		        'cena' => $this->input->post('price'),
+		        'drzava' => $this->input->post('country'),
+		        'mesto' => $this->input->post('city'),
+		        'p_stevilka' => $this->input->post('paddress'),
+		        'naslov' => $this->input->post('address'),
+		        'dolzina' => $this->input->post('length'),
+		        'sirina' => $this->input->post('width'),
+		        'visina' => $this->input->post('height'),
+		        'lastnik_ogled' => $owner_need_v,
+		        'gostota' => $this->input->post('often_visit'),
+		        'cas' => $this->input->post('day_visit'),
+		        'pot_slika' => $path_img,
+		        'id_u' => $arr['id_u']
+		        );
+			}
+		    
 
 
 

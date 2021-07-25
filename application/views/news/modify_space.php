@@ -2,7 +2,7 @@
    <main>
 
       <?php echo validation_errors(); ?>
-      <?php echo form_open('news/edit_space'); ?>
+      <?php echo form_open_multipart('news/edit_space'); ?>
 
       <div class="py-5 text-center">
          <h2>Checkout form</h2>
@@ -255,6 +255,14 @@
          </div>
          <input type="hidden" name="id_space" value="<?php echo $space['id_space']; ?>">
          <input type="hidden" name="id_pro" value="<?php echo $space['id_pro']; ?>">
+
+         <div id = "" class = "col-12 text-center">
+            <h4 class="mb-3">Features</h4><br>
+         </div>
+         <div id = "" class = "col-12 text-center">
+            <input type="file" name="userfile" size="2000" />
+         </div>
+         
          <input type="submit" class="w-100 btn btn-primary btn-lg" name="submit" value="List your space" />
    </div>
    </main>
