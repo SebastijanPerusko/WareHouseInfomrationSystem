@@ -95,7 +95,7 @@
       <nav aria-label="Page navigation example">
       <ul class="pagination">
         <?php $times = intval($num_space / 9);
-        if($num_space % 9 >= 1) {$times++;} echo $times; $i; ?>
+        if($num_space % 9 >= 1) {$times++;} ?>
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
         <?php for($i = 0; $i < $times; $i++){ ?>
         <li class="page-item"><a class="page-link" href="<?php echo site_url('news/index/'.($i+1)); ?>"><?php echo ($i+1); ?></a></li>
