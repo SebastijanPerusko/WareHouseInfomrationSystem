@@ -11,6 +11,38 @@
   margin-left: auto;
 }
 
+.container_image_index {
+  text-align: center;
+  position: relative;
+}
+
+.text_index_space {
+    color: #900C3F;
+}
+
+.comment_button {
+    color: white;
+}
+
+.bottom-left_index {
+  position: absolute;
+  bottom: 5px;
+  /*color: #ADEFD1FF;*/
+  color: #900C3F;
+  background-color: white;
+  left: 15px;
+}
+
+.bottom-right_index {
+  top: 5px;
+  right: 15px;
+  /*color: #ADEFD1FF;*/
+  color: #900C3F;
+  background-color: white;
+  position: absolute;
+}
+
+
 .col-4 {
     max-width: 100%;
 padding-right: calc(var(--bs-gutter-x) * .5);

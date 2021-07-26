@@ -39,7 +39,7 @@
             <input class="form-control col-lg-5" name = "end_price" type="text" value="<?php if(isset($price_end)){ echo $price_end; } else { echo "";} ?>" aria-label="Search">
           </li>
           <li class="nav-item">
-            <input type="submit" class="w-100 btn btn-primary btn-lg" name="submit" value="Find" />
+            <input id = "form_search_a" type="submit" class="w-100 btn btn-primary btn-lg" name="submit" value="Find" />
           </li>
         </ul>
 
@@ -63,10 +63,14 @@
         <div class="col-4">
           <a class = "space_ad" href="<?php echo site_url('news/view/'.$space_item['id_o']); ?>">
           <div class="card shadow-sm">
-            <img class="rounded-lg mx-auto d-block" src="<?php echo base_url($space_item['pot_slika']);?>" width="100%" height="225" alt="...">
+            <div class="container_image_index">
+              <img class="rounded-lg mx-auto d-block" src="<?php echo base_url($space_item['pot_slika']);?>" width="100%" height="225" alt="...">
+              <div class="bottom-left_index"><h3 class=""><?php echo $space_item['sirina']."X".$space_item['dolzina']; ?></h3></div>
+              <div class="bottom-right_index"><h3 class=""><?php echo $space_item['cena']."/month"; ?></h3></div>
+            </div>
 
             <div class="card-body">
-              <p class="card-text"><?php echo $space_item['dolzina']."x"; echo $space_item['sirina']." "; echo ucfirst(str_replace("_", " ", $space_item['opis_k']))." in ".$space_item['mesto'].", ".$space_item['drzava']; ?></p>
+              <p class="card-text text_index_space"><?php echo $space_item['dolzina']."x"; echo $space_item['sirina']." "; echo ucfirst(str_replace("_", " ", $space_item['opis_k']))." in ".$space_item['mesto'].", ".$space_item['drzava']; ?></p>
               
             </div>
           </div>
@@ -88,7 +92,7 @@
         if($num_space % 9 >= 1) {$times++;} ?>
         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
         <?php for($i = 0; $i < $times; $i++){ ?>
-        <li class="page-item"><a class="page-link" href="<?php echo site_url('news/index/'.($i+1)); ?>"><?php echo ($i+1); ?></a></li>
+        <li class="page-item"><a class="page-link" onclick="submit_search()" href="<?php echo site_url('news/index/'.($i+1)); ?>"><?php echo ($i+1); ?></a></li>
         <?php } ?>
         <li class="page-item"><a class="page-link" href="#">Next</a></li>
       </ul>

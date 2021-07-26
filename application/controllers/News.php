@@ -511,7 +511,6 @@
 
 
 
-
 			public function edit_comment($num = NULL)
 			{
 

@@ -47,6 +47,13 @@ function handleLocation() {
     }
 }
 
-function comment_transformation(){
-  
+function comment_edit(num){
+  var content = document.getElementById("comment_title"+num).textContent;
+  document.getElementById("comment_div"+num).innerHTML = 
+  '<?php echo form_open("news/edit_comment"); ?><input type="textarea" name="comment" value="'+content+'" /><br /><input type="submit" name="submit" value="Modify comment" /></form>'; 
 }
+
+function submit_search(){
+  document.getElementById('form_search_a').submit();
+}
+
