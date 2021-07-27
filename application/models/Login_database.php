@@ -68,6 +68,7 @@ class Login_database extends CI_model {
 	        				->select('rezervacija.id AS "id_res"')
 	        				->from('rezervacija')
 	        				->join('oglas', 'oglas.id = rezervacija.id_o')
+	        				->join('uporabnik', 'uporabnik.id = oglas.id_u')
 	        				->where('rezervacija.id_u', $num)
 	        				->get();
 	        return $query->result_array();

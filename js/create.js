@@ -49,8 +49,11 @@ function handleLocation() {
 
 function comment_edit(num){
   var content = document.getElementById("comment_title"+num).textContent;
-  document.getElementById("comment_div"+num).innerHTML = 
-  '<?php echo form_open("news/edit_comment"); ?><input type="textarea" name="comment" value="'+content+'" /><br /><input type="submit" name="submit" value="Modify comment" /></form>'; 
+  var php_code_comment = '<?php echo form_open("news/edit_comment"); ?>';
+  /*document.getElementById("comment_div"+num).innerHTML = 
+  '<?php echo form_open("news/edit_comment"); ?><input type="hidden" name="id_comment" value="'+num+'"><input type="textarea" name="comment" value="'+content+'" /><br /><input type="submit" name="submit" value="Modify comment" /></form>';*/
+  document.getElementById("comment_div"+num).innerHTML =
+  '<input type="hidden" name="id_comment" value="'+num+'"><input type="textarea" name="comment" value="'+content+'" /><br /><input type="submit" name="submit" value="Modify comment" />';  
 }
 
 function submit_search(){

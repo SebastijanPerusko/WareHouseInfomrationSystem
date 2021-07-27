@@ -358,8 +358,8 @@ class News_model extends CI_Model {
 		}
 
 		public function delete_news($slug){
-			$this->db->where("slug", $slug);
-			$this->db->delete("news");
+			$this->db->where("id", $slug);
+			$this->db->delete("oglas");
 		}
 
 		public function update_news($path_img){
@@ -662,6 +662,71 @@ class News_model extends CI_Model {
 			$this->db->update("rezervacija");
 
 		}
+
+		public function update_comment()
+		{
+			$data = array(
+		    	'vsebina' => $this->input->post('comment')
+		    );
+		    $this->db->set($data);
+			$this->db->where('id', $this->input->post('id_comment'));
+			$this->db->update("komentar");
+	        /*$query = $this->db->get('komentar');*/
+		}
+
+
+		public function delete_comment($slug){
+			$this->db->where("id", $slug);
+			$this->db->delete("komentar");
+		}
+
+		public function delete_comment_num($slug){
+			$query = $this->db->select('id_o')
+	        				->from('komentar')
+	        				->where('komentar.id', $slug)
+	        				->get();
+	        return $query->row()->id_o;
+		}
+
+
+		public function get_user_reservation($num)
+		{
+
+	        $query = $this->db->select('*')
+	        				->select('rezervacija.id AS "id_res"')
+	        				->from('rezervacija')
+	        				->join('oglas', 'oglas.id = rezervacija.id_o')
+	        				->join('uporabnik', 'uporabnik.id = oglas.id_u')
+	        				->where('rezervacija.id_u', $num)
+	        				->get();
+	        return $query->result_array();
+        }
+
+        public function get_other_reservation($num)
+		{
+
+	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
+	        $query = $this->db->select('*')
+	        				->select('rezervacija.id AS "id_res"')
+	        				->from('oglas')
+	        				->join('rezervacija', 'oglas.id = rezervacija.id_o')
+	        				->join('uporabnik', 'uporabnik.id = oglas.id_u')
+	        				->where('oglas.id_u', $num)
+	        				->get();
+	        return $query->result_array();
+        }
+
+        public function get_user_space($num)
+		{
+
+	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
+	        $query = $this->db->select('*')
+	        				->from('oglas')
+	        				->where('oglas.id_u', $num)
+	        				->get();
+	        return $query->result_array();
+        }
+
 
 
 

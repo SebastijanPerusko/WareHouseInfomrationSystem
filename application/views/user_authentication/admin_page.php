@@ -2,7 +2,7 @@
 <div class="container py-3">
 <div id="profile">
     <?php
-    echo "Hello <b id='welcome'><i>" .$username. "</i> !</b>";
+    /*echo "Hello <b id='welcome'><i>" .$username. "</i> !</b>";
     echo "<br/>";
     echo "<br/>";
     echo "Welcome to Admin Page";
@@ -11,46 +11,103 @@
     echo "Your Username is " .  $username;
     echo "<br/>";
     echo "Your Email is " . $email;
-    echo "<br/>";
-
-    echo "<h2>Your reservation</h2>";
+    echo "<br/>";*/
     ?>
+        <?php
+                if (isset($warning)) {
+                    echo "<h2 class='text-justify font-weight-bold text-warning'>";
+                    echo $warning;
+                    echo "</h2>";
+                } 
+        ?>
+        <h2 class='text-justify font-weight-bold'>Your reservation</h2>
+        <hr class="featurette-divider">
+
         <?php foreach ($user_reservation as $user_reservation_item): ?>
 
-        <h3><?php echo $user_reservation_item['opis_k']." in ".$user_reservation_item['mesto']; ?></h3>
-        <div class="main">
-                <?php echo "Status: ".$user_reservation_item['status']; ?>
-        </div>
-        <p><a href="<?php echo site_url('news/edit_reservation/'.$user_reservation_item['id_res']); ?>">Modify reservation</a></p>
-        <p><a href="<?php echo site_url('news/delete_reservation/'.$user_reservation_item['id_res']); ?>">Delete reservation</a></p>
+
+                <?php 
+                        $status_color;
+                        $message = '';
+                        if($user_reservation_item['status'] == 'pending'){
+                                $status_color = "border border-primary";
+                        } else if($user_reservation_item['status'] == 'accepted'){
+                                $status_color = "border border-success";
+                                $message = "Your reservation has been accepted, you can contact the owner at the following tel. number ".$user_reservation_item['tel']." or at the following email address".$user_reservation_item['email'];
+                        } else {
+                                $status_color = "border border-danger";
+                        }
+                ?>
+
+                <main class="container ">
+                  <div class="<?php echo " ".$status_color." " ?> p-5 rounded">
+                    <h3><?php echo $user_reservation_item['opis_k']." in ".$user_reservation_item['mesto']; ?></h3>
+                    <p class="lead"><span class="text-success"><?php echo $message; ?></span></p>
+                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a href="<?php echo site_url('news/edit_reservation/'.$user_reservation_item['id_res']); ?>">Modify reservation</a></p>
+                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a href="<?php echo site_url('news/delete_reservation/'.$user_reservation_item['id_res']); ?>">Delete reservation</a></p>
+                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a href="<?php echo site_url('news/view/'.$user_reservation_item['id_o']); ?>">See this space</a></p>
+                  </div>
+                </main><br>
 
         <?php endforeach; ?>
 
-        <h2>User that reserved your spaces</h2>
+        <h2 class='text-justify font-weight-bold'>User that reserved your spaces</h2>
+        <hr class="featurette-divider">
         <?php foreach ($other_reservation as $other_reservation_item): ?>
 
-        <h3><?php echo $other_reservation_item['ime']." reserved ".$other_reservation_item['opis_k']." in ".$other_reservation_item['mesto']." ".$other_reservation_item['naslov']; ?></h3>
-        <div class="main">
-                <?php echo "Status: ".$other_reservation_item['status']; ?>
-        </div>
-        <p><a href="<?php echo site_url('news/accept_reservation/'.$other_reservation_item['id_res']); ?>">Accept reservation</a></p>
-        <p><a href="<?php echo site_url('news/decline_reservation/'.$other_reservation_item['id_res']); ?>">Decline reservation</a></p>
+                <?php 
+                        $status_color;
+                        if($other_reservation_item['status'] == 'pending'){
+                                $status_color = "border border-primary";
+                        } else if($other_reservation_item['status'] == 'accepted'){
+                                $status_color = "border border-success";
+                        } else {
+                                $status_color = "border border-danger";
+                        }
+                ?>
+
+                <main class="container ">
+                  <div class="<?php echo " ".$status_color." " ?> bg-light p-5 rounded shadow-sm">
+                    <h3 class="font-weight-bold"><?php echo $other_reservation_item['ime']." reserved the ".$other_reservation_item['opis_k']." in ".$other_reservation_item['mesto'].", ".$other_reservation_item['naslov']; ?></h3>
+                    <p class="lead">Items that he want to store: <span class="font-weight-bold"><?php echo $other_reservation_item['stvari']; ?></span></p>
+                    <p class="lead">How long does he want to book this space: <span class="font-weight-bold"><?php echo $other_reservation_item['cas_rezervacije']; ?></span></p>
+                    <p class="lead">When will like to move in: <span class="font-weight-bold"><?php echo $other_reservation_item['datum_od']; ?></span></p>
+                    <p class="lead">Other information: <span class="font-weight-bold"><?php echo $other_reservation_item['opis']; ?></span></p>
+                    <p class="lead">Status: <span class="font-weight-bold"><?php echo $other_reservation_item['status']; ?></span></p>
+                    <p class="lead">Contact the user: <span class="font-weight-bold"><?php echo "tel. number: ".$other_reservation_item['tel']. " | e-mail address: ".$other_reservation_item['email']; ?></span></p>
+                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a href="<?php echo site_url('news/accept_reservation/'.$other_reservation_item['id_res']); ?>">Accept reservation</a></p>
+                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a  href="<?php echo site_url('news/decline_reservation/'.$other_reservation_item['id_res']); ?>">Decline reservation</a></p>
+                  </div>
+                </main><br>
 
         <?php endforeach; ?>
 
 
-        <h2>Your lised spaces</h2>
+        
+        <h2 class='text-justify font-weight-bold'>Your lised spaces</h2>
+        <hr class="featurette-divider">
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         <?php foreach ($user_space as $user_space): ?>
 
-        <h3><?php echo $user_space['opis_k']; ?></h3>
-        <div class="main">
-                <?php echo "Status: ".$user_space['opis_k']; ?>
-        </div>
-        <p><a href="<?php echo site_url('news/edit_space/'.$user_space['id']); ?>">Modify</a></p>
-        <p><a href="<?php echo site_url('news/view/'.$user_space['id']); ?>">Delete</a></p>
+
+                <div class="col-3">
+                <div class="card mb-4 rounded-3 shadow-sm">
+                  <div class="card-header py-3">
+                    <h5 class="my-0 fw-normal"><?php echo $user_space['opis_k']." in ".$user_space['mesto']; ?></h5>
+                  </div>
+                  <div class="card-body">
+
+                     <p class = 'w-100 btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('news/edit_space/'.$user_space['id']); ?>">Modify</a></p>
+                    <p class = 'w-100 btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('news/delete/'.$user_space['id']); ?>">Delete</a></p>
+                    <p class = 'w-100 btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('news/view/'.$user_space['id']); ?>">See this space</a></p>
+                  </div>
+                </div>
+              </div>
 
         <?php endforeach; ?>
+        </div>
 
     
 </div>
 </div>
+

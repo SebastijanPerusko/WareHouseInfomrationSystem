@@ -112,7 +112,15 @@
 			    else
 			    {
 			        $lastAdded = $this->news_model->set_comment();
-			        $this->load->view('news/success');
+			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
+	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/view', $data);
+	                $this->load->view('templates/footer');
 			    }
 
 
@@ -229,9 +237,16 @@
 			        $lastAdded = $this->news_model->set_news($path_img);
 
 			        $find = 'news/create/'.strval($lastAdded);
-			        $this->load->view('templates/header', $data);
-			        $this->load->view('news/create');
-			        $this->load->view('templates/footer');
+			        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
+	                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
+	                $data['warning'] = "Your ad is now public, if you want to change the information presented or delete this ad you can do it via the profile page.";
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/view', $data);
+	                $this->load->view('templates/footer');
 			    }
 			}
 
@@ -293,13 +308,24 @@
 						return;
 					}
 
-	                $data["title"] = "News";
 	                $this->news_model->delete_news($slug);
 	                /*var_dump($data["news_item"]);*/
-	                $this->load->view('templates/header', $data);
-	                /*var_dump($data["news"]);*/
-	                $this->load->view('news/success');
-	                $this->load->view('templates/footer');
+	               	$data['username'] = $this->session->userdata['logged_in']['username'];
+			        $data['email'] = $this->session->userdata['logged_in']['email'];
+			        $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
+			        $data['warning'] = "Your ad is now deleted.";
+
+
+			        /*reservation of the user*/
+			        $data['user_reservation'] = $this->news_model->get_user_reservation($data['id_u']);
+			        /*reservation of the other users for the space of this user*/
+			        $data['other_reservation'] = $this->news_model->get_other_reservation($data['id_u']);
+			        /*published spaces of the user*/
+			        $data['user_space'] = $this->news_model->get_user_space($data['id_u']);
+
+			        $this->load->view('templates/header');
+			        $this->load->view('user_authentication/admin_page', $data);
+			        $this->load->view('templates/footer');
 	        }
 
 
@@ -319,6 +345,31 @@
 	                $this->load->view('templates/header', $data);
 	                /*var_dump($data["news"]);*/
 	                $this->load->view('news/success');
+	                $this->load->view('templates/footer');
+	        }
+
+	        public function delete_comment($slug = NULL)
+	        {
+		        	if(!isset($this->session->userdata['logged_in'])){
+						$data['message_display'] = 'Signin to view this page!';
+					    $this->load->view('templates/header');
+					    $this->load->view('user_authentication/login_form', $data);
+					    $this->load->view('templates/footer');
+						return;
+					}
+
+					$num_comment = $this->news_model->delete_comment_num($slug);
+	                $this->news_model->delete_comment($slug);
+	                /*var_dump($data["news_item"]);*/
+	                $data['space_item'] = $this->news_model->get_news($num_comment, NULL);
+	                $data['comment'] = $this->news_model->get_comment($num_comment, NULL);
+	                $data['warning'] = "Your comment has been deleted.";
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/view', $data);
 	                $this->load->view('templates/footer');
 	        }
 
@@ -381,6 +432,7 @@
 				    $this->form_validation->set_rules('description_reservation', 'description_reservation', 'required');
 				    $this->form_validation->set_rules('description_need', 'description_need', 'required');
 					$this->news_model->update_reservation();
+
 			        $this->load->view('news/success');
 				} else if($num == NULL){
 					echo $this->form_validation->run() == TRUE;
@@ -492,9 +544,16 @@
 				    $lastAdded = $this->news_model->update_news($path_img);
 
 			        $find = 'news/create/'.strval($lastAdded);
-			        $this->load->view('templates/header');
-			        $this->load->view('news/create');
-			        $this->load->view('templates/footer');
+
+			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
+	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/view', $data);
+	                $this->load->view('templates/footer');
 				} else if($num == NULL){
 					echo $this->form_validation->run() == TRUE;
 					echo "ushaud";
@@ -514,7 +573,6 @@
 			public function edit_comment($num = NULL)
 			{
 
-
 				if(!isset($this->session->userdata['logged_in'])){
 					$data['message_display'] = 'Signin to view this page!';
 				    $this->load->view('templates/header');
@@ -526,12 +584,9 @@
 			    $this->load->helper('form');
 			    $this->load->library('form_validation');
 
-			    $data['news_item'] = $this->news_model->get_news($opis);
 
-			    $data['opis'] = 'Update a news item';
-
-			    $this->form_validation->set_rules('title', 'Title', 'required');
-			    $this->form_validation->set_rules('text', 'Text', 'required');
+				$this->form_validation->set_rules('id_comment', 'id_comment', 'required');
+			    $this->form_validation->set_rules('comment', 'comment', 'required');
 
 			    if ($this->form_validation->run() === FALSE)
 			    {
@@ -542,11 +597,18 @@
 			    }
 			    else
 			    {
-				    //var_dump($GLOBALS);
-				    $d["tip"] = $this->input->post('tip');
-				    $d["opis"] = $this->input->post('opis');
-			        $this->news_model->update_news($d, $opis);
-			        $this->load->view('news/success');
+			        $this->news_model->update_comment();
+
+			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_ad_c'), NULL);
+	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_ad_c'), NULL);
+	                $data['warning'] = "Your comment has been edited.";
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/view', $data);
+	                $this->load->view('templates/footer');
 			    }
 			}
 

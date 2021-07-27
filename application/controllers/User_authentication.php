@@ -149,10 +149,25 @@ public function signin() {
                 'id_u' => $result[0]->id,
             );
             // Add user data in session
-            $data = array('error_message' => 'Signin OK');
+            /*$data = array('error_message' => 'Signin OK');*/
             $this->session->set_userdata('logged_in', $session_data);
-            $this->load->view('templates/header',$data);
+            /*$this->load->view('templates/header',$data);
             $this->load->view('user_authentication/login_form',$data);
+            $this->load->view('templates/footer');*/
+            $data['username'] = $this->session->userdata['logged_in']['username'];
+            $data['email'] = $this->session->userdata['logged_in']['email'];
+            $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
+
+
+            /*reservation of the user*/
+            $data['user_reservation'] = $this->login_database->get_user_reservation($data['id_u']);
+            /*reservation of the other users for the space of this user*/
+            $data['other_reservation'] = $this->login_database->get_other_reservation($data['id_u']);
+            /*published spaces of the user*/
+            $data['user_space'] = $this->login_database->get_user_space($data['id_u']);
+
+            $this->load->view('templates/header');
+            $this->load->view('user_authentication/admin_page', $data);
             $this->load->view('templates/footer');
         }
     } else {

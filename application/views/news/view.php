@@ -1,5 +1,6 @@
 <!--<h2><?php /*echo $title;*/ ?></h2>-->
 
+
 <div class="container py-3">
         <div class="container marketing">
                 <?php $time_access;
@@ -16,6 +17,13 @@
                 }
 
                 ?>
+
+                <?php
+                if (isset($warning)) {
+                    echo "<h2 class='text-justify font-weight-bold text-warning'>";
+                    echo $warning;
+                    echo "</h2>";
+                } ?>
 
                 <div class="row featurette">
                       <div class="col-md-3 order-md-2">
@@ -183,19 +191,22 @@
 <?php echo form_open('news/comment'); ?>
 
 <label for="comment">Post a comment</label>
-<input type="textarea" name="comment" /><br />
+<input class="form-control" type="textarea" name="comment" rows="4" /><br />
 <input type="hidden" name="id_space" value=<?php echo $space_item['id_o']; ?>>
-<input type="submit" name="submit" value="Create news item" />
+<input class = 'comment_button d-inline btn btn-primary text-decoration-none' type="submit" name="submit" value="Publish comment" />
 </form>
 
 <div class="row">
 <?php foreach ($comment as $comment_item): ?>
 
         <div class="col-lg-4">
-                <div id = "<?php echo "comment_div".$comment_item['id_ads']; ?>">
-                <h3 id="<?php echo "comment_title".$comment_item['id_ads']; ?>"><?php echo $comment_item['vsebina']; ?></h3>
-                </div>
-                <p id="<?php echo "comment_text".$comment_item['id_ads']; ?>"><?php echo $comment_item['username'].", ".$comment_item['datumura']; ?></p>
+                <?php echo form_open("news/edit_comment"); ?>
+                        <input type="hidden" name="id_ad_c" value="<?php echo $comment_item['id_o']; ?>">
+                        <div id = "<?php echo "comment_div".$comment_item['id_ads']; ?>">
+                        <h3 id="<?php echo "comment_title".$comment_item['id_ads']; ?>"><?php echo $comment_item['vsebina']; ?></h3>
+                        </div>
+                        <p id="<?php echo "comment_text".$comment_item['id_ads']; ?>"><?php echo $comment_item['username'].", ".$comment_item['datumura']; ?></p>
+                </form>
                 
         
 
