@@ -166,23 +166,32 @@
                 <div id = "div_vote_space">
                         <div id="vote_space" class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-default">
-                                        <input id = "location_select_radio_i" type="radio" name="vote_space" value="1"/> 1
+                                        <input <?php if($vote_ad['vrednost'] == "1"){ echo "checked"; } ?> id = "location_select_radio_i" type="radio" name="vote_space" value="1"/> 1
                                 </label>
                                 <label class="btn btn-default">
-                                        <input id = "location_select_radio_c" type="radio"  name="vote_space" value="2"/> 2
+                                        <input <?php if($vote_ad['vrednost'] == "2"){ echo "checked"; } ?> id = "location_select_radio_c" type="radio"  name="vote_space" value="2"/> 2
                                 </label>
                                 <label class="btn btn-default">
-                                        <input id = "location_select_radio_u" type="radio"  name="vote_space" value="3"/> 3
+                                        <input <?php if($vote_ad['vrednost'] == "3"){ echo "checked"; } ?> id = "location_select_radio_u" type="radio"  name="vote_space" value="3"/> 3
                                 </label>
                                 <label class="btn btn-default">
-                                        <input id = "location_select_radio_i" type="radio" name="vote_space" value="4"/> 4
+                                        <input <?php if($vote_ad['vrednost'] == "4"){ echo "checked"; } ?> id = "location_select_radio_i" type="radio" name="vote_space" value="4"/> 4
                                 </label>
                                 <label class="btn btn-default">
-                                        <input id = "location_select_radio_c" type="radio"  name="vote_space" value="5"/> 5
+                                        <input <?php if($vote_ad['vrednost'] == "5"){ echo "checked"; } ?> id = "location_select_radio_c" type="radio"  name="vote_space" value="5"/> 5
                                 </label>
                         </div><input class="btn btn-primary" type="submit" name="submit" value="Vote" />
                 </div><br>
         </form>
+        <?php
+        if(isset($_SESSION['logged_in'])){
+               $arr = $_SESSION['logged_in']; 
+               if($vote_ad['id_u'] == $arr['id_u']){
+                        echo "<p class = 'comment_button d-inline btn btn-lg btn-outline-primary text-decoration-none'><a onclick=".'"return confirm(&quot Are you sure you want to delete?&quot);"'." href=".site_url('news/delete_vote/'.$vote_ad['id']).">Delete vote</a></p>";
+                }
+        } 
+
+        ?>
 
         
 <hr class="featurette-divider">
@@ -214,8 +223,8 @@
         if(isset($_SESSION['logged_in'])){
                $arr = $_SESSION['logged_in']; 
                if($comment_item['id_u'] == $arr['id_u']){
-                echo "<button onclick='comment_edit(".$comment_item['id_ads'].")' class = 'comment_button d-inline btn btn-secondary text-decoration-none'>Edit comment</button>";
-                echo "<p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a onclick=".'"return confirm(&quot Are you sure you want to delete?&quot);"'." href=".site_url('news/delete_comment/'.$comment_item['id_ads']).">Delete comment</a></p>";
+                echo "<button onclick='comment_edit(".$comment_item['id_ads'].")' class = 'comment_button d-inline btn btn-lg btn-outline-primary text-decoration-none'>Edit comment</button>";
+                echo "<p class = 'comment_button d-inline btn btn-lg btn-outline-primary text-decoration-none'><a onclick=".'"return confirm(&quot Are you sure you want to delete?&quot);"'." href=".site_url('news/delete_comment/'.$comment_item['id_ads']).">Delete comment</a></p>";
         } 
 }
 ?>

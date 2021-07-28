@@ -20,7 +20,7 @@
                     echo "</h2>";
                 } 
         ?>
-        <h2 class='text-justify font-weight-bold'>Your reservation</h2>
+        <h2 class='text-justify font-weight-bold'>Your reservations</h2>
         <hr class="featurette-divider">
 
         <?php foreach ($user_reservation as $user_reservation_item): ?>
@@ -41,11 +41,23 @@
 
                 <main class="container ">
                   <div class="<?php echo " ".$status_color." " ?> p-5 rounded">
-                    <h3><?php echo $user_reservation_item['opis_k']." in ".$user_reservation_item['mesto']; ?></h3>
+                    <h3><?php echo $user_reservation_item['opis_k']." in ".$user_reservation_item['mesto']." for ".$user_reservation_item['datum_od']; ?></h3>
+                     <p class="lead"><span class="text-success"><?php echo "<span class='text-primary'>Status: ".$user_reservation_item['status']."</span>"; ?></span></p>
                     <p class="lead"><span class="text-success"><?php echo $message; ?></span></p>
-                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a href="<?php echo site_url('news/edit_reservation/'.$user_reservation_item['id_res']); ?>">Modify reservation</a></p>
-                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a href="<?php echo site_url('news/delete_reservation/'.$user_reservation_item['id_res']); ?>">Delete reservation</a></p>
-                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a href="<?php echo site_url('news/view/'.$user_reservation_item['id_o']); ?>">See this space</a></p>
+
+                    <?php
+                    if($user_reservation_item['status'] == 'pending'){
+                        $add = site_url('news/edit_reservation/'.$user_reservation_item['id_res']);
+                        echo "<p class = 'btn btn-lg btn-outline-primary text-decoration-none'><a href=".$add.">Modify reservation</a></p>";
+                        $add2 = site_url('news/delete_reservation/'.$user_reservation_item['id_res']);
+                        echo "<p class = 'btn btn-lg btn-outline-primary text-decoration-none'><a onclick='return confirm(&quot Are you sure you want to delete?&quot);' href=".$add2.">Delete reservation</a></p>";
+                     }
+
+
+
+                    ?>
+
+                    <p class = 'btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('news/view/'.$user_reservation_item['id_o']); ?>">See this space</a></p>
                   </div>
                 </main><br>
 
@@ -75,8 +87,19 @@
                     <p class="lead">Other information: <span class="font-weight-bold"><?php echo $other_reservation_item['opis']; ?></span></p>
                     <p class="lead">Status: <span class="font-weight-bold"><?php echo $other_reservation_item['status']; ?></span></p>
                     <p class="lead">Contact the user: <span class="font-weight-bold"><?php echo "tel. number: ".$other_reservation_item['tel']. " | e-mail address: ".$other_reservation_item['email']; ?></span></p>
-                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a href="<?php echo site_url('news/accept_reservation/'.$other_reservation_item['id_res']); ?>">Accept reservation</a></p>
-                    <p class = 'comment_button d-inline btn btn-secondary text-decoration-none'><a  href="<?php echo site_url('news/decline_reservation/'.$other_reservation_item['id_res']); ?>">Decline reservation</a></p>
+
+
+                    <?php
+                    if($other_reservation_item['status'] == 'pending'){
+                        $add3 = site_url('news/accept_reservation/'.$other_reservation_item['id_res']);
+                        echo "<p class = 'btn btn-lg btn-outline-primary text-decoration-none'><a onclick='return confirm(&quot Are you sure you want to accept? Once accepted, you cannot make any other changes &quot);' href=".$add3.">Accept reservation</a></p>";
+                        $add5= site_url('news/decline_reservation/'.$other_reservation_item['id_res']);
+                        echo "<p class = 'btn btn-lg btn-outline-primary text-decoration-none'><a onclick='return confirm(&quot Are you sure you want to accept? Once accepted, you cannot make any other changes &quot);' href=".$add5.">Decline reservation</a></p>";
+
+
+
+                    }
+                    ?>
                   </div>
                 </main><br>
 

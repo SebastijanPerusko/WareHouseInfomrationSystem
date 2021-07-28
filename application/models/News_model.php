@@ -34,7 +34,30 @@ class News_model extends CI_Model {
 		        'id_o' => $this->input->post('id_space')
 		    );
 
-		    $this->db->insert('ocena', $data);
+		    $query2 = $this->db->select('*')
+	        				->from('ocena')
+	        				->where('ocena.id_u', $arr['id_u'])
+	        				->where('ocena.id_o', $this->input->post('id_space'))
+	        				->get();
+	        $num_rows_vote = $query2->num_rows();
+
+	        if($num_rows_vote > 0){
+	        	$id_vote = $query2->row()->id;
+	        	$data = array(
+			    	'vrednost' => intval($this->input->post('vote_space'))
+		    	);
+	        	$this->db->set($data);
+				$this->db->where('id', $id_vote);
+				$this->db->update("ocena");
+		    } else {
+	        	$this->db->insert('ocena', $data);
+	        }
+
+	        return $this->input->post('id_space');
+
+
+
+		    
         }
 
         public function control_comment(){
@@ -126,6 +149,25 @@ class News_model extends CI_Model {
 	        				->get();
 	        /*$query = $this->db->get('komentar');*/
 	        return $query->result_array();
+        }
+
+        public function get_vote($num)
+		{
+			if(isset($_SESSION['logged_in'])){
+				$arr = $_SESSION['logged_in'];
+			
+			
+
+				$query = $this->db->select('*')
+		        				->from('ocena')
+		        				->where('ocena.id_u', $arr['id_u'])
+		        				->where('ocena.id_o', $num)
+		        				->get();
+		        /*$query = $this->db->get('komentar');*/
+		        return $query->row_array();
+	    	} else {
+	    		return;
+	    	}
         }
 
 
@@ -680,10 +722,23 @@ class News_model extends CI_Model {
 			$this->db->delete("komentar");
 		}
 
+		public function delete_vote($slug){
+			$this->db->where("id", $slug);
+			$this->db->delete("ocena");
+		}
+
 		public function delete_comment_num($slug){
 			$query = $this->db->select('id_o')
 	        				->from('komentar')
 	        				->where('komentar.id', $slug)
+	        				->get();
+	        return $query->row()->id_o;
+		}
+
+		public function delete_vote_num($slug){
+			$query = $this->db->select('id_o')
+	        				->from('ocena')
+	        				->where('ocena.id', $slug)
 	        				->get();
 	        return $query->row()->id_o;
 		}

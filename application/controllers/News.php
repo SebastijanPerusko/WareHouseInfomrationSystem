@@ -114,7 +114,7 @@
 			        $lastAdded = $this->news_model->set_comment();
 			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
 	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
-
+	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
 	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
 	                $this->load->view('templates/header', $data);
@@ -154,7 +154,17 @@
 			    else
 			    {
 			        $lastAdded = $this->news_model->set_vote();
-			        $this->load->view('news/success');
+
+			        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
+	                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/view', $data);
+	                $this->load->view('templates/footer');
 			    }
 
 
@@ -164,6 +174,7 @@
 	        {
 	                $data['space_item'] = $this->news_model->get_news($num, NULL);
 	                $data['comment'] = $this->news_model->get_comment($num, NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($num, NULL);
 
 	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
@@ -239,6 +250,7 @@
 			        $find = 'news/create/'.strval($lastAdded);
 			        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
 	                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
 	                $data['warning'] = "Your ad is now public, if you want to change the information presented or delete this ad you can do it via the profile page.";
 
 	                $data["opis"] = "News";
@@ -294,7 +306,22 @@
 			    else
 			    {
 			        $lastAdded = $this->news_model->set_reservation();
-			        $this->load->view('news/success');
+			        $data['username'] = $this->session->userdata['logged_in']['username'];
+			        $data['email'] = $this->session->userdata['logged_in']['email'];
+			        $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
+			        $data['warning'] = "You have successfully posted your vote. ";
+
+
+			        /*reservation of the user*/
+			        $data['user_reservation'] = $this->news_model->get_user_reservation($data['id_u']);
+			        /*reservation of the other users for the space of this user*/
+			        $data['other_reservation'] = $this->news_model->get_other_reservation($data['id_u']);
+			        /*published spaces of the user*/
+			        $data['user_space'] = $this->news_model->get_user_space($data['id_u']);
+
+			        $this->load->view('templates/header');
+			        $this->load->view('user_authentication/admin_page', $data);
+			        $this->load->view('templates/footer');
 			    }
 			}
 
@@ -341,11 +368,25 @@
 
 	                $data["title"] = "News";
 	                $this->news_model->delete_reservation($slug);
-	                /*var_dump($data["news_item"]);*/
-	                $this->load->view('templates/header', $data);
-	                /*var_dump($data["news"]);*/
-	                $this->load->view('news/success');
-	                $this->load->view('templates/footer');
+
+
+
+	                $data['username'] = $this->session->userdata['logged_in']['username'];
+			        $data['email'] = $this->session->userdata['logged_in']['email'];
+			        $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
+			        $data['warning'] = "You have deleted the reservation.";
+
+
+			        /*reservation of the user*/
+			        $data['user_reservation'] = $this->news_model->get_user_reservation($data['id_u']);
+			        /*reservation of the other users for the space of this user*/
+			        $data['other_reservation'] = $this->news_model->get_other_reservation($data['id_u']);
+			        /*published spaces of the user*/
+			        $data['user_space'] = $this->news_model->get_user_space($data['id_u']);
+
+			        $this->load->view('templates/header');
+			        $this->load->view('user_authentication/admin_page', $data);
+			        $this->load->view('templates/footer');
 	        }
 
 	        public function delete_comment($slug = NULL)
@@ -363,6 +404,34 @@
 	                /*var_dump($data["news_item"]);*/
 	                $data['space_item'] = $this->news_model->get_news($num_comment, NULL);
 	                $data['comment'] = $this->news_model->get_comment($num_comment, NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($num_comment, NULL);
+	                $data['warning'] = "Your comment has been deleted.";
+
+	                $data["opis"] = "News";
+	                /*var_dump($data["news_item"]);*/
+	                $this->load->view('templates/header', $data);
+	                /*var_dump($data["news"]);*/
+	                $this->load->view('news/view', $data);
+	                $this->load->view('templates/footer');
+	        }
+
+
+	        public function delete_vote($slug = NULL)
+	        {
+		        	if(!isset($this->session->userdata['logged_in'])){
+						$data['message_display'] = 'Signin to view this page!';
+					    $this->load->view('templates/header');
+					    $this->load->view('user_authentication/login_form', $data);
+					    $this->load->view('templates/footer');
+						return;
+					}
+
+					$num_comment = $this->news_model->delete_vote_num($slug);
+	                $this->news_model->delete_vote($slug);
+	                /*var_dump($data["news_item"]);*/
+	                $data['space_item'] = $this->news_model->get_news($num_comment, NULL);
+	                $data['comment'] = $this->news_model->get_comment($num_comment, NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($num_comment, NULL);
 	                $data['warning'] = "Your comment has been deleted.";
 
 	                $data["opis"] = "News";
@@ -433,7 +502,23 @@
 				    $this->form_validation->set_rules('description_need', 'description_need', 'required');
 					$this->news_model->update_reservation();
 
-			        $this->load->view('news/success');
+			        $data['username'] = $this->session->userdata['logged_in']['username'];
+			        $data['email'] = $this->session->userdata['logged_in']['email'];
+			        $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
+			        $data['warning'] = "You have edited the reservation.";
+
+
+			        /*reservation of the user*/
+			        $data['user_reservation'] = $this->news_model->get_user_reservation($data['id_u']);
+			        /*reservation of the other users for the space of this user*/
+			        $data['other_reservation'] = $this->news_model->get_other_reservation($data['id_u']);
+			        /*published spaces of the user*/
+			        $data['user_space'] = $this->news_model->get_user_space($data['id_u']);
+
+			        $this->load->view('templates/header');
+			        $this->load->view('user_authentication/admin_page', $data);
+			        $this->load->view('templates/footer');
+
 				} else if($num == NULL){
 					echo $this->form_validation->run() == TRUE;
 					echo "ushaud";
@@ -469,6 +554,23 @@
 
 			    $this->news_model->accept_reservation_model($num);
 
+			    	$data['username'] = $this->session->userdata['logged_in']['username'];
+			        $data['email'] = $this->session->userdata['logged_in']['email'];
+			        $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
+			        $data['warning'] = "You have accepted the reservation.";
+
+
+			        /*reservation of the user*/
+			        $data['user_reservation'] = $this->news_model->get_user_reservation($data['id_u']);
+			        /*reservation of the other users for the space of this user*/
+			        $data['other_reservation'] = $this->news_model->get_other_reservation($data['id_u']);
+			        /*published spaces of the user*/
+			        $data['user_space'] = $this->news_model->get_user_space($data['id_u']);
+
+			        $this->load->view('templates/header');
+			        $this->load->view('user_authentication/admin_page', $data);
+			        $this->load->view('templates/footer');
+
 			}
 
 			public function decline_reservation($num = NULL)
@@ -486,6 +588,23 @@
 			    $this->load->library('form_validation');
 
 			    $this->news_model->decline_reservation_model($num);
+
+			    $data['username'] = $this->session->userdata['logged_in']['username'];
+			        $data['email'] = $this->session->userdata['logged_in']['email'];
+			        $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
+			        $data['warning'] = "You have declined the reservation.";
+
+
+			        /*reservation of the user*/
+			        $data['user_reservation'] = $this->news_model->get_user_reservation($data['id_u']);
+			        /*reservation of the other users for the space of this user*/
+			        $data['other_reservation'] = $this->news_model->get_other_reservation($data['id_u']);
+			        /*published spaces of the user*/
+			        $data['user_space'] = $this->news_model->get_user_space($data['id_u']);
+
+			        $this->load->view('templates/header');
+			        $this->load->view('user_authentication/admin_page', $data);
+			        $this->load->view('templates/footer');
 
 			}
 
@@ -601,6 +720,7 @@
 
 			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_ad_c'), NULL);
 	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_ad_c'), NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($this->input->post('id_ad_c'), NULL);
 	                $data['warning'] = "Your comment has been edited.";
 
 	                $data["opis"] = "News";

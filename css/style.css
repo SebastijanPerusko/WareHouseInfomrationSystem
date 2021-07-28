@@ -21,7 +21,7 @@
 }
 
 .comment_button {
-    color: white;
+    /*color: white;*/
 }
 
 .bottom-left_index {
@@ -122,11 +122,11 @@ input[type=text],input[type=password], input[type=email]{
 
 a{
     text-decoration:none;
-    color: cornflowerblue;
+    /*color: cornflowerblue;*/
 }
 
 i{
-    color: cornflowerblue;
+    /*color: cornflowerblue;*/
 }
 
 .error_msg{
