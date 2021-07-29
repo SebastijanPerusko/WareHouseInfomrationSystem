@@ -1,6 +1,6 @@
 <!--<h2><?php /*echo $title;*/ ?></h2>-->
 
-
+<?php echo $vote_ad_avg['vote_avg'] ?>
 <div class="container py-3">
         <div class="container marketing">
                 <?php $time_access;
@@ -32,6 +32,11 @@
                                 <input class="btn btn-primary" type="submit" name="submit" value="Reserve this space" />
                         </form></div></h2>
                         <p class="lead">
+                                <?php if($vote_ad_avg['vote_avg'] != NULL){
+                                        echo "<h3 class='text-justify font-weight-bold d-inline'>Rating: </h3><h3 class='text-justify font-weight-bold text-info d-inline'>".substr($vote_ad_avg['vote_avg'], 0, 3)."</h3>";
+                                }
+
+                                ?>
                                 <?php echo "<h3 class='text-justify font-weight-bold'>Size: </h3><h3 class='text-justify font-weight-bold text-info'>".$space_item['dolzina']." x ".$space_item['sirina']."</h3>"; ?>
                                 <?php if($space_item['visina'] > 0) {
                                         echo "<h3 class='text-justify font-weight-bold'>Height: </h3><h3 class='text-justify font-weight-bold text-info'>".$space_item['visina']."</h3>";
@@ -143,7 +148,7 @@
 </table>
 
 <hr class="featurette-divider">
-<h2 class='text-justify font-weight-bold'>Vote this <?php echo $space_item['opis_k']; ?></h2>
+<h2 class='text-justify font-weight-bold'>Rate this <?php echo $space_item['opis_k']; ?></h2>
 
 
 

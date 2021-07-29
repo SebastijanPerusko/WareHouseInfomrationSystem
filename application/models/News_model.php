@@ -171,6 +171,16 @@ class News_model extends CI_Model {
         }
 
 
+        public function get_avg_vote($num)
+		{
+			$query = $this->db->select('AVG(ocena.vrednost) AS "vote_avg"')
+		        				->from('ocena')
+		        				->where('ocena.id_o', $num)
+		        				->get();
+		    return $query->row_array();
+        }
+
+
         public function find_group_news($num = NULL)
 		{
 

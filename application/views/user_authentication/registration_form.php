@@ -1,68 +1,40 @@
-<div id="main">
-    <div id="login">
-        <h2>Registration Form</h2>
-        <hr/>
-        <?php
-        echo "<div class='error_msg'>";
-            echo validation_errors();
-        echo "</div>";
-        echo form_open('user_authentication/signup');
-        echo"<br/>";
 
-        echo form_label('Insert your name : ');
-        echo"<br/>";
-        echo form_input('name');
-        echo"<br/>";
 
-        echo form_label('Insert your secondname : ');
-        echo"<br/>";
-        echo form_input('secondname');
-        echo"<br/>";
 
-        echo form_label('Insert your email : ');
-        echo"<br/>";
-        echo form_input('email');
-        echo"<br/>";
+<div class = "container_log_in text-center"> 
+<main class="signin_from_main border">
+  <?php echo form_open('user_authentication/signup'); ?>
+    <h1 class="mb-3 h3 fw-normal">Create account</h1>
+    <h1 class="mb-3 h3 fw-normal text-danger"><?php echo validation_errors(); ?></h1>
 
-        echo form_label('Insert your tel : ');
-        echo"<br/>";
-        echo form_input('tel');
-        echo"<br/>";
-
-        echo form_label('Create Username : ');
-        echo"<br/>";
-        echo form_input('username');
-        echo"<br/>";
-
-        echo form_label('Insert password : ');
-        echo"<br/>";
-        echo form_password('password');
-        echo"<br/>";
-
-        echo "<div class='error_msg'>";
-        
-        if (isset($message_display)) {
-            echo $message_display;
-        }
-        /*echo "</div>";
-        echo"<br/>";
-        echo form_label('Email : ');
-        echo"<br/>";
-        $data = array(
-        'type' => 'email',
-        'name' => 'email_value'
-        );
-        echo form_input($data);
-        echo"<br/>";
-        echo"<br/>";
-        echo form_label('Password : ');
-        echo"<br/>";
-        echo form_password('password');
-        echo"<br/>";
-        echo"<br/>";*/
-        echo form_submit('submit', 'Sign Up');
-        echo form_close();
-        ?>
-        <a href="<?php echo base_url() ?> ">For Login Click Here</a>
+    <div class="form-floating">
+      <input placeholder="First" type="text" name="name" id="name" >
+      <label for="floatingInput">Name</label>
     </div>
+    <div class="form-floating">
+      <input placeholder="Second" type="text" name="secondname" id="name" >
+      <label for="floatingInput">Secondname</label>
+    </div>
+    <div class="form-floating">
+      <input placeholder="email.email@example.com" type="email" name="email" id="email" >
+      <label for="floatingInput">Email</label>
+    </div>
+    <div class="form-floating">
+      <input placeholder="Example" type="text" name="tel" id="tel" >
+      <label for="floatingInput">Telephone number</label>
+    </div>
+    <div class="form-floating">
+      <input placeholder="Example" type="text" name="username" id="username" >
+      <label for="floatingInput">Select an username</label>
+    </div>
+    <div class="form-floating">
+      <input placeholder="***********" type="password" name="password" id="username" >
+      <label for="floatingInput">Select a password</label>
+    </div>
+
+    <input class="w-100 btn btn-lg btn-primary" type="submit" value="Create account " name="submit"/><br /><br />
+    <a class="w-100 btn btn-lg btn-primary" href="<?php echo base_url() ?>">Click here to login</a>
+        <?php echo form_close(); ?>
+  </form>
+</main>
 </div>

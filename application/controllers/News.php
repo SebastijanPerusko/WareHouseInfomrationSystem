@@ -115,6 +115,7 @@
 			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
 	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
 	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
 	                $this->load->view('templates/header', $data);
@@ -158,6 +159,7 @@
 			        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
 	                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($lastAdded, NULL);
 
 	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
@@ -175,6 +177,7 @@
 	                $data['space_item'] = $this->news_model->get_news($num, NULL);
 	                $data['comment'] = $this->news_model->get_comment($num, NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($num, NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
 
 	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
@@ -251,6 +254,7 @@
 			        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
 	                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
 	                $data['warning'] = "Your ad is now public, if you want to change the information presented or delete this ad you can do it via the profile page.";
 
 	                $data["opis"] = "News";
@@ -405,6 +409,7 @@
 	                $data['space_item'] = $this->news_model->get_news($num_comment, NULL);
 	                $data['comment'] = $this->news_model->get_comment($num_comment, NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($num_comment, NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
 	                $data['warning'] = "Your comment has been deleted.";
 
 	                $data["opis"] = "News";
@@ -432,6 +437,7 @@
 	                $data['space_item'] = $this->news_model->get_news($num_comment, NULL);
 	                $data['comment'] = $this->news_model->get_comment($num_comment, NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($num_comment, NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
 	                $data['warning'] = "Your comment has been deleted.";
 
 	                $data["opis"] = "News";
@@ -721,6 +727,7 @@
 			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_ad_c'), NULL);
 	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_ad_c'), NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($this->input->post('id_ad_c'), NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
 	                $data['warning'] = "Your comment has been edited.";
 
 	                $data["opis"] = "News";

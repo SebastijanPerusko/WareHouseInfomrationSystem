@@ -12,14 +12,6 @@
         </head>
         <body class = "bg-light">
 
-<a href="<?php echo site_url('pages/view/home'); ?>">Home</a>
-<a href="<?php echo site_url('pages/view/about'); ?>">About</a>
-<a href="<?php echo site_url('news/index'); ?>">News</a>
-<a href="<?php echo site_url('news/create'); ?>">Create News</a>
-<a href="<?php echo site_url('user_authentication/profile'); ?>">Admin</a>
-<a href="<?php echo site_url('user_authentication/signin'); ?>">Signin</a>
-<a style = "float:right;" href="<?php echo site_url('user_authentication/logout'); ?>">Logout</a>
-
 <nav aria-label="Eighth navbar example" class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
                 <a class="navbar-brand" href="<?php echo site_url('pages/view/home'); ?>">Home</a>
@@ -41,9 +33,15 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="<?php echo site_url('user_authentication/profile'); ?>">Profile</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="<?php echo site_url('user_authentication/signin'); ?>">Singin</a>
-          </li>
+          <?php 
+              if(!isset($_SESSION['logged_in'])){
+                $add = site_url('user_authentication/signin');
+                echo '<li class="nav-item"><a class="nav-link active" aria-current="page" href="'.$add.'">Singin</a></li>';
+              }
+
+
+          ?>
+
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="<?php echo site_url('user_authentication/logout'); ?>">Logout</a>
           </li>
