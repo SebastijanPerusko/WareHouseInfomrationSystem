@@ -57,6 +57,7 @@ function comment_edit(num){
 }
 
 function submit_search(){
-  document.getElementById('form_search_a').submit();
+  document.getElementById("form_search_a").submit();
+  /*document.getElementById("form_search_b").click();*/
 }
 

@@ -80,6 +80,11 @@ class News_model extends CI_Model {
 	        				->from('oglas')
 	        				->join('lastnost', 'oglas.id = lastnost.id_o');
 
+	        /*if(isset($_SESSION['type_storage'] && $_SESSION['type_storage'] != ''){
+
+
+	        }*/
+
 	        if($_POST['type_storage'] == "veichle"){
 				$query = $this->db->where('oglas.lokacija', "cover")
 	        				->where('oglas.lokacija', "uncover");
@@ -87,6 +92,21 @@ class News_model extends CI_Model {
 				$query = $this->db->where('oglas.lokacija', "indoor")
 									->where('oglas.lokacija', "none");
 			}
+
+			if($_POST['size_storage'] == "extra_small"){
+			 	$query_text = "oglas.dolzina <= 5 AND oglas.sirina <= 5";
+				$query = $this->db->where($query_text);
+			} else if($_POST['size_storage'] == "small") {
+				$query_text = "oglas.dolzina >= 5 AND oglas.sirina >= 5 AND oglas.dolzina <= 10 AND oglas.sirina <= 10";
+				$query = $this->db->where($query_text);
+			} else if($_POST['size_storage'] == "medium") {
+				$query_text = "oglas.dolzina >= 10 AND oglas.sirina >= 10 AND oglas.dolzina <= 15 AND oglas.sirina <= 15";
+				$query = $this->db->where($query_text);
+			} else if($_POST['size_storage'] == "large") {
+				$query_text = "oglas.dolzina >= 15 AND oglas.sirina >= 15";
+				$query = $this->db->where($query_text);
+			} 
+
 
 			if(!empty($_POST['city_name'])){
 				$query = $this->db->where('UPPER(oglas.mesto)', strtoupper($_POST['city_name']));
@@ -194,6 +214,20 @@ class News_model extends CI_Model {
 			} else if($_POST['type_storage'] == "object") {
 				$query = $this->db->where("oglas.lokacija = 'indoor' OR oglas.lokacija = 'cover'");
 			}
+
+			if($_POST['size_storage'] == "extra_small"){
+			 	$query_text = "oglas.dolzina <= 5 AND oglas.sirina <= 5";
+				$query = $this->db->where($query_text);
+			} else if($_POST['size_storage'] == "small") {
+				$query_text = "oglas.dolzina >= 5 AND oglas.sirina >= 5 AND oglas.dolzina <= 10 AND oglas.sirina <= 10";
+				$query = $this->db->where($query_text);
+			} else if($_POST['size_storage'] == "medium") {
+				$query_text = "oglas.dolzina >= 10 AND oglas.sirina >= 10 AND oglas.dolzina <= 15 AND oglas.sirina <= 15";
+				$query = $this->db->where($query_text);
+			} else if($_POST['size_storage'] == "large") {
+				$query_text = "oglas.dolzina >= 15 AND oglas.sirina >= 15";
+				$query = $this->db->where($query_text);
+			} 
 
 			if(!empty($_POST['city_name'])){
 				$query = $this->db->where('UPPER(oglas.mesto)', strtoupper($_POST['city_name']));

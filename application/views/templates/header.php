@@ -27,24 +27,33 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="<?php echo site_url('news/index'); ?>">List</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="<?php echo site_url('news/create'); ?>">Create</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="<?php echo site_url('user_authentication/profile'); ?>">Profile</a>
-          </li>
+          <?php 
+              if(isset($_SESSION['logged_in'])){
+                $add_log = site_url('news/create');
+                echo '<li class="nav-item"><a class="nav-link active" aria-current="page" href="'.$add_log.'">Create</a></li>';
+              }
+          ?>
+
+          <?php 
+              if(isset($_SESSION['logged_in'])){
+                $add_log = site_url('user_authentication/profile');
+                echo ' <li class="nav-item"><a class="nav-link active" aria-current="page" href="'.$add_log.'">Profile</a></li>';
+              }
+          ?>
+         
           <?php 
               if(!isset($_SESSION['logged_in'])){
                 $add = site_url('user_authentication/signin');
                 echo '<li class="nav-item"><a class="nav-link active" aria-current="page" href="'.$add.'">Singin</a></li>';
               }
-
-
           ?>
 
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="<?php echo site_url('user_authentication/logout'); ?>">Logout</a>
-          </li>
+          <?php 
+              if(isset($_SESSION['logged_in'])){
+                $add_log_out = site_url('user_authentication/logout');
+                echo '<li class="nav-item"><a class="nav-link active" aria-current="page" href="'.$add_log_out.'">Logout</a></li>';
+              }
+          ?>
         </ul>
 
   </nav>
