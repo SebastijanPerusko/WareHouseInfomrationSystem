@@ -26,11 +26,16 @@
 	                if ($this->form_validation->run() === FALSE)
 				    {
 				    	if($num_page == NULL){
-				    		$data['space'] = $this->news_model->get_news(FALSE, 1);
+				    		$data['space'] = $this->news_model->find_group_news(1);
 				    	} else {
-				    		$data['space'] = $this->news_model->get_news(FALSE, $num_page);
+				    		$data['space'] = $this->news_model->find_group_news($num_page);
 				    	}
-				        $data['num_space'] = $this->news_model->get_num_space();
+				    	if($num_page != NULL){ 
+				        	$data['current_page'] = $num_page; 	
+				        } else {
+				        	$data['current_page'] = 1; 
+				        }
+				        $data['num_space'] = $this->news_model->get_num_space_form();
 
 		                /*$data["title"] = "News";*/
 		                $this->load->view('templates/header', $data);
@@ -41,13 +46,7 @@
 				    }
 				    else
 				    {
-				    	if($num_page == NULL){
-				    		$data['space'] = $this->news_model->find_group_news(1);
-				    	} else {
-				    		$data['space'] = $this->news_model->find_group_news($num_page);
-				    	}
-				        /*$data['space'] = $this->news_model->find_group_news();*/
-				        $data['city_post'] = $this->input->post('city_name');
+				    	$data['city_post'] = $this->input->post('city_name');
 				        $_SESSION['city_post'] = $this->input->post('city_name');
 				        $data['point_value'] = $this->input->post('type_storage');
 				        $_SESSION['point_value'] = $this->input->post('type_storage');
@@ -58,7 +57,19 @@
 				        $data['price_end'] = $this->input->post('end_price');
 				        $_SESSION['price_end'] = $this->input->post('end_price');
 				        $data['num_space'] = $this->news_model->get_num_space_form();
+				        if($num_page != NULL){
+				        	$data['current_page'] = $num_page; 
+				        } else {
+				        	$data['current_page'] = 1; 
+				        }
 				        $_SESSION['num_space'] = $this->news_model->get_num_space_form();
+				    	if($num_page == NULL){
+				    		$data['space'] = $this->news_model->find_group_news(1);
+				    	} else {
+				    		$data['space'] = $this->news_model->find_group_news($num_page);
+				    	}
+				        /*$data['space'] = $this->news_model->find_group_news();*/
+				        
 
 		                /*var_dump($data["news_item"]);*/
 		                $this->load->view('templates/header', $data);

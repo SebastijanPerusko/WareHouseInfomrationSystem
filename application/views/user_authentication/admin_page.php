@@ -40,7 +40,7 @@
                 ?>
 
                 <main class="container ">
-                  <div class="<?php echo " ".$status_color." " ?> p-5 rounded">
+                  <div class="<?php echo " ".$status_color." " ?> p-5 rounded border">
                     <h3><?php echo $user_reservation_item['opis_k']." in ".$user_reservation_item['mesto']." for ".$user_reservation_item['datum_od']; ?></h3>
                      <p class="lead"><span class="text-success"><?php echo "<span class='text-primary'>Status: ".$user_reservation_item['status']."</span>"; ?></span></p>
                     <p class="lead"><span class="text-success"><?php echo $message; ?></span></p>
@@ -79,7 +79,7 @@
                 ?>
 
                 <main class="container ">
-                  <div class="<?php echo " ".$status_color." " ?> bg-light p-5 rounded shadow-sm">
+                  <div class="<?php echo " ".$status_color." " ?> bg-light p-5 rounded shadow-sm border">
                     <h3 class="font-weight-bold"><?php echo $other_reservation_item['ime']." reserved the ".$other_reservation_item['opis_k']." in ".$other_reservation_item['mesto'].", ".$other_reservation_item['naslov']; ?></h3>
                     <p class="lead">Items that he want to store: <span class="font-weight-bold"><?php echo $other_reservation_item['stvari']; ?></span></p>
                     <p class="lead">How long does he want to book this space: <span class="font-weight-bold"><?php echo $other_reservation_item['cas_rezervacije']; ?></span></p>
@@ -129,6 +129,11 @@
 
         <?php endforeach; ?>
         </div>
+
+
+        <h2 class='text-justify font-weight-bold'>Account</h2>
+        <hr class="featurette-divider">
+        <p class = 'btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('user_authentication/edit_information_r/'.$id_u); ?>">Click here to edit informations about your account</a></p>
 
     
 </div>

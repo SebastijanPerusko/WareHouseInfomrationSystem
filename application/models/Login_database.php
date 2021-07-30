@@ -99,4 +99,23 @@ class Login_database extends CI_model {
 	        return $query->result_array();
         }
 
+        public function get_user_inf($num)
+		{
+
+	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
+	        $query = $this->db->select('*')
+	        				->from('uporabnik')
+	        				->where('uporabnik.id', $num)
+	        				->get();
+	        return $query->row_array();
+        }
+        public function update_data_info($data)
+		{
+
+	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
+	        $this->db->set($data);
+			$this->db->where('id', $this->session->userdata['logged_in']['id_u']);
+			return $this->db->update("uporabnik");
+        }
+
 }

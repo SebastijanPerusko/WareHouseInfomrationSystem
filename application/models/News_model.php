@@ -76,46 +76,44 @@ class News_model extends CI_Model {
         }
 
         public function get_num_space_form(){
+
         	$query = $this->db->select('*')
 	        				->from('oglas')
 	        				->join('lastnost', 'oglas.id = lastnost.id_o');
 
-	        /*if(isset($_SESSION['type_storage'] && $_SESSION['type_storage'] != ''){
+	        if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == 'veichle'){
+	        	$where_q = "oglas.lokacija = 'cover' OR oglas.lokacija = 'uncover'";
+	        	$query = $this->db->where($where_q);
+	        } else if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == 'object'){
+	        	$where_q_2 = "oglas.lokacija = 'indoor' OR oglas.lokacija = 'none'";
+	        	$query = $this->db->where($where_q_2);
+	        }
+	        
+
+	        if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == 'extra_small'){
+	        	$query_text = "oglas.dolzina <= 5 AND oglas.sirina <= 5";
+				$query = $this->db->where($query_text);
+	        } else if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == 'small'){
+	        	$query_text = "oglas.dolzina >= 5 AND oglas.sirina >= 5 AND oglas.dolzina <= 10 AND oglas.sirina <= 10";
+				$query = $this->db->where($query_text);
+	        } else if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == 'medium'){
+	        	$query_text = "oglas.dolzina >= 10 AND oglas.sirina >= 10 AND oglas.dolzina <= 15 AND oglas.sirina <= 15";
+				$query = $this->db->where($query_text);
+	        } else if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == 'large'){
+	        	$query_text = "oglas.dolzina >= 15 AND oglas.sirina >= 15";
+				$query = $this->db->where($query_text);
+	        }
 
 
-	        }*/
 
-	        if($_POST['type_storage'] == "veichle"){
-				$query = $this->db->where('oglas.lokacija', "cover")
-	        				->where('oglas.lokacija', "uncover");
-			} else if($_POST['type_storage'] == "object") {
-				$query = $this->db->where('oglas.lokacija', "indoor")
-									->where('oglas.lokacija', "none");
+			if(isset($_SESSION['city_post']) && $_SESSION['city_post'] != ''){
+				$query = $this->db->where('UPPER(oglas.mesto)', strtoupper($_SESSION['city_post']));
 			}
-
-			if($_POST['size_storage'] == "extra_small"){
-			 	$query_text = "oglas.dolzina <= 5 AND oglas.sirina <= 5";
-				$query = $this->db->where($query_text);
-			} else if($_POST['size_storage'] == "small") {
-				$query_text = "oglas.dolzina >= 5 AND oglas.sirina >= 5 AND oglas.dolzina <= 10 AND oglas.sirina <= 10";
-				$query = $this->db->where($query_text);
-			} else if($_POST['size_storage'] == "medium") {
-				$query_text = "oglas.dolzina >= 10 AND oglas.sirina >= 10 AND oglas.dolzina <= 15 AND oglas.sirina <= 15";
-				$query = $this->db->where($query_text);
-			} else if($_POST['size_storage'] == "large") {
-				$query_text = "oglas.dolzina >= 15 AND oglas.sirina >= 15";
-				$query = $this->db->where($query_text);
-			} 
-
-
-			if(!empty($_POST['city_name'])){
-				$query = $this->db->where('UPPER(oglas.mesto)', strtoupper($_POST['city_name']));
+			if(isset($_SESSION['price_from']) && !empty($_SESSION['price_from'])){
+				$query = $this->db->where('oglas.cena >=', intval($_SESSION['price_from']));
 			}
-			if(!empty($_POST['start_price'])){
-				$query = $this->db->where('oglas.cena >=', intval($_POST['start_price']));
-			}
-			if(!empty($_POST['end_price'])){
-				$query = $this->db->where('oglas.cena <=', intval($_POST['end_price']));
+			if(isset($_SESSION['price_end']) && !empty($_SESSION['price_end'])){
+				$query = $this->db->where('oglas.cena <=', intval($_SESSION['price_end']));
 			}
 
 	        $query = $this->db->get();
@@ -209,34 +207,39 @@ class News_model extends CI_Model {
 	        				->from('oglas')
 	        				->join('lastnost', 'oglas.id = lastnost.id_o');
 
-	        if($_POST['type_storage'] == "veichle"){
-				$query = $this->db->where("oglas.lokacija = 'cover' OR oglas.lokacija = 'uncover'");
-			} else if($_POST['type_storage'] == "object") {
-				$query = $this->db->where("oglas.lokacija = 'indoor' OR oglas.lokacija = 'cover'");
-			}
+	        if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == 'veichle'){
+	        	$where_q = "oglas.lokacija = 'cover' OR oglas.lokacija = 'uncover'";
+	        	$query = $this->db->where($where_q);
+	        } else if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == 'object'){
+	        	$where_q_2 = "oglas.lokacija = 'indoor' OR oglas.lokacija = 'none'";
+	        	$query = $this->db->where($where_q_2);
+	        }
+	        
 
-			if($_POST['size_storage'] == "extra_small"){
-			 	$query_text = "oglas.dolzina <= 5 AND oglas.sirina <= 5";
+	        if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == 'extra_small'){
+	        	$query_text = "oglas.dolzina <= 5 AND oglas.sirina <= 5";
 				$query = $this->db->where($query_text);
-			} else if($_POST['size_storage'] == "small") {
-				$query_text = "oglas.dolzina >= 5 AND oglas.sirina >= 5 AND oglas.dolzina <= 10 AND oglas.sirina <= 10";
+	        } else if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == 'small'){
+	        	$query_text = "oglas.dolzina >= 5 AND oglas.sirina >= 5 AND oglas.dolzina <= 10 AND oglas.sirina <= 10";
 				$query = $this->db->where($query_text);
-			} else if($_POST['size_storage'] == "medium") {
-				$query_text = "oglas.dolzina >= 10 AND oglas.sirina >= 10 AND oglas.dolzina <= 15 AND oglas.sirina <= 15";
+	        } else if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == 'medium'){
+	        	$query_text = "oglas.dolzina >= 10 AND oglas.sirina >= 10 AND oglas.dolzina <= 15 AND oglas.sirina <= 15";
 				$query = $this->db->where($query_text);
-			} else if($_POST['size_storage'] == "large") {
-				$query_text = "oglas.dolzina >= 15 AND oglas.sirina >= 15";
+	        } else if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == 'large'){
+	        	$query_text = "oglas.dolzina >= 15 AND oglas.sirina >= 15";
 				$query = $this->db->where($query_text);
-			} 
+	        }
 
-			if(!empty($_POST['city_name'])){
-				$query = $this->db->where('UPPER(oglas.mesto)', strtoupper($_POST['city_name']));
+
+
+			if(isset($_SESSION['city_post']) && $_SESSION['city_post'] != ''){
+				$query = $this->db->where('UPPER(oglas.mesto)', strtoupper($_SESSION['city_post']));
 			}
-			if(!empty($_POST['start_price'])){
-				$query = $this->db->where('oglas.cena >=', intval($_POST['start_price']));
+			if(isset($_SESSION['price_from']) && !empty($_SESSION['price_from'])){
+				$query = $this->db->where('oglas.cena >=', intval($_SESSION['price_from']));
 			}
-			if(!empty($_POST['end_price'])){
-				$query = $this->db->where('oglas.cena <=', intval($_POST['end_price']));
+			if(isset($_SESSION['price_end']) && !empty($_SESSION['price_end'])){
+				$query = $this->db->where('oglas.cena <=', intval($_SESSION['price_end']));
 			}
 
 			$query = $this->db->limit(12*($num),12*($num-1));
