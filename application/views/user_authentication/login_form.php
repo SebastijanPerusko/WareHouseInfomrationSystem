@@ -1,22 +1,11 @@
-<?php
-if (isset($logout_message)) {
-    echo "<div class='message'>";
-    echo $logout_message;
-    echo "</div>";
-}
-?>
-<?php
-if (isset($message_display)) {
-    echo "<div class='message'>";
-    echo $message_display;
-    echo "</div>";
-}
-?>
+
 
 
 <div class = "container_log_in text-center"> 
 <main class="signin_from_main border">
   <?php echo form_open('user_authentication/signin'); ?>
+    <p class = "text-success"><?php if (isset($message_display)) { echo $message_display; } ?></p>
+    <p class = "text-success"><?php if (isset($logout_message)) { echo $logout_message; } ?></p>
     <h1 class="mb-3 h3 fw-normal">Sign in</h1>
 
     <div class="form-floating">
@@ -34,7 +23,7 @@ if (isset($message_display)) {
       </label>-->
     </div>
     <input class="w-100 btn btn-lg btn-primary" type="submit" value="Login " name="submit"/><br /><br />
-    <a class="w-100 btn btn-lg btn-primary" href="<?php echo base_url() ?>index.php/user_authentication/show">Create your account</a>
+    <a class="w-100 btn btn-lg btn-primary" href="<?php echo base_url() ?>index.php/user_authentication/show">Create new account</a>
         <?php echo form_close(); ?>
   </form>
 </main>

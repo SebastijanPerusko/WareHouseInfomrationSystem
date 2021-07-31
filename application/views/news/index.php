@@ -55,13 +55,13 @@
             <p>Price</p>
           </li>
           <li class="nav-item">
-            <input class="form-control col-lg-5" name = "start_price" type="text" value="<?php if(isset($price_from)){ echo $price_from; } else { echo "";} ?>" aria-label="Search">
+            <input class="form-control col-lg-5" name = "start_price" type="text" value="<?php if(isset($_SESSION['price_from'])){ echo $_SESSION['price_from']; } else { echo "";} ?>" aria-label="Search">
           </li>
           <li class="nav-item align-middle">
             <p> to </p>
           </li>
           <li class="nav-item">
-            <input class="form-control col-lg-5" name = "end_price" type="text" value="<?php if(isset($price_end)){ echo $price_end; } else { echo "";} ?>" aria-label="Search">
+            <input class="form-control col-lg-5" name = "end_price" type="text" value="<?php if(isset($_SESSION['price_end'])){ echo $_SESSION['price_end']; } else { echo "";} ?>" aria-label="Search">
           </li>
           <li class="nav-item">
             <input id = "form_search_b" type="submit" class="w-100 btn btn-primary btn-lg" name="submit1" value="Find" />

@@ -61,3 +61,34 @@ function submit_search(){
   /*document.getElementById("form_search_b").click();*/
 }
 
+function password_check(){
+  var p1 = document.getElementById("password_reg");
+  var p2 = document.getElementById("password_reg2");
+
+  if(p1.value != p2.value){
+    document.getElementById("password_reg").classList.add("border");
+    document.getElementById("password_reg").classList.add("border-danger");
+    document.getElementById("password_reg2").classList.add("border");
+    document.getElementById("password_reg2").classList.add("border-danger");
+    document.getElementById("password_reg").classList.remove("border-success");
+    document.getElementById("password_reg2").classList.remove("border-success");
+    document.getElementById("error_m").innerHTML = "Passwords do not match, try again.";
+    document.getElementById("error_m").classList.remove("text-success");
+    document.getElementById("error_m").classList.add("text-danger");
+    document.getElementById("submit_reg").disabled = true; 
+  } else {
+    document.getElementById("password_reg").classList.add("border");
+    document.getElementById("password_reg").classList.add("border-success");
+    document.getElementById("password_reg2").classList.add("border");
+    document.getElementById("password_reg2").classList.add("border-success");
+    document.getElementById("password_reg").classList.remove("border-danger");
+    document.getElementById("password_reg2").classList.remove("border-danger");
+    document.getElementById("error_m").innerHTML = "";
+    document.getElementById("error_m").classList.remove("text-danger");
+    document.getElementById("error_m").classList.add("text-success");
+    document.getElementById("submit_reg").disabled = true; 
+    document.getElementById("submit_reg").disabled = false;
+  }
+
+}
+

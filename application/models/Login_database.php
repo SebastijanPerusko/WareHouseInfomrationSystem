@@ -44,6 +44,15 @@ class Login_database extends CI_model {
 	    }
 	}
 
+
+
+	public function change_password($data) {
+		$this->db->set($data);
+		$this->db->where('id', $this->session->userdata['logged_in']['id_u']);
+		$this->db->update("uporabnik");
+		return TRUE;
+	}
+
 	// Read data from database to show data in admin page
 	public function read_user_information($username) {
 

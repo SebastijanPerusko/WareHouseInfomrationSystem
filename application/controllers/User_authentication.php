@@ -68,7 +68,7 @@ class User_authentication extends CI_Controller{
         );
         $result = $this->login_database->registration_insert($data);
         if ($result == TRUE) {
-            $data['message_display'] = 'Registration Successfully !';
+            $data['message_display'] = 'Registration Successfully, now login';
             $this->load->view('templates/header');
             $this->load->view('user_authentication/login_form', $data);
             $this->load->view('templates/footer');
@@ -148,12 +148,7 @@ public function profile(){
                     'email' => $result[0]->email,
                     'id_u' => $result[0]->id,
                 );
-            // Add user data in session
-                /*$data = array('error_message' => 'Signin OK');*/
-                $this->session->set_userdata('logged_in', $session_data);
-            /*$this->load->view('templates/header',$data);
-            $this->load->view('user_authentication/login_form',$data);
-            $this->load->view('templates/footer');*/
+            $this->session->set_userdata('logged_in', $session_data);
             $data['username'] = $this->session->userdata['logged_in']['username'];
             $data['email'] = $this->session->userdata['logged_in']['email'];
             $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
@@ -250,6 +245,63 @@ public function edit_inf() {
         $this->load->view('templates/header');
         $this->load->view('user_authentication/admin_page', $data);
         $this->load->view('templates/footer');
+    }
+}
+
+
+public function edit_password_u($num = NULL) {
+
+    // Check validation for user input in SignUp form
+        $this->form_validation->set_rules('password_old', 'password_old', 'trim|required');
+        $this->form_validation->set_rules('password_new1', 'password_new1', 'trim|required');
+        $this->form_validation->set_rules('password_new2', 'password_new2', 'trim|required');
+
+
+
+    /*$this->form_validation->set_rules('username', 'Username', 'trim|required');
+    $this->form_validation->set_rules('email_value', 'Email', 'trim|required');
+    $this->form_validation->set_rules('password', 'Password', 'trim|required');*/
+
+    if ($this->form_validation->run() == FALSE) {
+        $this->load->view('templates/header');
+        $this->load->view('user_authentication/edit_password');
+        $this->load->view('templates/footer');
+    } else {
+        $hash = $this->input->post('password');
+        $password_hash = password_hash($hash, PASSWORD_DEFAULT);
+        $data = array(
+            'username' => $this->session->userdata['logged_in']['username'],
+            'geslo' => $this->input->post('password_old')
+        );
+        $result = $this->login_database->login($data);
+        if ($result == TRUE) {
+            $hash = $this->input->post('password_new1');
+            $password_hash = password_hash($hash, PASSWORD_DEFAULT);
+            $data = array(
+                'geslo' => $password_hash
+            );
+            $result = $this->login_database->change_password($data);
+            if ($result == TRUE) {
+                $data['message_display'] = 'You have changed sucessfuly your password';
+                $data['message_color'] = 'text-success';
+                $this->load->view('templates/header');
+                $this->load->view('user_authentication/edit_password', $data);
+                $this->load->view('templates/footer');
+            } else {
+                $data['message_display'] = 'Problem with updating your password, try again later.';
+                $data['message_color'] = 'text-warning';
+                $this->load->view('templates/header');
+                $this->load->view('user_authentication/edit_password', $data);
+                $this->load->view('templates/footer');
+            }
+       
+        } else {
+            $data['message_display'] = 'Incorrect old password, try again. ';
+            $data['message_color'] = 'text-warning';
+            $this->load->view('templates/header');
+            $this->load->view('user_authentication/edit_password', $data);
+            $this->load->view('templates/footer');
+        }
     }
 }
 
