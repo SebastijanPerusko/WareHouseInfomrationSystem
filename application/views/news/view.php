@@ -1,6 +1,5 @@
 <!--<h2><?php /*echo $title;*/ ?></h2>-->
 
-<?php echo $vote_ad_avg['vote_avg'] ?>
 <div class="container py-3">
         <div class="container marketing">
                 <?php $time_access;
@@ -27,23 +26,37 @@
 
                 <div class="row featurette">
                       <div class="col-md-3 order-md-2">
-                        <h2 class="featurette-heading"><?php echo $space_item['opis_k']." in ".$space_item['mesto']; ?><div class="text-muted">
+                        <h2 class="featurette-heading display-5 fw-bold"><?php echo $space_item['opis_k']." in ".$space_item['mesto']; ?><div class="text-muted">
                                 <?php echo form_open('news/reserve/'.$space_item['id_o']); ?>
-                                <input class="btn btn-primary" type="submit" name="submit" value="Reserve this space" />
+                                <input class="w-100 btn btn-primary border border-danger" type="submit" name="submit" value="Reserve this space" />
                         </form></div></h2>
                         <p class="lead">
-                                <?php if($vote_ad_avg['vote_avg'] != NULL){
-                                        echo "<h3 class='text-justify font-weight-bold d-inline'>Rating: </h3><h3 class='text-justify font-weight-bold text-info d-inline'>".substr($vote_ad_avg['vote_avg'], 0, 3)."</h3>";
+                                <?php
+
+                                if($vote_ad_avg['vote_avg'] != NULL){
+                                        echo "<div class='card_padding_feature text-center'><div class='p-3 text-white bg-primary rounded-3'><h5>Rating: ".substr($vote_ad_avg['vote_avg'], 0, 3)."</h5></div></div>";
+                                }
+                                ?>
+
+                                <?php 
+                                echo "<div class='card_padding_feature text-center'><div class='p-3 text-white bg-primary rounded-3'>";
+
+                                echo "<h5>Size: ".$space_item['dolzina']." x ".$space_item['sirina']."m"."</h5>";
+
+                                echo "</div></div>"; ?>
+
+
+                                <?php
+
+                                if($space_item['visina'] > 0){
+                                        echo "<div class='card_padding_feature text-center'><div class='p-3 text-white bg-primary rounded-3'><h5>Height: ".$space_item['visina']."</h5></div></div>";
                                 }
 
+                                echo "<div class='card_padding_feature text-center'><div class='p-3 text-white bg-primary rounded-3'><h5>Storage Type: ".$space_item['opis_k']."</h5></div></div>";
+
+                                echo "<div class='card_padding_feature text-center'><div class='p-3 text-white bg-primary rounded-3'><h5>You can access this space ".$space_item['gostota']." ".$time_access."</h5></div></div>";
+
                                 ?>
-                                <?php echo "<h3 class='text-justify font-weight-bold'>Size: </h3><h3 class='text-justify font-weight-bold text-info'>".$space_item['dolzina']." x ".$space_item['sirina']."</h3>"; ?>
-                                <?php if($space_item['visina'] > 0) {
-                                        echo "<h3 class='text-justify font-weight-bold'>Height: </h3><h3 class='text-justify font-weight-bold text-info'>".$space_item['visina']."</h3>";
-                                }
-                                ?>
-                                <?php echo "<h3 class='text-justify font-weight-bold'>Storage Type: </h3><h3 class='text-justify font-weight-bold text-info'>".$space_item['opis_k']."</h3>"; ?>
-                                <?php echo "<h3 class='text-justify font-weight-bold'>Access: </h3><h3 class='text-justify font-weight-bold text-info'>You can access this space ".$space_item['gostota']." ".$time_access."</h3>"; ?>
 
                         </p>
                 </div>
@@ -53,102 +66,76 @@
                 </div>
         </div>
         <hr class="featurette-divider">
-        <h2 class='text-justify font-weight-bold'>General information</h2>
+        <h2 class='text-justify display-5 fw-bold'>General information</h2>
 
         <table class="table text-center">
           <tbody>
             <tr>
-              <td><?php echo "<h4 class='text-justify font-weight-bold'>Country: </h4><h4 class='text-justify font-weight-bold text-info'>".$space_item['drzava']."</h4>"; ?></td>
-              <td><?php echo "<h4 class='text-justify font-weight-bold'>City: </h4><h4 class='text-justify font-weight-bold text-info'>".$space_item['p_stevilka'].", ".$space_item['mesto']."</h4>"; ?></td>
-              <td><?php echo "<h4 class='text-justify font-weight-bold'>Address: </h4><h4 class='text-justify font-weight-bold text-info'>".$space_item['naslov']."</h4>"; ?></td>
+              <td><?php echo "<h4 class='text-justify font-weight-bold'>Country: </h4><h4 class='text-justify font-weight-bold text-primary'>".$space_item['drzava']."</h4>"; ?></td>
+              <td><?php echo "<h4 class='text-justify font-weight-bold'>City: </h4><h4 class='text-justify font-weight-bold text-primary'>".$space_item['p_stevilka'].", ".$space_item['mesto']."</h4>"; ?></td>
+              <td><?php echo "<h4 class='text-justify font-weight-bold'>Address: </h4><h4 class='text-justify font-weight-bold text-primary'>".$space_item['naslov']."</h4>"; ?></td>
       </tr>
 </tbody>
 </table>
 
+
+
 <hr class="featurette-divider">
-<h2 class='text-justify font-weight-bold'>Features</h2>
-<table class="table text-center">
-  <tbody>
-    <tr>
-        <td><?php 
+<div class="container py-4">
+<h2 class='text-justify display-5 fw-bold'>Features</h2>
+<div class="row align-items-md-stretch">
+
+        <?php 
         if($space_item['vozilo'] == 'yes'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>This storage can store veichles. </h4>"; 
+                echo "<div class='card_padding_feature col-md-3'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>This storage can store veichles</h2></div></div>"; 
         } else if ($space_item['vozilo'] == 'no'){
-                echo "<h4 class='text-justify font-weight-bold'>This storage can't store veichles. </h4>"; 
+                echo "<div class='card_padding_feature col-md-3'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>This storage can't store veichles</h2></div></div>"; 
         }
 
-        ?></td>
-    </tr>
-
-<tr>
-        <td><?php 
         if($space_item['lokacija'] != 'none'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>".$space_item['lokacija']."</h4>"; 
-        }?></td>
-        <td><?php 
-                echo "<h4 class='text-justify font-weight-bold text-info'>".$space_item['opis_k']."</h4>"; ?>
-                        
-                </td>
-
-</tr>
-
-<tr>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>".$space_item['lokacija']."</h2></div></div>"; 
+        }
+        echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>".$space_item['opis_k']."</h2></div></div>"; 
         if($space_item['climate_controlled'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Climate controlled</h4>"; 
-        }?></td>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Climate controlled</h2></div></div>"; 
+        }
         if($space_item['smoke_free'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Smoke free</h4>"; 
-        }?></td>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Smoke free</h2></div></div>"; 
+        }
         if($space_item['smoke_detectors'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Smoke detektors</h4>"; 
-        }?></td>
-        <td><?php 
-        if($space_item['climate_controlled'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Climate controlled</h4>"; 
-        }?></td>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Smoke detectors</h2></div></div>"; 
+        }
         if($space_item['private_entrance'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Private entrance</h4>"; 
-        }?></td>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Private entrance</h2></div></div>"; 
+        }
         if($space_item['private_space'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Private space</h4>"; 
-        }?></td>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Private space</h2></div></div>"; 
+        }
         if($space_item['locked_area'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Locked area</h4>"; 
-        }?></td>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Loked area</h2></div></div>"; 
+        }
         if($space_item['pet_free'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Pet free</h4>"; 
-        }?></td>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Pet free</h2></div></div>"; 
+        }
         if($space_item['security_camera'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>Security camera</h4>"; 
-        }?></td>
-        <td><?php 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Security camera</h2></div></div>"; 
+        }
         if($space_item['no_stairs'] == '1'){
-                echo "<h4 class='text-justify font-weight-bold text-info'>No strairs</h4>"; 
-        }?></td>
-        
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>No strairs</h2></div></div>"; 
+        }
+        ?>
 
-</tr>
-</tbody>
-</table>
 
-<table class="table text-center">
-          <tbody>
-            <tr>
-              <td><?php echo "<h5 class='text-justify font-weight-bold'>Description: </h4><h4 class='text-justify font-weight-bold text-info'>".$space_item['opis']."</h5>"; ?></td>
-            </tr>
-</tbody>
-</table>
+<div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Description</h1>
+        <p class="col-md-8 fs-4"><?php echo $space_item['opis']; ?></p>
+      </div>
+    </div>
+
 
 <hr class="featurette-divider">
-<h2 class='text-justify font-weight-bold'>Rate this <?php echo $space_item['opis_k']; ?></h2>
+<h2 class='text-justify display-5 fw-bold'>Rate this <?php echo $space_item['opis_k']; ?></h2>
 
 
 
@@ -200,7 +187,7 @@
 
         
 <hr class="featurette-divider">
-<h2 class='text-justify font-weight-bold'>Comments</h2>
+<h2 class='text-justify display-5 fw-bold'>Comments</h2>
 
 <?php echo form_open('news/comment'); ?>
 

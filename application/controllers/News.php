@@ -271,7 +271,7 @@
 			        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
 	                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
-	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($lastAdded, NULL);
 	                $data['warning'] = "Your ad is now public, if you want to change the information presented or delete this ad you can do it via the profile page.";
 
 	                $data["opis"] = "News";
