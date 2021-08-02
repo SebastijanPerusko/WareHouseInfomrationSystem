@@ -83,7 +83,8 @@ class News_model extends CI_Model {
 
         	$subquery = $this->db->get_compiled_select();
 
-        	$query = $this->db->select('*')
+
+			$query = $this->db->select('*')
 	        				->from('oglas')
 	        				->join('lastnost', 'oglas.id = lastnost.id_o')
 	        				->join("($subquery) O", "O.id_o = oglas.id", 'left');
@@ -162,6 +163,23 @@ class News_model extends CI_Model {
 				$query = $this->db->order_by("cena", "asc");
 			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'high_to_low'){
 				$query = $this->db->order_by("cena", "desc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'low_to_high_r'){
+				$query = $this->db->order_by("avg_oglas", "asc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'high_to_low_r'){
+				$query = $this->db->order_by("avg_oglas", "desc");
+			}
+
+			if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '1_greater'){
+				$query = $this->db->where("avg_oglas >=", 1.0);
+			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '2_greater'){
+				$query = $this->db->where("avg_oglas >=", 2.0);
+			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '3_greater'){
+				$query = $this->db->where("avg_oglas >=", 3.0);
+			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '4_greater'){
+				echo "uhausdj";
+				$query = $this->db->where("avg_oglas >=", 4.0);
+			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '5_greater'){
+				$query = $this->db->where("avg_oglas >=", 5.0);
 			}
 
 	        $query = $this->db->get();
@@ -336,6 +354,23 @@ class News_model extends CI_Model {
 				$query = $this->db->order_by("cena", "asc");
 			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'high_to_low'){
 				$query = $this->db->order_by("cena", "desc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'low_to_high_r'){
+				$query = $this->db->order_by("avg_oglas", "asc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'high_to_low_r'){
+				$query = $this->db->order_by("avg_oglas", "desc");
+			}
+
+			if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '1_greater'){
+				$query = $this->db->where("avg_oglas >=", 1.0);
+			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '2_greater'){
+				$query = $this->db->where("avg_oglas >=", 2.0);
+			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '3_greater'){
+				$query = $this->db->where("avg_oglas >=", 3.0);
+			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '4_greater'){
+				echo "uhausdj";
+				$query = $this->db->where("avg_oglas >=", 4.0);
+			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '5_greater'){
+				$query = $this->db->where("avg_oglas >=", 5.0);
 			}
 
 			$query = $this->db->limit(12*($num),12*($num-1));

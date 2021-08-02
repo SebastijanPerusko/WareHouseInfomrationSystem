@@ -57,6 +57,7 @@
 				        $data['price_end'] = $this->input->post('end_price');
 				        $_SESSION['price_end'] = $this->input->post('end_price');
 				        $_SESSION['order_ad'] = $this->input->post('order_by');
+				        $_SESSION['rating_ad'] = $this->input->post('rating_order');
 
 				        if(isset($_POST['climate_controlled_button'])){
 				        	$_SESSION['climate_controlled'] = "1";

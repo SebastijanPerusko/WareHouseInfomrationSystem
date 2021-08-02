@@ -57,6 +57,19 @@
               <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "newest"){ echo "selected"; } ?> value="newest">Newest</option>
               <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "low_to_high"){ echo "selected"; } ?> value="low_to_high">Low to high price</option>
               <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "high_to_low"){ echo "selected"; } ?> value="high_to_low">High to low price</option>
+              <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "low_to_high_r"){ echo "selected"; } ?> value="low_to_high_r">Low to high rating</option>
+              <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "high_to_low_r"){ echo "selected"; } ?> value="high_to_low_r">High to low rating</option>
+            </select>
+          </li>
+
+          <li class="nav-item text-center index_padding_button">
+            <select class="form-select border border-primary" name="rating_order" aria-label="Default select example">
+              <option <?php if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == "rating_none"){ echo "selected"; } else if(!isset($_SESSION['rating_ad'])) { echo "selected";} ?> value="rating_none">Rating: None</option>
+              <option <?php if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == "1_greater"){ echo "selected"; } ?> value="1_greater">1 or greater</option>
+              <option <?php if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == "2_greater"){ echo "selected"; } ?> value="2_greater">2 or greater</option>
+              <option <?php if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == "3_greater"){ echo "selected"; } ?> value="3_greater">3 or greater</option>
+              <option <?php if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == "4_greater"){ echo "selected"; } ?> value="4_greater">4 or greater</option>
+              <option <?php if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == "5_greater"){ echo "selected"; } ?> value="5_greater">5</option>
             </select>
           </li>
 
