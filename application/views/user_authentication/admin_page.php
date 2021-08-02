@@ -39,9 +39,20 @@
                         }
                 ?>
 
+                <?php 
+                      $name_space_first;
+                      if($user_reservation_item['opis_k'] == 'self_s_u' || $user_reservation_item['opis_k'] == 'self_storage'){
+                        $name_space_first = 'Self storage unit';
+                      } else if ($user_reservation_item['opis_k'] == 'shipping_c' || $user_reservation_item['opis_k'] == 'shipping'){
+                        $name_space_first = 'Shipping container';
+                      } else {
+                        $name_space_first = ucfirst(str_replace("_", " ", $user_reservation_item['opis_k']));
+                      }
+                ?>
+
                 <main class="container ">
                   <div class="<?php echo " ".$status_color." " ?> p-5 rounded border">
-                    <h3><?php echo $user_reservation_item['opis_k']." in ".$user_reservation_item['mesto']." for ".$user_reservation_item['datum_od']; ?></h3>
+                    <h3><?php echo $name_space_first." in ".$user_reservation_item['mesto']." for ".$user_reservation_item['datum_od']; ?></h3>
                      <p class="lead"><span class="text-success"><?php echo "<span class='text-primary'>Status: ".$user_reservation_item['status']."</span>"; ?></span></p>
                     <p class="lead"><span class="text-success"><?php echo $message; ?></span></p>
 
@@ -63,6 +74,8 @@
 
         <?php endforeach; ?>
 
+
+
         <h2 class='text-justify font-weight-bold'>User that reserved your spaces</h2>
         <hr class="featurette-divider">
         <?php foreach ($other_reservation as $other_reservation_item): ?>
@@ -78,9 +91,20 @@
                         }
                 ?>
 
+                <?php 
+                      $name_space_first;
+                      if($other_reservation_item['opis_k'] == 'self_s_u' || $other_reservation_item['opis_k'] == 'self_storage'){
+                        $name_space_first = 'Self storage unit';
+                      } else if ($other_reservation_item['opis_k'] == 'shipping_c' || $other_reservation_item['opis_k'] == 'shipping'){
+                        $name_space_first = 'Shipping container';
+                      } else {
+                        $name_space_first = ucfirst(str_replace("_", " ", $other_reservation_item['opis_k']));
+                      }
+                ?>
+
                 <main class="container ">
                   <div class="<?php echo " ".$status_color." " ?> bg-light p-5 rounded shadow-sm border">
-                    <h3 class="font-weight-bold"><?php echo $other_reservation_item['ime']." reserved the ".$other_reservation_item['opis_k']." in ".$other_reservation_item['mesto'].", ".$other_reservation_item['naslov']; ?></h3>
+                    <h3 class="font-weight-bold"><?php echo $other_reservation_item['ime']." reserved the ".$name_space_first." in ".$other_reservation_item['mesto'].", ".$other_reservation_item['naslov']; ?></h3>
                     <p class="lead">Items that he want to store: <span class="font-weight-bold"><?php echo $other_reservation_item['stvari']; ?></span></p>
                     <p class="lead">How long does he want to book this space: <span class="font-weight-bold"><?php echo $other_reservation_item['cas_rezervacije']; ?></span></p>
                     <p class="lead">When will like to move in: <span class="font-weight-bold"><?php echo $other_reservation_item['datum_od']; ?></span></p>
@@ -112,11 +136,22 @@
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         <?php foreach ($user_space as $user_space): ?>
 
+                <?php 
+                      $name_space_first;
+                      if($user_space['opis_k'] == 'self_s_u' || $user_space['opis_k'] == 'self_storage'){
+                        $name_space_first = 'Self storage unit';
+                      } else if ($user_space['opis_k'] == 'shipping_c' || $user_space['opis_k'] == 'shipping'){
+                        $name_space_first = 'Shipping container';
+                      } else {
+                        $name_space_first = ucfirst(str_replace("_", " ", $user_space['opis_k']));
+                      }
+                ?>
+
 
                 <div class="col-3">
                 <div class="card mb-4 rounded-3 shadow-sm">
                   <div class="card-header py-3">
-                    <h5 class="my-0 fw-normal"><?php echo $user_space['opis_k']." in ".$user_space['mesto']; ?></h5>
+                    <h5 class="my-0 fw-normal"><?php echo $name_space_first." in ".$user_space['mesto']; ?></h5>
                   </div>
                   <div class="card-body">
 

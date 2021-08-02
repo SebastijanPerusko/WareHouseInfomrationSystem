@@ -6,19 +6,19 @@
     <h1 class="mb-3 h3 fw-normal">Change password</h1>
 
     <div class="form-floating">
-      <input type="password" name="password_old" id="password_old" placeholder="**********">
+      <input class = "form-control" type="password" name="password_old" id="password_old" placeholder="**********">
       <label for="floatingInput">Old password</label>
     </div>
 
     <p id = "error_m"></p>
 
     <div class="form-floating">
-      <input  type="password" name="password_new1" id="password_reg" placeholder="**********">
+      <input class = "form-control" type="password" name="password_new1" id="password_reg" placeholder="**********">
       <label for="floatingPassword">New password</label>
     </div>
 
     <div class="form-floating">
-      <input  type="password" onchange="password_check()" name="password_new2" id="password_reg2" placeholder="**********">
+      <input class = "form-control" type="password" onchange="password_check()" name="password_new2" id="password_reg2" placeholder="**********">
       <label for="floatingPassword">Repeat new password</label>
     </div>
 

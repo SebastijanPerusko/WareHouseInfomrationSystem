@@ -9,7 +9,7 @@
 
 
          <div id = "select_type_container" class = "col-12 text-center">
-            <h4 class="mb-3">General information about you space</h4>
+            <h4 class="mb-3 display-6 fw-bold">General information about you space</h4>
             <div id = "div_type_select" class = "text-center">
                <label for="type_select_radio" class = "font-weight-bold">Can your space store a vehicle?</label><br>
                <div id="type_select" class="btn-group" data-toggle="buttons">
@@ -132,7 +132,7 @@
 
 
          <div id = "" class = "col-12 text-center">
-            <h4 class="mb-3">General information about you space</h4><br>
+            <h4 class="mb-3 display-6 fw-bold">Location of your space</h4><br>
          </div>
          <div class="col-md-3">
             <div class="form-floating">
@@ -162,22 +162,20 @@
             </div>
          </div>
 
-         <div class = "border rounded">
+         <div class = "border rounded text-center">
             <div id = "" class = "col-md-3 text-center form-check-inline align-middle">
-               <h4 class="mb-3">Describe your space</h4><br>
+               <h4 class="mb-3 display-6 fw-bold">Describe your space</h4><br>
             </div>
             <div id = "" class = "col-5 text-center form-check-inline">
                <div class="form-floating mx-auto">
-                  <textarea class="form-control border border-primary" id = "input_description" name="text"></textarea>
+                  <textarea class="form-control border border-primary" id = "input_description" name="text" rows="20"></textarea>
                   <label for="input_description">Description</label>
                </div>
             </div>
          </div>
 
-         <div class = "border rounded">
-            <div id = "" class = "col-md-3 text-center form-check-inline align-middle">
-               <h4 class="mb-3">How big is your space</h4><br>
-            </div>
+         <div class = "border rounded text-center">
+            
             <div class="form-check-inline text-center">
                <div class="form-floating">
                   <input class="form-control border border-primary" id = "input_length" class="form-control" type="text" name="length">
@@ -197,12 +195,15 @@
                   <input class="form-control border border-primary" id = "input_height" class="form-control" type="text" name="height"/>
                   <label for="input_height">Height</label>
                </div>
+            </div>
+            <div id = "" class = "col-md-3 text-center form-check-inline align-middle">
+               <h4 class="mb-3 display-6 fw-bold">How big is your space</h4><br>
             </div><br>
          </div><br>
 
          <div class = "border rounded">
             <div id = "" class = "col-5 text-center form-check-inline align-middle">
-               <h4 class="mb-3">Set the price</h4><br>
+               <h4 class="mb-3 display-6 fw-bold">Set the price per month</h4><br>
             </div>
             <div id = "" class = "text-center col-md-3 form-check-inline">
                <div class="form-floating">
@@ -215,7 +216,7 @@
 
          <div class = "border rounded">
             <div id = "" class = "col-12 text-center">
-               <h4 class="mb-3">Visits</h4><br>
+               <h4 class="mb-3 display-6 fw-bold">Visits</h4><br>
             </div>
             <div id = "" class = "col-12 text-center">
             <label for="need_owner">Is the space accessible only with the owner? So the user will have to make an appointment before visiting this space?</label>
@@ -260,7 +261,7 @@
 
          <div class ="border rounded">
             <div id = "" class = "col-12 text-center">
-               <h4 class="mb-3">Select the Features</h4><br>
+               <h4 class="mb-3 display-6 fw-bold">Select the Features</h4><br>
             </div>
 
             <div id = "" class = "col-12 text-center">
@@ -295,7 +296,7 @@
 
          <div class = "border rounded">
             <div id = "" class = "col-12 text-center">
-               <h4 class="mb-3">Load an image of your space</h4><br>
+               <h4 class="mb-3 display-6 fw-bold">Load an image of your space</h4><br>
             </div>
             <div id = "" class = "col-12 text-center">
                <input type="file" name="userfile" size="2000" />

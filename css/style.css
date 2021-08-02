@@ -122,3 +122,9 @@ i{
 .text-index-white {
     color: white;
 }
+
+.index_padding_button {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}

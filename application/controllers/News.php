@@ -56,6 +56,65 @@
 				        $_SESSION['price_from'] = $this->input->post('start_price');
 				        $data['price_end'] = $this->input->post('end_price');
 				        $_SESSION['price_end'] = $this->input->post('end_price');
+				        $_SESSION['order_ad'] = $this->input->post('order_by');
+
+				        if(isset($_POST['climate_controlled_button'])){
+				        	$_SESSION['climate_controlled'] = "1";
+				        } else {
+				        	$_SESSION['climate_controlled'] = "0";
+				        }
+
+				        if(isset($_POST['smoke_free_button'])){
+				        	$_SESSION['smoke_free'] = "1";
+				        } else {
+				        	$_SESSION['smoke_free'] = "0";
+				        }
+
+				        if(isset($_POST['smoke_detectors_button'])){
+				        	$_SESSION['smoke_detectors'] = "1";
+				        } else {
+				        	$_SESSION['smoke_detectors'] = "0";
+				        }
+
+				        if(isset($_POST['private_entrance_button'])){
+				        	$_SESSION['private_entrance'] = "1";
+				        } else {
+				        	$_SESSION['private_entrance'] = "0";
+				        }
+
+				        if(isset($_POST['private_space_button'])){
+				        	$_SESSION['private_space'] = "1";
+				        } else {
+				        	$_SESSION['private_space'] = "0";
+				        }
+
+				        if(isset($_POST['locked_area_button'])){
+				        	$_SESSION['locked_area'] = "1";
+				        } else {
+				        	$_SESSION['locked_area'] = "0";
+				        }
+
+				        if(isset($_POST['pet_free_button'])){
+				        	$_SESSION['pet_free'] = "1";
+				        } else {
+				        	$_SESSION['pet_free'] = "0";
+				        }
+
+				        if(isset($_POST['security_camera_button'])){
+				        	$_SESSION['security_camera'] = "1";
+				        } else {
+				        	$_SESSION['security_camera'] = "0";
+				        }
+
+				        if(isset($_POST['no_strairs_button'])){
+				        	$_SESSION['no_strairs'] = "1";
+				        } else {
+				        	$_SESSION['no_strairs'] = "0";
+				        }
+
+
+
+
 				        $data['num_space'] = $this->news_model->get_num_space_form();
 				        if($num_page != NULL){
 				        	$data['current_page'] = $num_page; 
@@ -330,7 +389,7 @@
 			        $data['username'] = $this->session->userdata['logged_in']['username'];
 			        $data['email'] = $this->session->userdata['logged_in']['email'];
 			        $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
-			        $data['warning'] = "You have successfully posted your vote. ";
+			        $data['warning'] = "You have successfully created a reservation. ";
 
 
 			        /*reservation of the user*/
@@ -344,6 +403,12 @@
 			        $this->load->view('user_authentication/admin_page', $data);
 			        $this->load->view('templates/footer');
 			    }
+			}
+
+			public function home(){
+				$this->load->view('templates/header');
+			    $this->load->view('pages/home');
+			    $this->load->view('templates/footer');
 			}
 
 			public function delete($slug = NULL)
@@ -658,7 +723,6 @@
 
 				    $path_img = '';
 				    if(isset($_FILES['userfile'])){
-				    	echo "Enter";
 				    	$config['upload_path']          = './uploads/';
 		                $config['allowed_types']        = 'gif|jpg|png';
 		                $config['max_size']             = 2000;
@@ -670,8 +734,6 @@
 		                if ( ! $this->upload->do_upload('userfile'))
 		                {
 		                        $error = array('error' => $this->upload->display_errors());
-
-	                        	$this->load->view('upload_form', $error);
 		                }
 		                else
 		                {
@@ -689,8 +751,10 @@
 
 			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
 	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($this->input->post('id_space'), NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($this->input->post('id_space'), NULL);
+	                $data['warning'] = "Your ad has been successfully edited. ";
 
-	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
 	                $this->load->view('templates/header', $data);
 	                /*var_dump($data["news"]);*/
@@ -698,7 +762,6 @@
 	                $this->load->view('templates/footer');
 				} else if($num == NULL){
 					echo $this->form_validation->run() == TRUE;
-					echo "ushaud";
 					$this->load->view('news/success');
 				} else {
 					$data['space'] = $this->news_model->get_news($num);

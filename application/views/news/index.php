@@ -26,14 +26,14 @@
         echo form_open('news/index', $attributes); 
         ?>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <input class="form-control" name = "city_name" type="text" placeholder="Select the city" 
+          <li class="nav-item index_padding_button">
+            <input class="form-control border border-primary" name = "city_name" type="text" placeholder="Select the city" 
             value="<?php if(isset($_SESSION['city_post'])){ echo $_SESSION['city_post']; } else { echo "";} ?>" 
             aria-label="Search">
           </li>
 
-          <li class="nav-item text-center">
-            <select class="form-select" name="type_storage" aria-label="Default select example">
+          <li class="nav-item text-center index_padding_button">
+            <select class="form-select border border-primary" name="type_storage" aria-label="Default select example">
               <option <?php if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == "all"){ echo "selected"; } else if(!isset($point_value)) { echo "selected";} ?> value="all">All storages</option>
               <option <?php if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == "veichle"){ echo "selected"; } ?> value="veichle">Veichle storage</option>
               <option <?php if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == "object"){ echo "selected"; } ?> value="object">Object storage</option>
@@ -41,8 +41,8 @@
           </li>
 
 
-          <li class="nav-item text-center">
-            <select class="form-select" name="size_storage">
+          <li class="nav-item text-center index_padding_button">
+            <select class="form-select border border-primary" name="size_storage">
               <option <?php if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == "any_size"){ echo "selected"; } else if(!isset($point_value_size)) { echo "selected";} ?> value="any_size">All sizes</option>
               <option <?php if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == "extra_small"){ echo "selected"; } ?> value="extra_small">Extra small - less than 5x5</option>
               <option <?php if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == "small"){ echo "selected"; } ?> value="small">Small - from 5x5 to 10x10 </option>
@@ -50,27 +50,89 @@
               <option <?php if(isset($_SESSION['point_value_size']) && $_SESSION['point_value_size'] == "large"){ echo "selected"; } ?> value="large">Large - from 15x15</option>
             </select>
           </li>
-          
 
+          <li class="nav-item text-center index_padding_button">
+            <select class="form-select border border-primary" name="order_by" aria-label="Default select example">
+              <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "oldest"){ echo "selected"; } else if(!isset($_SESSION['order_ad'])) { echo "selected";} ?> value="oldest">Oldest</option>
+              <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "newest"){ echo "selected"; } ?> value="newest">Newest</option>
+              <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "low_to_high"){ echo "selected"; } ?> value="low_to_high">Low to high price</option>
+              <option <?php if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == "high_to_low"){ echo "selected"; } ?> value="high_to_low">High to low price</option>
+            </select>
+          </li>
 
-
+  
           <!--<li class="nav-item">
             <p>Price from</p>
           </li>-->
-          <li class="nav-item">
-            <input class="form-control col-lg-1" name = "start_price" type="text" placeholder = "Price from" value="<?php if(isset($_SESSION['price_from'])){ echo $_SESSION['price_from']; } else { echo "";} ?>" aria-label="Search">
+          <li class="nav-item index_padding_button">
+            <input class="form-control col-md-2 border border-primary" name = "start_price" type="text" placeholder = "Price from" value="<?php if(isset($_SESSION['price_from'])){ echo $_SESSION['price_from']; } else { echo "";} ?>" aria-label="Search">
           </li>
           <!--<li class="nav-item align-middle">
             <p> to </p>
           </li>-->
-          <li class="nav-item">
-            <input class="form-control col-lg-5" name = "end_price" type="text" placeholder = "Price to" value="<?php if(isset($_SESSION['price_end'])){ echo $_SESSION['price_end']; } else { echo "";} ?>" aria-label="Search">
+          <li class="nav-item index_padding_button">
+            <input class="form-control col-lg-5 border border-primary" name = "end_price" type="text" placeholder = "Price to" value="<?php if(isset($_SESSION['price_end'])){ echo $_SESSION['price_end']; } else { echo "";} ?>" aria-label="Search">
           </li>
-          <li class="nav-item">
-            <button type="button" class="btn btn-primary">Primary</button>
+
+          </ul>
+
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item index_padding_button text-center align-middle">
+            <h5 class = "fw-bold text-center align-middle">Features: </h5>
           </li>
-          <li class="nav-item">
-            <input id = "form_search_b" type="submit" class="btn btn-primary" name="submit1" value="Find" />
+
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['climate_controlled']) && $_SESSION['climate_controlled'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "climate_controlled_button" id="climate_controlled_check">
+            <label class="btn btn-outline-primary" for="climate_controlled_check">Climate controlled</label><br>
+          </li>
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['smoke_free']) && $_SESSION['smoke_free'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "smoke_free_button" id="smoke_free_button">
+            <label class="btn btn-outline-primary" for="smoke_free_button">Smoke free</label><br>
+          </li>
+
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['smoke_detectors']) && $_SESSION['smoke_detectors'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "smoke_detectors_button" id="smoke_detectors_button">
+            <label class="btn btn-outline-primary" for="smoke_detectors_button">Smoke detectors</label><br>
+          </li>
+
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['private_entrance']) && $_SESSION['private_entrance'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "private_entrance_button" id="private_entrance_button">
+            <label class="btn btn-outline-primary" for="private_entrance_button">Private entrance</label><br>
+          </li>
+
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['private_space']) && $_SESSION['private_space'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "private_space_button" id="private_space_button">
+            <label class="btn btn-outline-primary" for="private_space_button">Private space</label><br>
+          </li>
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['locked_area']) && $_SESSION['locked_area'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "locked_area_button" id="locked_area_button">
+            <label class="btn btn-outline-primary" for="locked_area_button">Locked area</label><br>
+          </li>
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['pet_free']) && $_SESSION['pet_free'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "pet_free_button" id="pet_free_button">
+            <label class="btn btn-outline-primary" for="pet_free_button">Pet free</label><br>
+          </li>
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['security_camera']) && $_SESSION['security_camera'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "security_camera_button" id="security_camera_button">
+            <label class="btn btn-outline-primary" for="security_camera_button">Security camera</label><br>
+          </li>
+
+          <li class="nav-item index_padding_button">
+            <input <?php if(isset($_SESSION['no_strairs']) && $_SESSION['no_strairs'] == '1'){ echo "checked"; } ?> type="checkbox" class="btn-check" name = "no_strairs_button" id="no_strairs_button">
+            <label class="btn btn-outline-primary" for="no_strairs_button">No stairs</label><br>
+          </li>
+
+          <li class="nav-item index_padding_button">
+            <input id = "form_search_b" type="submit" class="btn btn-primary h-100 border border-danger" name="submit1" value="Find" />
           </li>
         </ul>
 
@@ -96,12 +158,23 @@
           <div class="card shadow-sm">
             <div class="container_image_index">
               <img class="rounded-lg mx-auto d-block" src="<?php echo base_url($space_item['pot_slika']);?>" width="100%" height="225" alt="...">
-              <div class="text-over-image bottom-left_index rounded-pill"><h3 class=""><?php echo $space_item['sirina']."X".$space_item['dolzina']; ?></h3></div>
-              <div class="text-over-image bottom-right_index rounded-pill"><h3 class=""><?php echo $space_item['cena']."/month"; ?></h3></div>
+              <div class="text-over-image bottom-left_index rounded-pill"><h3 class="fw-bold"><?php echo $space_item['sirina']."X".$space_item['dolzina']; ?></h3></div>
+              <div class="text-over-image bottom-right_index rounded-pill"><h3 class="fw-bold"><?php echo $space_item['cena']."&euro;/month"; ?></h3></div>
             </div>
 
+            <?php 
+              $name_space_first;
+              if($space_item['opis_k'] == 'self_s_u' || $space_item['opis_k'] == 'self_storage'){
+                $name_space_first = 'Self storage unit';
+              } else if ($space_item['opis_k'] == 'shipping_c' || $space_item['opis_k'] == 'shipping'){
+                $name_space_first = 'Shipping container';
+              } else {
+                $name_space_first = ucfirst(str_replace("_", " ", $space_item['opis_k']));
+              }
+            ?>
+
             <div class="card-body bg-primary">
-              <p class="card-text text-index-white font-weight-bold"><?php echo $space_item['dolzina']."x"; echo $space_item['sirina']." "; echo ucfirst(str_replace("_", " ", $space_item['opis_k']))." in ".$space_item['mesto'].", ".$space_item['drzava']; ?></p>
+              <p class="card-text text-index-white font-weight-bold fw-bold"><?php echo $space_item['dolzina']."x"; echo $space_item['sirina']." "; echo $name_space_first." in ".$space_item['mesto'].", ".$space_item['drzava']; ?></p>
               
             </div>
           </div>

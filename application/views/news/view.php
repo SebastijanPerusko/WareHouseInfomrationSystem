@@ -19,14 +19,25 @@
 
                 <?php
                 if (isset($warning)) {
-                    echo "<h2 class='text-justify font-weight-bold text-warning'>";
+                    echo "<h2 class='text-justify font-weight-bold text-danger'>";
                     echo $warning;
                     echo "</h2>";
                 } ?>
+ 
+                <?php 
+                      $name_space_first;
+                      if($space_item['opis_k'] == 'self_s_u' || $space_item['opis_k'] == 'self_storage'){
+                        $name_space_first = 'Self storage unit';
+                      } else if ($space_item['opis_k'] == 'shipping_c' || $space_item['opis_k'] == 'shipping'){
+                        $name_space_first = 'Shipping container';
+                      } else {
+                        $name_space_first = ucfirst(str_replace("_", " ", $space_item['opis_k']));
+                      }
+                ?>
 
                 <div class="row featurette">
                       <div class="col-md-3 order-md-2">
-                        <h2 class="featurette-heading display-5 fw-bold"><?php echo $space_item['opis_k']." in ".$space_item['mesto']; ?><div class="text-muted">
+                        <h2 class="featurette-heading display-5 fw-bold"><?php echo $name_space_first." in ".$space_item['mesto']; ?><div class="text-muted">
                                 <?php echo form_open('news/reserve/'.$space_item['id_o']); ?>
                                 <input class="w-100 btn btn-primary border border-danger" type="submit" name="submit" value="Reserve this space" />
                         </form></div></h2>

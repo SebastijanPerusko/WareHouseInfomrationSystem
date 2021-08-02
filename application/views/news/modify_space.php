@@ -4,21 +4,22 @@
       <?php echo validation_errors(); ?>
       <?php echo form_open_multipart('news/edit_space'); ?>
 
-      <div class="py-5 text-center">
-         <h2>Checkout form</h2>
-         <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
-      </div>
 
       <div class="row">
 
 
          <div id = "select_type_container" class = "col-12 text-center">
-            <h4 class="mb-3">General information about you space</h4>
+            <h4 class="mb-3 display-6 fw-bold">General information about you space</h4>
             <div id = "div_type_select" class = "text-center">
                <label for="type_select_radio" class = "font-weight-bold">Can your space store a vehicle?</label><br>
                <div id="type_select" class="btn-group" data-toggle="buttons">
-                  <input <?php if($space['vozilo'] == 'yes'){ echo "checked"; } ?> id = "type_select_radio_yes" class="btn-check" type="radio" name="type_select_radio" value="yes" onchange="handleYesNo();"/> Yes
-                  <input <?php if($space['vozilo'] == 'no'){ echo "checked"; } ?> id = "type_select_radio_no" class="btn-check" type="radio"  name="type_select_radio" value="no" onchange="handleYesNo();"/> No
+
+                  <input <?php if($space['vozilo'] == 'yes'){ echo "checked"; } ?> type="radio" class="btn-check" id = "type_select_radio_yes"  name="type_select_radio" value="yes" onchange="handleYesNo();"> 
+                  <label class="btn btn-outline-primary" for="type_select_radio_yes">YES</label><br>
+
+                  <input <?php if($space['vozilo'] == 'no'){ echo "checked"; } ?> id = "type_select_radio_no" class="btn-check" type="radio"  name="type_select_radio" value="no" onchange="handleYesNo();"/> 
+                  <label class="btn btn-outline-primary" for="type_select_radio_no">NO</label>
+
                </div>
             </div>
 
@@ -26,30 +27,31 @@
             <div <?php if($space['vozilo'] == 'no'){ echo "style='display: block !important;'"; } else { echo "style='display: none !important;'"; } ?> id = "div_type_no_select" class = "col-12 text-center">
                <label for="type_no_select" class = "font-weight-bold">Which best describes your storage?</label><br>
                <div id="type_select_no" class="text-center" data-toggle="buttons">
-                  <label class="btn btn-default active">
-                  <input <?php if($space['opis_k'] == 'attic'){ echo "checked"; } ?> type="radio" name="type_select_no" value="attic"/> Attic
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'basement'){ echo "checked"; } ?> type="radio"  name="type_select_no" value="basement"/> Basement
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'bedroom'){ echo "checked"; } ?> type="radio"  name="type_select_no" value="bedroom"/> Bedroom
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'garage'){ echo "checked"; } ?> type="radio"  name="type_select_no" value="garage"/> Garage
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'self_s_u'){ echo "checked"; } ?> type="radio"  name="type_select_no" value="self_s_u"/> Self storage unit
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'shed'){ echo "checked"; } ?> type="radio"  name="type_select_no" value="shed"/> Shed
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'shipping_c'){ echo "checked"; } ?> type="radio"  name="type_select_no" value="shipping_c"/> Shipping container
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'warehouse'){ echo "checked"; } ?> type="radio"  name="type_select_no" value="warehouse"/> Warehouse
-                  </label>
+
+                  <input <?php if($space['opis_k'] == 'attic'){ echo "checked"; } ?> type="radio" class="btn-check" name="type_select_no" id = "attic_no_select" value="attic">
+                  <label class="btn btn-outline-primary" for="attic_no_select">Attic</label>
+
+                  <input <?php if($space['opis_k'] == 'basement'){ echo "checked"; } ?> type="radio" class="btn-check"  name="type_select_no"  id = "basement_no_select" value="basement">
+                  <label class="btn btn-outline-primary" for="basement_no_select">Basement</label>
+
+                  <input <?php if($space['opis_k'] == 'bedroom'){ echo "checked"; } ?> type="radio" class="btn-check"  name="type_select_no" id = "bedroom_no_select" value="bedroom">
+                  <label class="btn btn-outline-primary" for="bedroom_no_select">Bedroom</label>
+
+                  <input <?php if($space['opis_k'] == 'garage'){ echo "checked"; } ?> type="radio" class="btn-check" name="type_select_no" id = "garage_no_select" value="garage">
+                  <label class="btn btn-outline-primary" for="garage_no_select">Garage</label>
+
+                  <input <?php if($space['opis_k'] == 'self_s_u'){ echo "checked"; } ?> type="radio" class="btn-check" name="type_select_no" id = "self_s_u_no_select" value="self_s_u">
+                  <label class="btn btn-outline-primary" for="self_s_u_no_select">Self storage unit</label>
+
+                  <input <?php if($space['opis_k'] == 'shed'){ echo "checked"; } ?> type="radio" class="btn-check" name="type_select_no" id = "shed_no_select" value="shed">
+                  <label class="btn btn-outline-primary" for="shed_no_select">Shed</label>
+
+                  <input <?php if($space['opis_k'] == 'shipping_c'){ echo "checked"; } ?> type="radio" class="btn-check" name="type_select_no" id = "shipping_c_no_select" value="shipping_c"> 
+                  <label class="btn btn-outline-primary" for="shipping_c_no_select">Shipping container</label>
+
+                  <input <?php if($space['opis_k'] == 'warehouse'){ echo "checked"; } ?> type="radio" class="btn-check" name="type_select_no" id = "warehouse_no_select" value="warehouse">
+                  <label class="btn btn-outline-primary" for="warehouse_no_select">Warehouse</label>
+
                </div>
             </div>
 
@@ -59,48 +61,51 @@
             <div <?php if($space['vozilo'] == 'yes'){ echo "style='display: block !important;'"; } else { echo "style='display: none !important;'"; } ?> id = "div_location_select" class = "col-12 text-center">
                <label for="location_select" class = "font-weight-bold">Which best describes your space?</label><br>
                <div id="type_select_yes" class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-default active">
-                  <input <?php if($space['lokacija'] == 'indoor'){ echo "checked"; } ?> id = "location_select_radio_i" type="radio" name="type_select_yes" value="indoor" onchange="handleLocation();"/> Indoor
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['lokacija'] == 'cover'){ echo "checked"; } ?> id = "location_select_radio_c" type="radio"  name="type_select_yes" value="cover" onchange="handleLocation();"/> Outdoor-covered
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['lokacija'] == 'uncover'){ echo "checked"; } ?> id = "location_select_radio_u" type="radio"  name="type_select_yes" value="uncover" onchange="handleLocation();"/> Outdoor-uncovered
-                  </label>
+
+
+                  <input <?php if($space['lokacija'] == 'indoor'){ echo "checked"; } ?> id = "location_select_radio_i" class="btn-check" type="radio" name="type_select_yes" value="indoor" onchange="handleLocation();"> 
+                  <label class="btn btn-outline-primary" for="location_select_radio_i">Indoor</label>
+ 
+                  <input <?php if($space['lokacija'] == 'cover'){ echo "checked"; } ?> id = "location_select_radio_c" class="btn-check" type="radio"  name="type_select_yes" value="cover" onchange="handleLocation();"/> 
+                  <label class="btn btn-outline-primary" for="location_select_radio_c">Outdoor-covered</label>
+
+                  <input <?php if($space['lokacija'] == 'uncover'){ echo "checked"; } ?> id = "location_select_radio_u" class="btn-check" type="radio"  name="type_select_yes" value="uncover" onchange="handleLocation();"/>
+                  <label class="btn btn-outline-primary" for="location_select_radio_u">Outdoor-uncovered</label>
+
                </div>
             </div>
+
 
             <div <?php if($space['lokacija'] == 'indoor'){ echo "style='display: block !important;'"; } else { echo "style='display: none !important;'"; } ?> id = "div_indoor_select" class = "col-12 text-center">
                <label for="indoor_select" class = "font-weight-bold">Which best describes your indoor vehicle storage?</label><br>
                <div id="indoor_select" class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-default active">
-                  <input <?php if($space['opis_k'] == 'garage'){ echo "checked"; } ?> type="radio" name="indoor_select" value="garage"/> Garage
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'self_storage'){ echo "checked"; } ?> type="radio"  name="indoor_select" value="self_storage"/> Self storage unit
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'shed'){ echo "checked"; } ?> type="radio"  name="indoor_select" value="shed"/> Shed
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'shipping'){ echo "checked"; } ?> type="radio"  name="indoor_select" value="shipping"/> Shipping container
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'warehouse'){ echo "checked"; } ?> type="radio"  name="indoor_select" value="warehouse"/> Warehouse
-                  </label>
+
+                  <input <?php if($space['opis_k'] == 'garage'){ echo "checked"; } ?> type="radio" class="btn-check" id = "garage_indoor_select" name="indoor_select" value="garage">
+                  <label class="btn btn-outline-primary" for="garage_indoor_select">Garage</label>
+
+                  <input <?php if($space['opis_k'] == 'self_storage'){ echo "checked"; } ?> type="radio" class="btn-check" id = "self_storage_indoor_select" name="indoor_select" value="self_storage"/>
+                  <label class="btn btn-outline-primary" for="self_storage_indoor_select">Self storage unit</label>
+
+                  <input <?php if($space['opis_k'] == 'shed'){ echo "checked"; } ?> type="radio" class="btn-check" id = "shed_indoor_select" name="indoor_select" value="shed"/>
+                  <label class="btn btn-outline-primary" for="shed_indoor_select">Shed</label>
+
+                  <input <?php if($space['opis_k'] == 'shipping'){ echo "checked"; } ?> type="radio" class="btn-check" id = "shipping_indoor_select" name="indoor_select" value="shipping"/>
+                  <label class="btn btn-outline-primary" for="shipping_indoor_select">Shipping container</label>
+
+                  <input <?php if($space['opis_k'] == 'warehouse'){ echo "checked"; } ?> type="radio" class="btn-check" id = "warehouse_indoor_select" name="indoor_select" value="warehouse"/>
+                  <label class="btn btn-outline-primary" for="warehouse_indoor_select">Warehouse</label>
                </div>
             </div>
 
             <div <?php if($space['lokacija'] == 'cover'){ echo "style='display: block !important;'"; } else { echo "style='display: none !important;'"; } ?> id = "div_cover_select" class = "col-12 text-center">
                <label for="cover_select" class = "font-weight-bold">Which best describes your covered outdoor vehicle storage?</label><br>
                <div id="cover_select" class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-default active">
-                  <input <?php if($space['opis_k'] == 'carport'){ echo "checked"; } ?> type="radio" name="cover_select" value="carport"/> Carport
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'parking_lot'){ echo "checked"; } ?> type="radio"  name="cover_select" value="parking_lot"/> Parking lot
-                  </label>
+
+                  <input <?php if($space['opis_k'] == 'carport'){ echo "checked"; } ?> type="radio" class="btn-check" id = "carport_cover_select" name="cover_select" value="carport"/>
+                  <label class="btn btn-outline-primary" for="carport_cover_select">Carport</label>
+
+                  <input <?php if($space['opis_k'] == 'parking_lot'){ echo "checked"; } ?> type="radio" name="cover_select" class="btn-check" id = "parking_lot_cover_select" value="parking_lot"/>
+                  <label class="btn btn-outline-primary" for="parking_lot_cover_select">Parking lot</label>
                </div>
             </div>
 
@@ -108,162 +113,198 @@
             <div <?php if($space['lokacija'] == 'uncover'){ echo "style='display: block !important;'"; } else { echo "style='display: none !important;'"; } ?> id = "div_uncover_select" class = "col-12 text-center">
                <label for="uncover_select" class = "font-weight-bold">Which best describes your uncovered outdoor vehicle storage?</label><br>
                <div id="uncover_select" class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-default active">
-                  <input <?php if($space['opis_k'] == 'driveway'){ echo "checked"; } ?> type="radio" name="uncover_select" value="driveway"/> Driveway
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'parking_lot'){ echo "checked"; } ?> type="radio"  name="uncover_select" value="parking_lot"/> Parking lot
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'unpawed_lot'){ echo "checked"; } ?> type="radio"  name="uncover_select" value="unpawed_lot"/> Unpawed lot
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['opis_k'] == 'street_parking'){ echo "checked"; } ?> type="radio"  name="uncover_select" value="street_parking"/> Parking lot
-                  </label>
-               </div>
-            </div>
-         </div>
 
-         <div id = "" class = "col-12 text-center">
-            <h4 class="mb-3">General information about you space</h4><br>
-         </div>
-         <div class="col-md-3">
-            <label for="country">Country</label>
-            <input class="form-control" type="text" name="country" value = "<?php echo $space['drzava']; ?>"/><br />
-         </div>
+                  <input <?php if($space['opis_k'] == 'driveway'){ echo "checked"; } ?> type="radio" class="btn-check" id = "driveway_uncover_select" name="uncover_select" value="driveway"/>
+                  <label class="btn btn-outline-primary" for="driveway_uncover_select">Driveway</label>
 
-         <div class="col-md-3">
-             <label for="city">City</label>
-            <input class="form-control" type="text" name="city" value = "<?php echo $space['mesto']; ?>"/><br />
-         </div>
+                  <input <?php if($space['opis_k'] == 'parking_lot'){ echo "checked"; } ?> type="radio"  name="uncover_select" class="btn-check" id = "parking_lot_uncover_select" value="parking_lot"/> 
+                  <label class="btn btn-outline-primary" for="parking_lot_uncover_select">Parking lot</label>
 
-         <div class="col-md-3">
-            <label for="paddress">postal address</label>
-            <input class="form-control" type="text" name="paddress" value = "<?php echo $space['p_stevilka']; ?>"/><br />
-         </div>
-
-         <div class="col-md-3">
-            <label for="Address">Address</label>
-            <input class="form-control" type="text" name="address" value = "<?php echo $space['naslov']; ?>"/><br />
-         </div>
+                  <input <?php if($space['opis_k'] == 'unpawed_lot'){ echo "checked"; } ?> type="radio"  name="uncover_select" class="btn-check" id = "unpawed_lot_uncover_select" value="unpawed_lot"/> 
+                  <label class="btn btn-outline-primary" for="unpawed_lot_uncover_select">Unpawed lot</label>
 
 
-         <div id = "" class = "col-12 text-center">
-            <h4 class="mb-3">Describe your space</h4><br>
-         </div>
-         <div id = "" class = "col-12 text-center">
-         <label for="text">Description</label>
-         <textarea class="form-control" name="text"><?php echo $space['opis']; ?></textarea>
-         </div>
-
-
-         <div id = "" class = "col-12 text-center">
-            <h4 class="mb-3">How big is your space</h4><br>
-         </div>
-         <div class="col-md-5">
-            <label for="length">Length</label>
-            <input class="form-control" type="text" name="length" value = "<?php echo $space['dolzina']; ?>" /><br />
-         </div>
-
-         <div class="col-md-4">
-            <label for="width">Width</label>
-            <input class="form-control" type="text" name="width" value = "<?php echo $space['sirina']; ?>"/><br />
-         </div>
-
-         <div class="col-md-3">
-            <label for="height">Height</label>
-            <input class="form-control" type="text" name="height" value = "<?php echo $space['visina']; ?>"/><br />
-         </div>
-            
-            
-            
-         </div>
-
-
-         <div id = "" class = "col-12 text-center">
-            <h4 class="mb-3">Set the price</h4><br>
-         </div>
-         <div id = "" class = "col-12 text-center">
-         <label for="price">Price</label>
-         <input type="number" name="price" value = "<?php echo $space['cena']; ?>"/><br />
-         </div>
-
-
-         <div id = "" class = "col-12 text-center">
-            <h4 class="mb-3">Visits</h4><br>
-         </div>
-         <div id = "" class = "col-12 text-center">
-         <label for="need_owner">Accessible only with the owner</label>
-         <input <?php if($space['lastnik_ogled'] == 'yes'){ echo "checked"; } ?> type="checkbox" name="need_owner" value="yes"/><br />
-         <div id = "div_often_visit">
-            <label for="often_visit">How often the renters can access their items?</label><br>
-            <div id="often_visit" class="btn-group" data-toggle="buttons">
-               <label class="btn btn-default active">
-               <input <?php if($space['gostota'] == 'daily'){ echo "checked"; } ?> id = "location_select_radio_i" type="radio" name="often_visit" value="daily"/> Daily
-               </label>
-               <label class="btn btn-default">
-               <input <?php if($space['gostota'] == 'weekly'){ echo "checked"; } ?> id = "location_select_radio_c" type="radio"  name="often_visit" value="weekly"/> Weekly
-               </label>
-               <label class="btn btn-default">
-               <input <?php if($space['gostota'] == 'monthly'){ echo "checked"; } ?> id = "location_select_radio_u" type="radio"  name="often_visit" value="monthly"/> Monthly
-               </label>
-            </div>
-         </div>
-         </div>
-
-         <div id = "" class = "col-12 text-center">
-            <div id = "div_day_visit">
-               <label for="day_visit">What time of the day can renters access their items</label><br>
-               <div id="day_visit" class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-default active">
-                  <input <?php if($space['cas'] == 'daytime'){ echo "checked"; } ?> id = "location_select_radio_i" type="radio" name="day_visit" value="daytime"/> Daytime(8am-8pm)
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['cas'] == 'evening'){ echo "checked"; } ?> id = "location_select_radio_c" type="radio"  name="day_visit" value="evening"/> Evening(5pm-9pm)
-                  </label>
-                  <label class="btn btn-default">
-                  <input <?php if($space['cas'] == 'all_day'){ echo "checked"; } ?> id = "location_select_radio_u" type="radio"  name="day_visit" value="all_day"/> 24 hours a day
-                  </label>
+                  <input <?php if($space['opis_k'] == 'street_parking'){ echo "checked"; } ?> type="radio"  name="uncover_select" class="btn-check" id = "street_parking_uncover_select" value="street_parking"/> 
+                  <label class="btn btn-outline-primary" for="street_parking_uncover_select">Street parking</label>
                </div>
             </div>
          </div>
 
 
          <div id = "" class = "col-12 text-center">
-            <h4 class="mb-3">Features</h4><br>
+            <h4 class="mb-3 display-6 fw-bold">Location of your space</h4><br>
+         </div>
+         <div class="col-md-3">
+            <div class="form-floating">
+               <input value = "<?php echo $space['drzava']; ?>" class = "form-control border border-primary" id = "input_country" class="form-control" type="text" name="country" />
+               <label for="input_country">Country</label>
+            </div>
          </div>
 
-         <div id = "" class = "col-12 text-center">
-            <label for="climate_controlled">Climate controlled</label>
-            <input <?php if($space['climate_controlled'] == '1'){ echo "checked"; } ?> type="checkbox" name="climate_controlled" value="yes"/><br />
-            <label for="smoke_free">Smoke free</label>
-            <input <?php if($space['smoke_free'] == '1'){ echo "checked"; } ?> type="checkbox" name="smoke_free" value="yes"/><br />
-            <label for="smoke_detectors">Smoke detectors</label>
-            <input <?php if($space['smoke_detectors'] == '1'){ echo "checked"; } ?> type="checkbox" name="smoke_detectors" value="yes"/><br />
-            <label for="private_entrance">Private Entrance</label>
-            <input <?php if($space['private_entrance'] == '1'){ echo "checked"; } ?> type="checkbox" name="private_entrance" value="yes"/><br />
-            <label for="private_space">Private space</label>
-            <input <?php if($space['private_space'] == '1'){ echo "checked"; } ?> type="checkbox" name="private_space" value="yes"/><br />
-            <label for="locked_area">Locked area</label>
-            <input <?php if($space['locked_area'] == '1'){ echo "checked"; } ?> type="checkbox" name="locked_area" value="yes"/><br />
-            <label for="pet_free">Pet free</label>
-            <input <?php if($space['pet_free'] == '1'){ echo "checked"; } ?> type="checkbox" name="pet_free" value="yes"/><br />
-            <label for="security_camera">Security Camera</label>
-            <input <?php if($space['security_camera'] == '1'){ echo "checked"; } ?> type="checkbox" name="security_camera" value="yes"/><br />
-            <label for="no_stairs">No stairs</label>
-            <input <?php if($space['no_stairs'] == '1'){ echo "checked"; } ?> type="checkbox" name="no_stairs" value="yes"/><br />
+         <div class="col-md-3">
+            <div class="form-floating">
+               <input value = "<?php echo $space['mesto']; ?>" class="form-control border border-primary" type="text" id = "input_city" class="form-control" name="city"/>
+               <label for="input_city">City</label>
+            </div>
          </div>
+
+         <div class="col-md-3">
+            <div class="form-floating">
+               <input value = "<?php echo $space['p_stevilka']; ?>" class="form-control border border-primary" type="text" id = "input_paddress" name="paddress"  />
+               <label for="input_paddress">Zip</label>
+            </div>
+         </div>
+
+         <div class="col-md-3">
+            <div class="form-floating">
+               <input value = "<?php echo $space['naslov']; ?>" class="form-control border border-primary" type="text" id = "input_address" name="address"/><br />
+               <label for="input_address">Address</label>
+            </div>
+         </div>
+
+         <div class = "border rounded text-center">
+            <div id = "" class = "col-md-3 text-center form-check-inline align-middle">
+               <h4 class="mb-3 display-6 fw-bold">Describe your space</h4><br>
+            </div>
+            <div id = "" class = "col-5 text-center form-check-inline">
+               <div class="form-floating mx-auto">
+                  <textarea class="form-control border border-primary" id = "input_description" name="text" rows="20"><?php echo $space['opis']; ?></textarea>
+                  <label for="input_description">Description</label>
+               </div>
+            </div>
+         </div>
+
+         <div class = "border rounded text-center">
+            
+            <div class="form-check-inline text-center">
+               <div class="form-floating">
+                  <input  value = "<?php echo $space['dolzina']; ?>" class="form-control border border-primary" id = "input_length" class="form-control" type="text" name="length">
+                  <label for="input_length">Length</label>
+               </div>
+            </div>
+
+            <div class="form-check-inline text-center">
+               <div class="form-floating">
+                  <input value = "<?php echo $space['sirina']; ?>" class="form-control border border-primary" id = "input_width" class="form-control" type="text" name="width"/>
+                  <label for="input_width">Width</label>
+               </div>
+            </div>
+
+            <div class="form-check-inline text-center">
+               <div class="form-floating">
+                  <input value = "<?php echo $space['visina']; ?>" class="form-control border border-primary" id = "input_height" class="form-control" type="text" name="height"/>
+                  <label for="input_height">Height</label>
+               </div>
+            </div>
+            <div id = "" class = "col-md-3 text-center form-check-inline align-middle">
+               <h4 class="mb-3 display-6 fw-bold">How big is your space</h4><br>
+            </div><br>
+         </div><br>
+
+         <div class = "border rounded">
+            <div id = "" class = "col-5 text-center form-check-inline align-middle">
+               <h4 class="mb-3 display-6 fw-bold">Set the price per month</h4><br>
+            </div>
+            <div id = "" class = "text-center col-md-3 form-check-inline">
+               <div class="form-floating">
+                  <input value = "<?php echo $space['cena']; ?>" class="form-control border border-primary" id = "input_price" type="number" name="price" />
+                  <label for="input_price">Price</label>
+               </div>
+            </div><br>
+         </div><br>
+
+
+         <div class = "border rounded">
+            <div id = "" class = "col-12 text-center">
+               <h4 class="mb-3 display-6 fw-bold">Visits</h4><br>
+            </div>
+            <div id = "" class = "col-12 text-center">
+            <label for="need_owner">Is the space accessible only with the owner? So the user will have to make an appointment before visiting this space?</label>
+               <input <?php if($space['lastnik_ogled'] == 'yes'){ echo "checked"; } ?> class="btn-check" id = "need_owner_check" type="checkbox" name="need_owner" value="yes"/>
+               <label class="btn btn-outline-primary" for="need_owner_check">YES, is accesible only with the owner. </label>
+
+
+
+            <div id = "div_often_visit">
+               <label for="often_visit">How often the renters can access their items?</label><br>
+               <div id="often_visit" class="btn-group" data-toggle="buttons">
+
+                  <input <?php if($space['gostota'] == 'daily'){ echo "checked"; } ?> class="btn-check" id = "often_daily" type="radio" name="often_visit" value="daily">
+                  <label class="btn btn-outline-primary" for="often_daily">Daily</label>
+
+                  <input <?php if($space['gostota'] == 'weekly'){ echo "checked"; } ?> class="btn-check" id = "often_weekly" type="radio"  name="often_visit" value="weekly">
+                  <label class="btn btn-outline-primary" for="often_weekly">Weekly</label>
+
+                  <input <?php if($space['gostota'] == 'monthly'){ echo "checked"; } ?> class="btn-check" id = "often_monthly" type="radio"  name="often_visit" value="monthly"> 
+                  <label class="btn btn-outline-primary" for="often_monthly">Monthly</label>
+               </div>
+            </div>
+
+            <div id = "" class = "col-12 text-center">
+               <div id = "div_day_visit">
+                  <label for="day_visit">What time of the day can renters access their items</label><br>
+                  <div id="day_visit" class="btn-group" data-toggle="buttons">
+
+                     <input <?php if($space['cas'] == 'daytime'){ echo "checked"; } ?> class="btn-check" id = "time_daytime" type="radio" name="day_visit" value="daytime"/> 
+                     <label class="btn btn-outline-primary" for="time_daytime">Daytime(8am-8pm)</label>
+
+                     <input <?php if($space['cas'] == 'evening'){ echo "checked"; } ?> class="btn-check" id = "time_evening" type="radio"  name="day_visit" value="evening"/> 
+                     <label class="btn btn-outline-primary" for="time_evening">Evening(5pm-9pm)</label>
+
+                     <input <?php if($space['cas'] == 'all_day'){ echo "checked"; } ?> class="btn-check" id = "time_all_day" type="radio"  name="day_visit" value="all_day"/> 
+                     <label class="btn btn-outline-primary" for="time_all_day">24/7</label>
+
+                  </div>
+               </div>
+            </div><br>
+         </div><br>
+
+         <div class ="border rounded">
+            <div id = "" class = "col-12 text-center">
+               <h4 class="mb-3 display-6 fw-bold">Select the Features</h4><br>
+            </div>
+
+            <div id = "" class = "col-12 text-center">
+               <input <?php if($space['climate_controlled'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_cli_con" type="checkbox" name="climate_controlled" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_cli_con">Climate Controlled</label>
+
+               <input <?php if($space['smoke_free'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_smoke_free" type="checkbox" name="smoke_free" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_smoke_free">Smoke Free</label>
+
+               <input <?php if($space['smoke_detectors'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_smoke_detectors" type="checkbox" name="smoke_detectors" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_smoke_detectors">Smoke detectors</label>            
+
+               <input <?php if($space['private_entrance'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_private_entrance" type="checkbox" name="private_entrance" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_private_entrance">Private Entrance</label>
+
+               <input <?php if($space['private_space'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_private_space" type="checkbox" name="private_space" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_private_space">Private space</label>
+
+               <input <?php if($space['locked_area'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_locked_area" type="checkbox" name="locked_area" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_locked_area">Locked area</label>
+
+               <input <?php if($space['pet_free'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_pet_free" type="checkbox" name="pet_free" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_pet_free">Pet free</label>
+
+               <input <?php if($space['security_camera'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_security_camera" type="checkbox" name="security_camera" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_security_camera">Security Camera</label>
+
+               <input <?php if($space['no_stairs'] == '1'){ echo "checked"; } ?> class="btn-check" id = "checkbox_no_stairs" type="checkbox" name="no_stairs" value="yes"/>
+               <label class="btn btn-outline-primary" for="checkbox_no_stairs">No stairs</label>
+            </div><br>
+         </div><br>
          <input type="hidden" name="id_space" value="<?php echo $space['id_space']; ?>">
          <input type="hidden" name="id_pro" value="<?php echo $space['id_pro']; ?>">
 
-         <div id = "" class = "col-12 text-center">
-            <h4 class="mb-3">Features</h4><br>
+         <div class = "border rounded">
+            <div id = "" class = "col-12 text-center">
+               <h4 class="mb-3 display-6 fw-bold">Load an image of your space</h4><br>
+            </div>
+            <div id = "" class = "col-12 text-center">
+               <input type="file" name="userfile" size="2000" />
+            </div><br>
+            <input type="submit" class="w-100 btn btn-primary btn-lg" name="submit" value="Update your space" />
          </div>
-         <div id = "" class = "col-12 text-center">
-            <input type="file" name="userfile" size="2000" />
-         </div>
-         
-         <input type="submit" class="w-100 btn btn-primary btn-lg" name="submit" value="List your space" />
    </div>
    </main>
 </div>

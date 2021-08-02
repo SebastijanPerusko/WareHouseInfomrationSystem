@@ -242,6 +242,47 @@ class News_model extends CI_Model {
 				$query = $this->db->where('oglas.cena <=', intval($_SESSION['price_end']));
 			}
 
+
+			if(isset($_SESSION['climate_controlled']) && $_SESSION['climate_controlled'] == '1'){
+				$query = $this->db->where('lastnost.climate_controlled', 1);
+			}
+			if(isset($_SESSION['smoke_free']) && $_SESSION['smoke_free'] == '1'){
+				$query = $this->db->where('lastnost.smoke_free', 1);
+			}
+			if(isset($_SESSION['smoke_detectors']) && $_SESSION['smoke_detectors'] == '1'){
+				$query = $this->db->where('lastnost.smoke_detectors', 1);
+			}
+			if(isset($_SESSION['private_entrance']) && $_SESSION['private_entrance'] == '1'){
+				$query = $this->db->where('lastnost.private_entrance', 1);
+			}
+			if(isset($_SESSION['private_space']) && $_SESSION['private_space'] == '1'){
+				$query = $this->db->where('lastnost.private_space', 1);
+			}
+			if(isset($_SESSION['locked_area']) && $_SESSION['locked_area'] == '1'){
+				$query = $this->db->where('lastnost.locked_area', 1);
+			}
+			if(isset($_SESSION['pet_free']) && $_SESSION['pet_free'] == '1'){
+				$query = $this->db->where('lastnost.pet_free', 1);
+			}
+			if(isset($_SESSION['security_camera']) && $_SESSION['security_camera'] == '1'){
+				$query = $this->db->where('lastnost.security_camera', 1);
+			}
+			if(isset($_SESSION['no_strairs']) && $_SESSION['no_strairs'] == '1'){
+				$query = $this->db->where('lastnost.no_stairs', 1);
+			}
+
+
+
+			if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'oldest'){
+				$query = $this->db->order_by("datumura", "asc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'newest'){
+				$query = $this->db->order_by("datumura", "desc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'low_to_high'){
+				$query = $this->db->order_by("cena", "asc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'high_to_low'){
+				$query = $this->db->order_by("cena", "desc");
+			}
+
 			$query = $this->db->limit(12*($num),12*($num-1));
 
 	        $query = $this->db->get();
@@ -256,6 +297,7 @@ class News_model extends CI_Model {
 
 		    $slug = url_title($this->input->post('title'), 'dash', TRUE);
 		    $arr = $_SESSION['logged_in'];
+		    $my_date_time = date('Y-m-d H:i:s');
 		    $location;
 		    $description_s;
 		    $owner_need_v;
@@ -322,6 +364,7 @@ class News_model extends CI_Model {
 		        'gostota' => $this->input->post('often_visit'),
 		        'cas' => $this->input->post('day_visit'),
 		        'pot_slika' => '/uploads/no_img.png',
+		        'datumura' => $my_date_time,
 		        'id_u' => $arr['id_u']
 		    );
 			} else {
@@ -342,6 +385,7 @@ class News_model extends CI_Model {
 		        'gostota' => $this->input->post('often_visit'),
 		        'cas' => $this->input->post('day_visit'),
 		        'pot_slika' => $path_img,
+		        'datumura' => $my_date_time,
 		        'id_u' => $arr['id_u']
 		    );
 			}
