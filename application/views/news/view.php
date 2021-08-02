@@ -12,7 +12,7 @@
                 }
 
                 if($space_item['lastnik_ogled'] == 'yes') {
-                        $time_access = $time_access." and appointment required";
+                        $time_access = $time_access." "."<span class = 'fw-bold'>and an appointment is required before visiting the space.</span>";
                 }
 
                 ?>
@@ -43,6 +43,8 @@
                         </form></div></h2>
                         <p class="lead">
                                 <?php
+
+                                echo "<div class='card_padding_feature text-center'><div class='p-3 text-white bg-primary rounded-3'><h5>".$space_item['cena']."&euro;/month</h5></div></div>";
 
                                 if($vote_ad_avg['vote_avg'] != NULL){
                                         echo "<div class='card_padding_feature text-center'><div class='p-3 text-white bg-primary rounded-3'><h5>Rating: ".substr($vote_ad_avg['vote_avg'], 0, 3)."</h5></div></div>";

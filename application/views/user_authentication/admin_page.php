@@ -20,7 +20,7 @@
                     echo "</h2>";
                 } 
         ?>
-        <h2 class='text-justify font-weight-bold'>Your reservations</h2>
+        <h2 class='text-justify font-weight-bold display-6 fw-bold'>Your reservations</h2>
         <hr class="featurette-divider">
 
         <?php foreach ($user_reservation as $user_reservation_item): ?>
@@ -76,7 +76,7 @@
 
 
 
-        <h2 class='text-justify font-weight-bold'>User that reserved your spaces</h2>
+        <h2 class='text-justify font-weight-bold display-6 fw-bold'>User that reserved your spaces</h2>
         <hr class="featurette-divider">
         <?php foreach ($other_reservation as $other_reservation_item): ?>
 
@@ -105,12 +105,12 @@
                 <main class="container ">
                   <div class="<?php echo " ".$status_color." " ?> bg-light p-5 rounded shadow-sm border">
                     <h3 class="font-weight-bold"><?php echo $other_reservation_item['ime']." reserved the ".$name_space_first." in ".$other_reservation_item['mesto'].", ".$other_reservation_item['naslov']; ?></h3>
-                    <p class="lead">Items that he want to store: <span class="font-weight-bold"><?php echo $other_reservation_item['stvari']; ?></span></p>
-                    <p class="lead">How long does he want to book this space: <span class="font-weight-bold"><?php echo $other_reservation_item['cas_rezervacije']; ?></span></p>
-                    <p class="lead">When will like to move in: <span class="font-weight-bold"><?php echo $other_reservation_item['datum_od']; ?></span></p>
-                    <p class="lead">Other information: <span class="font-weight-bold"><?php echo $other_reservation_item['opis']; ?></span></p>
-                    <p class="lead">Status: <span class="font-weight-bold"><?php echo $other_reservation_item['status']; ?></span></p>
-                    <p class="lead">Contact the user: <span class="font-weight-bold"><?php echo "tel. number: ".$other_reservation_item['tel']. " | e-mail address: ".$other_reservation_item['email']; ?></span></p>
+                    <p class="lead">Items that he want to store: <span class="fw-bold"><?php echo $other_reservation_item['stvari']; ?></span></p>
+                    <p class="lead">How long does he want to book this space: <span class="fw-bold"><?php echo $other_reservation_item['cas_rezervacije']; ?></span></p>
+                    <p class="lead">When will like to move in: <span class="fw-bold"><?php echo $other_reservation_item['datum_od']; ?></span></p>
+                    <p class="lead">Other information: <span class="fw-bold"><?php echo $other_reservation_item['opis']; ?></span></p>
+                    <p class="lead">Status: <span class="fw-bold"><?php echo $other_reservation_item['status']; ?></span></p>
+                    <p class="lead">Contact the user: <span class="font-weight-bold"><?php echo "tel. number: <span class='fw-bold'>".$other_reservation_item['tel']. "</span> | e-mail address: <span class='fw-bold'>".$other_reservation_item['email']."</span>"; ?></span></p>
 
 
                     <?php
@@ -131,7 +131,7 @@
 
 
         
-        <h2 class='text-justify font-weight-bold'>Your lised spaces</h2>
+        <h2 class='text-justify font-weight-bold display-6 fw-bold'>Your lised spaces</h2>
         <hr class="featurette-divider">
         <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         <?php foreach ($user_space as $user_space): ?>
@@ -166,7 +166,7 @@
         </div>
 
 
-        <h2 class='text-justify font-weight-bold'>Account</h2>
+        <h2 class='text-justify font-weight-bold display-6 fw-bold'>Account</h2>
         <hr class="featurette-divider">
         <p class = 'btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('user_authentication/edit_information_r/'.$id_u); ?>">Click here to edit informations about your account</a></p>
         <p class = 'btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('user_authentication/edit_password_u/'.$id_u); ?>">Click here to change the password</a></p>

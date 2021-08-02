@@ -77,9 +77,16 @@ class News_model extends CI_Model {
 
         public function get_num_space_form(){
 
+        	$this->db->select('ocena.id_o, AVG(ocena.vrednost) AS "avg_oglas"')
+        			->from('ocena')
+        			->group_by('ocena.id_o');
+
+        	$subquery = $this->db->get_compiled_select();
+
         	$query = $this->db->select('*')
 	        				->from('oglas')
-	        				->join('lastnost', 'oglas.id = lastnost.id_o');
+	        				->join('lastnost', 'oglas.id = lastnost.id_o')
+	        				->join("($subquery) O", "O.id_o = oglas.id", 'left');
 
 	        if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == 'veichle'){
 	        	$where_q = "oglas.lokacija = 'cover' OR oglas.lokacija = 'uncover'";
@@ -114,6 +121,47 @@ class News_model extends CI_Model {
 			}
 			if(isset($_SESSION['price_end']) && !empty($_SESSION['price_end'])){
 				$query = $this->db->where('oglas.cena <=', intval($_SESSION['price_end']));
+			}
+
+
+			if(isset($_SESSION['climate_controlled']) && $_SESSION['climate_controlled'] == '1'){
+				$query = $this->db->where('lastnost.climate_controlled', 1);
+			}
+			if(isset($_SESSION['smoke_free']) && $_SESSION['smoke_free'] == '1'){
+				$query = $this->db->where('lastnost.smoke_free', 1);
+			}
+			if(isset($_SESSION['smoke_detectors']) && $_SESSION['smoke_detectors'] == '1'){
+				$query = $this->db->where('lastnost.smoke_detectors', 1);
+			}
+			if(isset($_SESSION['private_entrance']) && $_SESSION['private_entrance'] == '1'){
+				$query = $this->db->where('lastnost.private_entrance', 1);
+			}
+			if(isset($_SESSION['private_space']) && $_SESSION['private_space'] == '1'){
+				$query = $this->db->where('lastnost.private_space', 1);
+			}
+			if(isset($_SESSION['locked_area']) && $_SESSION['locked_area'] == '1'){
+				$query = $this->db->where('lastnost.locked_area', 1);
+			}
+			if(isset($_SESSION['pet_free']) && $_SESSION['pet_free'] == '1'){
+				$query = $this->db->where('lastnost.pet_free', 1);
+			}
+			if(isset($_SESSION['security_camera']) && $_SESSION['security_camera'] == '1'){
+				$query = $this->db->where('lastnost.security_camera', 1);
+			}
+			if(isset($_SESSION['no_strairs']) && $_SESSION['no_strairs'] == '1'){
+				$query = $this->db->where('lastnost.no_stairs', 1);
+			}
+
+
+
+			if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'oldest'){
+				$query = $this->db->order_by("datumura", "asc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'newest'){
+				$query = $this->db->order_by("datumura", "desc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'low_to_high'){
+				$query = $this->db->order_by("cena", "asc");
+			} else if(isset($_SESSION['order_ad']) && $_SESSION['order_ad'] == 'high_to_low'){
+				$query = $this->db->order_by("cena", "desc");
 			}
 
 	        $query = $this->db->get();
@@ -202,10 +250,17 @@ class News_model extends CI_Model {
         public function find_group_news($num = NULL)
 		{
 
+			$this->db->select('ocena.id_o, AVG(ocena.vrednost) AS "avg_oglas"')
+        			->from('ocena')
+        			->group_by('ocena.id_o');
+
+        	$subquery = $this->db->get_compiled_select();
+
 
 			$query = $this->db->select('*')
 	        				->from('oglas')
-	        				->join('lastnost', 'oglas.id = lastnost.id_o');
+	        				->join('lastnost', 'oglas.id = lastnost.id_o')
+	        				->join("($subquery) O", "O.id_o = oglas.id", 'left');
 
 	        if(isset($_SESSION['point_value']) && $_SESSION['point_value'] == 'veichle'){
 	        	$where_q = "oglas.lokacija = 'cover' OR oglas.lokacija = 'uncover'";

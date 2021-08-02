@@ -160,6 +160,10 @@
               <img class="rounded-lg mx-auto d-block" src="<?php echo base_url($space_item['pot_slika']);?>" width="100%" height="225" alt="...">
               <div class="text-over-image bottom-left_index rounded-pill"><h3 class="fw-bold"><?php echo $space_item['sirina']."X".$space_item['dolzina']; ?></h3></div>
               <div class="text-over-image bottom-right_index rounded-pill"><h3 class="fw-bold"><?php echo $space_item['cena']."&euro;/month"; ?></h3></div>
+              <?php if($space_item['avg_oglas'] != ''){
+                echo "<div class='text-over-image top-right_index rounded-pill'><h6 class='fw-bold text-primary'>rating: ".substr($space_item['avg_oglas'], 0, 3)."</h6></div>";
+                }
+                ?>
             </div>
 
             <?php 
