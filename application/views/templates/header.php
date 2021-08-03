@@ -34,8 +34,9 @@
 
       <?php 
       if(isset($_SESSION['logged_in'])){
+        $name_profile = ucfirst($this->session->userdata['logged_in']['username']);
         $add_log = site_url('user_authentication/profile');
-        echo ' <li class="nav-item"><a class="nav-link active text-primary fw-bold border border-primary rounded m-1" aria-current="page" href="'.$add_log.'">Profile</a></li>';
+        echo ' <li class="nav-item"><a class="nav-link active text-primary fw-bold border border-primary rounded m-1" aria-current="page" href="'.$add_log.'">Profile <span class = "text-danger">'.$name_profile.'</span></a></li>';
       }
       ?>
 

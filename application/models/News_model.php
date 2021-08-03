@@ -276,6 +276,7 @@ class News_model extends CI_Model {
 
 
 			$query = $this->db->select('*')
+							->select('oglas.id AS "id_ad_space"')
 	        				->from('oglas')
 	        				->join('lastnost', 'oglas.id = lastnost.id_o')
 	        				->join("($subquery) O", "O.id_o = oglas.id", 'left');

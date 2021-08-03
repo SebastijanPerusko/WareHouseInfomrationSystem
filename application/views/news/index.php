@@ -167,10 +167,10 @@
 
       
         <div class="col">
-          <a class = "space_ad" href="<?php echo site_url('news/view/'.$space_item['id_o']); ?>">
-          <div class="card shadow-sm">
+          <a class = "space_ad" href="<?php echo site_url('news/view/'.$space_item['id_ad_space']); ?>">
+          <div class="card shadow-sm border rounded">
             <div class="container_image_index">
-              <img class="rounded-lg mx-auto d-block" src="<?php echo base_url($space_item['pot_slika']);?>" width="100%" height="225" alt="...">
+              <img class="rounded-lg mx-auto d-block image_fit_index" src="<?php echo base_url($space_item['pot_slika']);?>" width="100%" height="225">
               <div class="text-over-image bottom-left_index rounded-pill"><h3 class="fw-bold"><?php echo $space_item['sirina']."X".$space_item['dolzina']; ?></h3></div>
               <div class="text-over-image bottom-right_index rounded-pill"><h3 class="fw-bold"><?php echo $space_item['cena']."&euro;/month"; ?></h3></div>
               <?php if($space_item['avg_oglas'] != ''){

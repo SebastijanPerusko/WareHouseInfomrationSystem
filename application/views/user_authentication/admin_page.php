@@ -23,10 +23,13 @@
         <h2 class='text-justify font-weight-bold display-6 fw-bold'>Your reservations</h2>
         <hr class="featurette-divider">
 
+        <?php $iteration_res = 0; ?>
+
         <?php foreach ($user_reservation as $user_reservation_item): ?>
 
 
                 <?php 
+                        $iteration_res++;
                         $status_color;
                         $message = '';
                         if($user_reservation_item['status'] == 'pending'){
@@ -75,12 +78,22 @@
         <?php endforeach; ?>
 
 
+        <?php 
+            if($iteration_res == 0){
+                echo " <h2 class='text-justify fw-bold text-muted'>You have no reservations. </h2>";
+            }
+            $iteration_user_res = 0;
+
+        ?>
+
+
 
         <h2 class='text-justify font-weight-bold display-6 fw-bold'>User that reserved your spaces</h2>
         <hr class="featurette-divider">
         <?php foreach ($other_reservation as $other_reservation_item): ?>
 
                 <?php 
+                        $iteration_user_res++;
                         $status_color;
                         if($other_reservation_item['status'] == 'pending'){
                                 $status_color = "border border-primary";
@@ -129,6 +142,14 @@
 
         <?php endforeach; ?>
 
+        <?php 
+            if($iteration_user_res == 0){
+                echo " <h2 class='text-justify fw-bold text-muted'>You do not have any reservations from users who have reserved your space.  </h2>";
+            }
+            $iteration_listed = 0;
+
+        ?>
+
 
         
         <h2 class='text-justify font-weight-bold display-6 fw-bold'>Your lised spaces</h2>
@@ -137,6 +158,7 @@
         <?php foreach ($user_space as $user_space): ?>
 
                 <?php 
+                      $iteration_listed++;
                       $name_space_first;
                       if($user_space['opis_k'] == 'self_s_u' || $user_space['opis_k'] == 'self_storage'){
                         $name_space_first = 'Self storage unit';
@@ -164,6 +186,13 @@
 
         <?php endforeach; ?>
         </div>
+
+        <?php 
+            if($iteration_listed == 0){
+                echo " <h2 class='text-justify fw-bold text-muted'>You do not have any listed space.</h2>";
+            }
+
+        ?>
 
 
         <h2 class='text-justify font-weight-bold display-6 fw-bold'>Account</h2>
