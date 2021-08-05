@@ -3,7 +3,11 @@
 
 <div class = "container_log_in text-center"> 
 <main class="signin_from_main border">
+  
   <?php echo form_open('user_authentication/signup'); ?>
+    <p class = "text-success"><?php if (isset($message_display)) { echo $message_display; } ?></p>
+    <p class = "text-success"><?php if (isset($logout_message)) { echo $logout_message; } ?></p>
+    <p class = "text-danger"><?php if (isset($error_message)) { echo $error_message; } ?></p>
     <h1 class="mb-3 h3 fw-normal">Create account</h1>
     <h1 class="mb-3 h3 fw-normal text-danger"><?php echo validation_errors(); ?></h1>
 

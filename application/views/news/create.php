@@ -6,6 +6,9 @@
 
 
       <div class="row">
+         <p class = "text-success"><?php if (isset($message_display)) { echo $message_display; } ?></p>
+         <p class = "text-success"><?php if (isset($logout_message)) { echo $logout_message; } ?></p>
+         <p class = "text-danger"><?php if (isset($error_message)) { echo $error_message; } ?></p>
 
 
          <div id = "select_type_container" class = "col-12 text-center">
@@ -299,7 +302,7 @@
                <h4 class="mb-3 display-6 fw-bold">Load an image of your space</h4><br>
             </div>
             <div id = "" class = "col-12 text-center">
-               <input type="file" name="userfile" size="2000" />
+               <input type="file" name="userfile" size="10000" />
             </div><br>
             <input type="submit" class="w-100 btn btn-primary btn-lg" name="submit" value="List your space" />
          </div>

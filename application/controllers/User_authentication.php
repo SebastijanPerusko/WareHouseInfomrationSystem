@@ -73,8 +73,10 @@ class User_authentication extends CI_Controller{
             $this->load->view('user_authentication/login_form', $data);
             $this->load->view('templates/footer');
         } else {
+            echo "here";
+            $data['error_message'] = 'E-mail or username already used';
             $this->load->view('templates/header');
-            $this->load->view('user_authentication/registration_form');
+            $this->load->view('user_authentication/registration_form', $data);
             $this->load->view('templates/footer');
         }
     }
@@ -133,45 +135,50 @@ public function profile(){
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
-        $data = array(
-            'username' => $this->input->post('username'),
-            'geslo' => $this->input->post('password')
-        );
-        $result = $this->login_database->login($data);
-        if ($result == TRUE) {
-
-            $username = $this->input->post('username');
-            $result = $this->login_database->read_user_information($username);
-            if ($result != false) {
-                $session_data = array(
-                    'username' => $result[0]->username,
-                    'email' => $result[0]->email,
-                    'id_u' => $result[0]->id,
-                );
-            $this->session->set_userdata('logged_in', $session_data);
-            $data['username'] = $this->session->userdata['logged_in']['username'];
-            $data['email'] = $this->session->userdata['logged_in']['email'];
-            $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
-
-
-            /*reservation of the user*/
-            $data['user_reservation'] = $this->login_database->get_user_reservation($data['id_u']);
-            /*reservation of the other users for the space of this user*/
-            $data['other_reservation'] = $this->login_database->get_other_reservation($data['id_u']);
-            /*published spaces of the user*/
-            $data['user_space'] = $this->login_database->get_user_space($data['id_u']);
-
+        if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header');
-            $this->load->view('user_authentication/admin_page', $data);
+            $this->load->view('user_authentication/login_form');
             $this->load->view('templates/footer');
-        }
-    } else {
-        $data = array(
-            'error_message' => 'Invalid Username or Password'
-        );
-        $this->load->view('templates/header');
-        $this->load->view('user_authentication/login_form', $data);
-        $this->load->view('templates/footer');
+        } else {
+            $data = array(
+                'username' => $this->input->post('username'),
+                'geslo' => $this->input->post('password')
+            );
+            $result = $this->login_database->login($data);
+            if ($result == TRUE) {
+                $username = $this->input->post('username');
+                $result = $this->login_database->read_user_information($username);
+                if ($result != false) {
+                    $session_data = array(
+                        'username' => $result[0]->username,
+                        'email' => $result[0]->email,
+                        'id_u' => $result[0]->id,
+                    );
+                $this->session->set_userdata('logged_in', $session_data);
+                $data['username'] = $this->session->userdata['logged_in']['username'];
+                $data['email'] = $this->session->userdata['logged_in']['email'];
+                $data['id_u'] = $this->session->userdata['logged_in']['id_u'];
+
+
+                /*reservation of the user*/
+                $data['user_reservation'] = $this->login_database->get_user_reservation($data['id_u']);
+                /*reservation of the other users for the space of this user*/
+                $data['other_reservation'] = $this->login_database->get_other_reservation($data['id_u']);
+                /*published spaces of the user*/
+                $data['user_space'] = $this->login_database->get_user_space($data['id_u']);
+
+                $this->load->view('templates/header');
+                $this->load->view('user_authentication/admin_page', $data);
+                $this->load->view('templates/footer');
+            }
+            } else {
+                $data = array(
+                    'error_message' => 'Invalid Username or Password'
+                );
+                $this->load->view('templates/header');
+                $this->load->view('user_authentication/login_form', $data);
+                $this->load->view('templates/footer');
+            }
     }
 }
 
@@ -227,7 +234,11 @@ public function edit_inf() {
         if ($result == TRUE) {
             $data['warning'] = "You have successfully updated your profile information.";
         } else {
-            $data['warning'] = "Problem updating information, please try again later. ";
+            $data['user_item'] = $this->login_database->get_user_inf($this->session->userdata['logged_in']['id_u']);
+            $data['error_message'] = "Email or username already used, try with other email or username. ";
+            $this->load->view('templates/header');
+            $this->load->view('user_authentication/edit_information', $data);
+            $this->load->view('templates/footer');
         }
 
         $data['username'] = $this->session->userdata['logged_in']['username'];

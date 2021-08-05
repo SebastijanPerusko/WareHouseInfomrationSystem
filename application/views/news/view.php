@@ -110,31 +110,31 @@
         }
         echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>".$space_item['opis_k']."</h2></div></div>"; 
         if($space_item['climate_controlled'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Climate controlled</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path d='M5 12.5a1.5 1.5 0 1 1-2-1.415V9.5a.5.5 0 0 1 1 0v1.585A1.5 1.5 0 0 1 5 12.5z'/><path d='M1 2.5a2.5 2.5 0 0 1 5 0v7.55a3.5 3.5 0 1 1-5 0V2.5zM3.5 1A1.5 1.5 0 0 0 2 2.5v7.987l-.167.15a2.5 2.5 0 1 0 3.333 0L5 10.486V2.5A1.5 1.5 0 0 0 3.5 1zm5 1a.5.5 0 0 1 .5.5v1.293l.646-.647a.5.5 0 0 1 .708.708L9 5.207v1.927l1.669-.963.495-1.85a.5.5 0 1 1 .966.26l-.237.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.884.237a.5.5 0 1 1-.26.966l-1.848-.495L9.5 8l1.669.963 1.849-.495a.5.5 0 1 1 .258.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.237.883a.5.5 0 1 1-.966.258L10.67 9.83 9 8.866v1.927l1.354 1.353a.5.5 0 0 1-.708.708L9 12.207V13.5a.5.5 0 0 1-1 0v-11a.5.5 0 0 1 .5-.5z'/></svg><h2>Climate controlled</h2></div></div>"; 
         }
         if($space_item['smoke_free'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Smoke free</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path d='M8.5 2a5.001 5.001 0 0 1 4.905 4.027A3 3 0 0 1 13 12H3.5A3.5 3.5 0 0 1 .035 9H5.5a.5.5 0 0 0 0-1H.035a3.5 3.5 0 0 1 3.871-2.977A5.001 5.001 0 0 1 8.5 2zm-6 8a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zM0 13.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z'/></svg><h2>Smoke free</h2></div></div>"; 
         }
         if($space_item['smoke_detectors'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Smoke detectors</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path d='M4 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 2a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm2 2a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM13.405 4.027a5.001 5.001 0 0 0-9.499-1.004A3.5 3.5 0 1 0 3.5 10H13a3 3 0 0 0 .405-5.973z'/></svg><h2>Smoke detectors</h2></div></div>"; 
         }
         if($space_item['private_entrance'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Private entrance</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path d='M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z'/><h2>Private entrance</h2></div></div>"; 
         }
         if($space_item['private_space'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Private space</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path d='M7 6a1 1 0 0 1 2 0v1H7V6z'/><path d='M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-2 6v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V8.3c0-.627.46-1.058 1-1.224V6a2 2 0 1 1 4 0z'/></svg><h2>Private space</h2></div></div>"; 
         }
         if($space_item['locked_area'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Loked area</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path d='M12 1a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2a1 1 0 0 1 1-1h8zm-2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z'/></svg><h2>Loked area</h2></div></div>"; 
         }
         if($space_item['pet_free'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Pet free</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path d='M4.355.522a.5.5 0 0 1 .623.333l.291.956A4.979 4.979 0 0 1 8 1c1.007 0 1.946.298 2.731.811l.29-.956a.5.5 0 1 1 .957.29l-.41 1.352A4.985 4.985 0 0 1 13 6h.5a.5.5 0 0 0 .5-.5V5a.5.5 0 0 1 1 0v.5A1.5 1.5 0 0 1 13.5 7H13v1h1.5a.5.5 0 0 1 0 1H13v1h.5a1.5 1.5 0 0 1 1.5 1.5v.5a.5.5 0 1 1-1 0v-.5a.5.5 0 0 0-.5-.5H13a5 5 0 0 1-10 0h-.5a.5.5 0 0 0-.5.5v.5a.5.5 0 1 1-1 0v-.5A1.5 1.5 0 0 1 2.5 10H3V9H1.5a.5.5 0 0 1 0-1H3V7h-.5A1.5 1.5 0 0 1 1 5.5V5a.5.5 0 0 1 1 0v.5a.5.5 0 0 0 .5.5H3c0-1.364.547-2.601 1.432-3.503l-.41-1.352a.5.5 0 0 1 .333-.623zM4 7v4a4 4 0 0 0 3.5 3.97V7H4zm4.5 0v7.97A4 4 0 0 0 12 11V7H8.5zM12 6a3.989 3.989 0 0 0-1.334-2.982A3.983 3.983 0 0 0 8 2a3.983 3.983 0 0 0-2.667 1.018A3.989 3.989 0 0 0 4 6h8z'/></svg><h2>Pet free</h2></div></div>"; 
         }
         if($space_item['security_camera'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>Security camera</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5z'/></svg><h2>Security camera</h2></div></div>"; 
         }
         if($space_item['no_stairs'] == '1'){
-                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><h2>No strairs</h2></div></div>"; 
+                echo "<div class='card_padding_feature col-md-3 text-center'><div class='h-100 p-5 text-white bg-primary rounded-3'><svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='currentColor' class='bi bi-thermometer-snow' viewBox='0 0 16 16'><path d='M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-7zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0v-7z'/></svg><h2>No strairs</h2></div></div>"; 
         }
         ?>
 

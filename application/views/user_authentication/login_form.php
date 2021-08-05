@@ -6,6 +6,7 @@
   <?php echo form_open('user_authentication/signin'); ?>
     <p class = "text-success"><?php if (isset($message_display)) { echo $message_display; } ?></p>
     <p class = "text-success"><?php if (isset($logout_message)) { echo $logout_message; } ?></p>
+    <p class = "text-danger"><?php if (isset($error_message)) { echo $error_message; } ?></p>
     <h1 class="mb-3 h3 fw-normal">Sign in</h1>
 
     <div class="form-floating">

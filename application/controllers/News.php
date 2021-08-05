@@ -191,8 +191,8 @@
 			        $lastAdded = $this->news_model->set_comment();
 			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
 	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
-	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
-	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($this->input->post('id_space'), NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($this->input->post('id_space'), NULL);
 	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
 	                $this->load->view('templates/header', $data);
@@ -249,14 +249,14 @@
 
 	        }
 
-	        public function view($num = NULL)
+	        public function view($num = NULL, $warning = NULL)
 	        {
 	                $data['space_item'] = $this->news_model->get_news($num, NULL);
 	                $data['comment'] = $this->news_model->get_comment($num, NULL);
 	                $data['vote_ad'] = $this->news_model->get_vote($num, NULL);
 	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
+	                $data['warning'] = $warning;
 
-	                $data["opis"] = "News";
 	                /*var_dump($data["news_item"]);*/
 	                $this->load->view('templates/header', $data);
 	                /*var_dump($data["news"]);*/
@@ -277,7 +277,6 @@
 			    $this->load->helper('form');
 			    $this->load->library('form_validation');
 
-			    $data['title'] = 'Create a news item';
 
 			    /*$this->form_validation->set_rules('title', 'Title', 'required');
 			    $this->form_validation->set_rules('text', 'Text', 'required');*/
@@ -292,7 +291,7 @@
 
 			    if ($this->form_validation->run() === FALSE)
 			    {
-			        $this->load->view('templates/header', $data);
+			        $this->load->view('templates/header');
 			        $this->load->view('news/create');
 			        $this->load->view('templates/footer');
 
@@ -301,9 +300,9 @@
 			    {
 				    $config['upload_path']          = './uploads/';
 	                $config['allowed_types']        = 'gif|jpg|png';
-	                $config['max_size']             = 2000;
+	                $config['max_size']             = 10000;
 	                $config['max_width']            = 4096;
-	                $config['max_height']           = 2160;
+	                $config['max_height']           = 4096;
 
 	                $this->load->library('upload', $config);
 
@@ -312,7 +311,13 @@
 	                {
 	                        $error = array('error' => $this->upload->display_errors());
 
-                        	$this->load->view('upload_form', $error);
+	                        $data['space'] = $this->news_model->get_news($this->input->post('id_space'));
+		                    $data['error_message'] = $error['error'];
+
+					        $this->load->view('templates/header');
+					        $this->load->view('news/create', $data);
+					        $this->load->view('templates/footer');
+
 	                }
 	                else
 	                {
@@ -321,25 +326,25 @@
                         	/*$this->load->view('upload_success', $data);*/
                         	$path_img = $data['upload_data']['full_path'];
                         	$path_img = substr($path_img, 50);
+                        	$lastAdded = $this->news_model->set_news($path_img);
+
+					        $find = 'news/create/'.strval($lastAdded);
+					        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
+			                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
+			                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
+			                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($lastAdded, NULL);
+			                $data['warning'] = "Your ad is now public, if you want to change the information presented or delete this ad you can do it via the profile page.";
+
+			                /*var_dump($data["news_item"]);*/
+			                $this->load->view('templates/header', $data);
+			                /*var_dump($data["news"]);*/
+			                $this->load->view('news/view', $data);
+			                $this->load->view('templates/footer');
 	                }
 
 
 
-			        $lastAdded = $this->news_model->set_news($path_img);
-
-			        $find = 'news/create/'.strval($lastAdded);
-			        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
-	                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
-	                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
-	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($lastAdded, NULL);
-	                $data['warning'] = "Your ad is now public, if you want to change the information presented or delete this ad you can do it via the profile page.";
-
-	                $data["opis"] = "News";
-	                /*var_dump($data["news_item"]);*/
-	                $this->load->view('templates/header', $data);
-	                /*var_dump($data["news"]);*/
-	                $this->load->view('news/view', $data);
-	                $this->load->view('templates/footer');
+			        
 			    }
 			}
 
@@ -489,10 +494,10 @@
 					$num_comment = $this->news_model->delete_comment_num($slug);
 	                $this->news_model->delete_comment($slug);
 	                /*var_dump($data["news_item"]);*/
-	                $data['space_item'] = $this->news_model->get_news($num_comment, NULL);
-	                $data['comment'] = $this->news_model->get_comment($num_comment, NULL);
-	                $data['vote_ad'] = $this->news_model->get_vote($num_comment, NULL);
-	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
+	                $data['space_item'] = $this->news_model->get_news($num_comment['id_o'], NULL);
+	                $data['comment'] = $this->news_model->get_comment($num_comment['id_o'], NULL);
+	                $data['vote_ad'] = $this->news_model->get_vote($num_comment['id_o'], NULL);
+	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num_comment['id_o'], NULL);
 	                $data['warning'] = "Your comment has been deleted.";
 
 	                $data["opis"] = "News";
@@ -517,18 +522,16 @@
 					$num_comment = $this->news_model->delete_vote_num($slug);
 	                $this->news_model->delete_vote($slug);
 	                /*var_dump($data["news_item"]);*/
-	                $data['space_item'] = $this->news_model->get_news($num_comment, NULL);
-	                $data['comment'] = $this->news_model->get_comment($num_comment, NULL);
-	                $data['vote_ad'] = $this->news_model->get_vote($num_comment, NULL);
-	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($num, NULL);
-	                $data['warning'] = "Your comment has been deleted.";
+	                $warning = "Your vote has been deleted.";
 
-	                $data["opis"] = "News";
-	                /*var_dump($data["news_item"]);*/
+	                $this->view($num_comment['id_o'], $warning);
+
+
+
+	                /*$data["opis"] = "News";
 	                $this->load->view('templates/header', $data);
-	                /*var_dump($data["news"]);*/
 	                $this->load->view('news/view', $data);
-	                $this->load->view('templates/footer');
+	                $this->load->view('templates/footer');*/
 	        }
 
 	        public function edit($opis = NULL)
@@ -726,15 +729,22 @@
 				    if(isset($_FILES['userfile'])){
 				    	$config['upload_path']          = './uploads/';
 		                $config['allowed_types']        = 'gif|jpg|png';
-		                $config['max_size']             = 2000;
+		                $config['max_size']             = 10000;
 		                $config['max_width']            = 4096;
-		                $config['max_height']           = 2160;
+		                $config['max_height']           = 4096;
 
 		                $this->load->library('upload', $config);
 
 		                if ( ! $this->upload->do_upload('userfile'))
 		                {
 		                        $error = array('error' => $this->upload->display_errors());
+
+		                        $data['space'] = $this->news_model->get_news($this->input->post('id_space'));
+		                        $data['error_message'] = $error['error'];
+
+					            $this->load->view('templates/header', $data);
+					            $this->load->view('news/modify_space', $data);
+					            $this->load->view('templates/footer');
 		                }
 		                else
 		                {
@@ -743,24 +753,25 @@
 	                        	/*$this->load->view('upload_success', $data);*/
 	                        	$path_img = $data['upload_data']['full_path'];
 	                        	$path_img = substr($path_img, 50);
+	                        	$lastAdded = $this->news_model->update_news($path_img);
+
+						        $find = 'news/create/'.strval($lastAdded);
+
+						        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
+				                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
+				                $data['vote_ad'] = $this->news_model->get_vote($this->input->post('id_space'), NULL);
+				                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($this->input->post('id_space'), NULL);
+				                $data['warning'] = "Your ad has been successfully edited. ";
+
+				                /*var_dump($data["news_item"]);*/
+				                $this->load->view('templates/header', $data);
+				                /*var_dump($data["news"]);*/
+				                $this->load->view('news/view', $data);
+				                $this->load->view('templates/footer');
 		                }
 				    }
 
-				    $lastAdded = $this->news_model->update_news($path_img);
-
-			        $find = 'news/create/'.strval($lastAdded);
-
-			        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
-	                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
-	                $data['vote_ad'] = $this->news_model->get_vote($this->input->post('id_space'), NULL);
-	                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($this->input->post('id_space'), NULL);
-	                $data['warning'] = "Your ad has been successfully edited. ";
-
-	                /*var_dump($data["news_item"]);*/
-	                $this->load->view('templates/header', $data);
-	                /*var_dump($data["news"]);*/
-	                $this->load->view('news/view', $data);
-	                $this->load->view('templates/footer');
+				    
 				} else if($num == NULL){
 					echo $this->form_validation->run() == TRUE;
 					$this->load->view('news/success');

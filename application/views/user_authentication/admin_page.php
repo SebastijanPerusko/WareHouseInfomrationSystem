@@ -178,7 +178,7 @@
                   <div class="card-body">
 
                      <p class = 'w-100 btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('news/edit_space/'.$user_space['id']); ?>">Modify</a></p>
-                    <p class = 'w-100 btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('news/delete/'.$user_space['id']); ?>">Delete</a></p>
+                    <p class = 'w-100 btn btn-lg btn-outline-primary text-decoration-none'><a onclick='return confirm(&quot Are you sure you want to accept? Once accepted, you cannot make any other changes &quot);' href="<?php echo site_url('news/delete/'.$user_space['id']); ?>">Delete</a></p>
                     <p class = 'w-100 btn btn-lg btn-outline-primary text-decoration-none'><a href="<?php echo site_url('news/view/'.$user_space['id']); ?>">See this space</a></p>
                   </div>
                 </div>

@@ -7,13 +7,20 @@ class Login_database extends CI_model {
 	public function registration_insert($data) {
 
 	    // Query to check whether username already exist or not
-	    $condition = "username =" . "'" . $data['username'] . "'";
+	    $condition = "UPPER(username) =" . "UPPER('" . $data['username'] . "')";
 	    $this->db->select('*');
 	    $this->db->from('uporabnik');
 	    $this->db->where($condition);
 	    $this->db->limit(1);
 	    $query = $this->db->get();
-	    if ($query->num_rows() == 0) {
+
+	    $condition2 = "UPPER(email) =" . "UPPER('" . $data['email'] . "')";
+	    $query2 = $this->db->select('*')
+	        				->from('uporabnik')
+	        				->where($condition)
+	        				->limit(1)
+	        				->get();
+	    if ($query->num_rows() == 0 || $query2->num_rows() == 0) {
 
 	        // Query to insert data in database
 	        $this->db->insert('uporabnik', $data);
@@ -28,14 +35,13 @@ class Login_database extends CI_model {
 	// Read data using username and password
 	public function login($data) {
 
-	    $condition = "username =" . "'" . $data['username'] . "'";
+	    $condition = "UPPER(username) =" . "UPPER('" . $data['username'] . "')";
 	    $this->db->select('*');
 	    $this->db->from('uporabnik');
 	    $this->db->where($condition);
 	    $this->db->limit(1);
 	    $query = $this->db->get();
 	    $row = $query->row_array();
-	    echo(password_verify($data['geslo'], $row['geslo']));
 
 	    if (password_verify($data['geslo'], $row['geslo']) && $query->num_rows() == 1) {
 	        return true;
@@ -56,7 +62,7 @@ class Login_database extends CI_model {
 	// Read data from database to show data in admin page
 	public function read_user_information($username) {
 
-	    $condition = "username =" . "'" . $username . "'";
+	    $condition = "UPPER(username) =" . "UPPER('" . $username . "')";
 	    $this->db->select('*');
 	    $this->db->from('uporabnik');
 	    $this->db->where($condition);
@@ -91,7 +97,7 @@ class Login_database extends CI_model {
 	        				->select('rezervacija.id AS "id_res"')
 	        				->from('oglas')
 	        				->join('rezervacija', 'oglas.id = rezervacija.id_o')
-	        				->join('uporabnik', 'uporabnik.id = oglas.id_u')
+	        				->join('uporabnik', 'uporabnik.id = rezervacija.id_u')
 	        				->where('oglas.id_u', $num)
 	        				->get();
 	        return $query->result_array();
@@ -121,10 +127,45 @@ class Login_database extends CI_model {
         public function update_data_info($data)
 		{
 
-	        /*$query = $this->db->get_where('oglas', array('id' => $slug));*/
-	        $this->db->set($data);
-			$this->db->where('id', $this->session->userdata['logged_in']['id_u']);
-			return $this->db->update("uporabnik");
+			if($data['username'] == $this->session->userdata['logged_in']['username'] && $data['email'] == $this->session->userdata['logged_in']['email']){
+				$this->db->set($data);
+				$this->db->where('id', $this->session->userdata['logged_in']['id_u']);
+				$this->db->update("uporabnik");
+				return true;
+			} else if($data['username'] == $this->session->userdata['logged_in']['username']){
+				$condition2 = "UPPER(email) =" . "UPPER('" . $data['email'] . "')";
+		    	$query2 = $this->db->select('*')
+		        ->from('uporabnik')
+		        ->where($condition2)
+		        ->limit(1)
+		        ->get();
+
+		        if($query2->num_rows() == 0){
+		        	$this->db->set($data);
+					$this->db->where('id', $this->session->userdata['logged_in']['id_u']);
+					$this->db->update("uporabnik");
+					return true;
+		        } else {
+		        	return false;
+		        }
+			} else if($data['email'] == $this->session->userdata['logged_in']['email']){
+				$condition = "UPPER(username) =" . "UPPER('" . $data['username'] . "')";
+			    $this->db->select('*');
+			    $this->db->from('uporabnik');
+			    $this->db->where($condition);
+			    $this->db->limit(1);
+			    $query = $this->db->get();
+
+			    if ($query->num_rows() == 0) {
+			    	$this->db->set($data);
+					$this->db->where('id', $this->session->userdata['logged_in']['id_u']);
+					$this->db->update("uporabnik");
+					return true;
+			    } else {
+			    	return false;
+			    }
+			}
+	        
         }
 
 }

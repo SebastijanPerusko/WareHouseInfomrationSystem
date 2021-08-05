@@ -368,13 +368,12 @@ class News_model extends CI_Model {
 			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '3_greater'){
 				$query = $this->db->where("avg_oglas >=", 3.0);
 			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '4_greater'){
-				echo "uhausdj";
 				$query = $this->db->where("avg_oglas >=", 4.0);
 			} else if(isset($_SESSION['rating_ad']) && $_SESSION['rating_ad'] == '5_greater'){
 				$query = $this->db->where("avg_oglas >=", 5.0);
 			}
 
-			$query = $this->db->limit(12*($num),12*($num-1));
+			$query = $this->db->limit(12,12*($num-1));
 
 	        $query = $this->db->get();
 
@@ -590,7 +589,6 @@ class News_model extends CI_Model {
 
 
 			$this->load->helper('url');
-			echo $path_img."ashdoashodh";
 
 		    $slug = url_title($this->input->post('title'), 'dash', TRUE);
 		    $arr = $_SESSION['logged_in'];
@@ -914,15 +912,15 @@ class News_model extends CI_Model {
 	        				->from('komentar')
 	        				->where('komentar.id', $slug)
 	        				->get();
-	        return $query->row()->id_o;
+	        return $query->row_array();
 		}
 
 		public function delete_vote_num($slug){
-			$query = $this->db->select('id_o')
+			$query = $this->db->select('*')
 	        				->from('ocena')
 	        				->where('ocena.id', $slug)
 	        				->get();
-	        return $query->row()->id_o;
+	        return $query->row_array();
 		}
 
 
@@ -947,7 +945,7 @@ class News_model extends CI_Model {
 	        				->select('rezervacija.id AS "id_res"')
 	        				->from('oglas')
 	        				->join('rezervacija', 'oglas.id = rezervacija.id_o')
-	        				->join('uporabnik', 'uporabnik.id = oglas.id_u')
+	        				->join('uporabnik', 'uporabnik.id = rezervacija.id_u')
 	        				->where('oglas.id_u', $num)
 	        				->get();
 	        return $query->result_array();
