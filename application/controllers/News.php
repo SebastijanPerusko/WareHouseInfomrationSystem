@@ -314,9 +314,29 @@
 	                        $data['space'] = $this->news_model->get_news($this->input->post('id_space'));
 		                    $data['error_message'] = $error['error'];
 
-					        $this->load->view('templates/header');
-					        $this->load->view('news/create', $data);
-					        $this->load->view('templates/footer');
+		                    if(empty($this->input->post('userfile'))){
+		                    	$path_img = '';
+	                        	$lastAdded = $this->news_model->set_news($path_img);
+
+						        $find = 'news/create/'.strval($lastAdded);
+						        $data['space_item'] = $this->news_model->get_news($lastAdded, NULL);
+				                $data['comment'] = $this->news_model->get_comment($lastAdded, NULL);
+				                $data['vote_ad'] = $this->news_model->get_vote($lastAdded, NULL);
+				                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($lastAdded, NULL);
+				                $data['warning'] = "Your ad is now public, if you want to change the information presented or delete this ad you can do it via the profile page.";
+
+				                /*var_dump($data["news_item"]);*/
+				                $this->load->view('templates/header', $data);
+				                /*var_dump($data["news"]);*/
+				                $this->load->view('news/view', $data);
+				                $this->load->view('templates/footer');
+		                    } else {
+		                    	$this->load->view('templates/header');
+						        $this->load->view('news/create', $data);
+						        $this->load->view('templates/footer');
+		                    }
+
+					        
 
 	                }
 	                else
@@ -742,9 +762,30 @@
 		                        $data['space'] = $this->news_model->get_news($this->input->post('id_space'));
 		                        $data['error_message'] = $error['error'];
 
-					            $this->load->view('templates/header', $data);
-					            $this->load->view('news/modify_space', $data);
-					            $this->load->view('templates/footer');
+
+		                        if(empty($this->input->post('userfile'))){
+		                        	$path_img = '';
+		                        	$lastAdded = $this->news_model->update_news($path_img);
+
+							        $find = 'news/create/'.strval($lastAdded);
+
+							        $data['space_item'] = $this->news_model->get_news($this->input->post('id_space'), NULL);
+					                $data['comment'] = $this->news_model->get_comment($this->input->post('id_space'), NULL);
+					                $data['vote_ad'] = $this->news_model->get_vote($this->input->post('id_space'), NULL);
+					                $data['vote_ad_avg'] = $this->news_model->get_avg_vote($this->input->post('id_space'), NULL);
+					                $data['warning'] = "Your ad has been successfully edited. ";
+
+					                /*var_dump($data["news_item"]);*/
+					                $this->load->view('templates/header', $data);
+					                /*var_dump($data["news"]);*/
+					                $this->load->view('news/view', $data);
+					                $this->load->view('templates/footer');
+		                        } else {
+		                        	$this->load->view('templates/header', $data);
+						            $this->load->view('news/modify_space', $data);
+						            $this->load->view('templates/footer');
+		                        }
+					            
 		                }
 		                else
 		                {
